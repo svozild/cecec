@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CECEC 2026 &#8211; Central & Eastern European Cheminformatics Conference</title>
+  <title>CECEC 2025 &#8211; Central & Eastern European Cheminformatics Conference</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --navy:    #0D1B2A;
       --steel:   #1B4F72;
@@ -17,621 +16,148 @@
       --cyan-dim:#007F8B;
       --white:   #F4F8FB;
       --gray:    #8FA3B1;
-      --light:   #E2ECF3;
       --card-bg: #132233;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 16px;
-      line-height: 1.65;
-    }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 3rem;
-      height: 64px;
-      background: rgba(13,27,42,0.95);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 64px;
+      background: rgba(13,27,42,0.95); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,198,215,0.12);
     }
-    .nav-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: .04em;
-      color: var(--cyan);
-      text-decoration: none;
-      flex-shrink: 0;
-    }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; flex-shrink: 0; }
     .nav-logo span { color: var(--white); }
     .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
-    .nav-links a {
-      color: var(--gray);
-      text-decoration: none;
-      font-size: .875rem;
-      font-weight: 500;
-      letter-spacing: .03em;
-      transition: color .2s;
-      white-space: nowrap;
-    }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--cyan); }
-    .nav-cta {
-      background: var(--cyan);
-      color: var(--navy) !important;
-      padding: .4rem 1.1rem;
-      border-radius: 4px;
-      font-weight: 600 !important;
-    }
-    .nav-cta:hover { background: #00aebf; color: var(--navy) !important; }
-
-    /* hamburger */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: .3rem;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px; height: 2px;
-      background: var(--gray);
-      border-radius: 2px;
-      transition: background .2s;
-    }
-    .nav-hamburger:hover span { background: var(--cyan); }
-
-    /* mobile menu */
-    .nav-mobile {
-      display: none;
-      position: fixed;
-      top: 64px; left: 0; right: 0;
-      background: rgba(13,27,42,0.98);
-      border-bottom: 1px solid rgba(0,198,215,.12);
-      padding: 1.2rem 2rem;
-      z-index: 99;
-      flex-direction: column;
-      gap: .9rem;
-    }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .03em; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
     .nav-mobile.open { display: flex; }
-    .nav-mobile a {
-      color: var(--gray);
-      text-decoration: none;
-      font-size: .95rem;
-      font-weight: 500;
-      transition: color .2s;
-      padding: .3rem 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-    }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
     .nav-mobile a:last-child { border-bottom: none; }
     .nav-mobile a:hover { color: var(--cyan); }
 
-    /* ── HERO ── */
-    #hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      padding: 6rem 2rem 4rem;
-    }
-    #hex-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      opacity: .55;
-      display: block;
-    }
-    .hero-eyebrow {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1.2rem;
-      position: relative;
-    }
-    .hero-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -.02em;
-      position: relative;
-      max-width: 900px;
-    }
+    /* HERO */
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 6rem 2rem 4rem; }
+    #hex-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: .55; display: block; }
+    .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.2rem; position: relative; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; position: relative; max-width: 900px; }
     .hero-title .accent { color: var(--cyan); }
-    .hero-subtitle {
-      margin-top: 1.4rem;
-      font-size: 1.1rem;
-      color: var(--gray);
-      max-width: 560px;
-      position: relative;
-    }
-    .hero-meta {
-      margin-top: 2.5rem;
-      display: flex;
-      gap: 2.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
+    .hero-subtitle { margin-top: 1.4rem; font-size: 1.1rem; color: var(--gray); max-width: 560px; position: relative; }
+    .hero-meta { margin-top: 2.5rem; display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
     .hero-meta-item { text-align: center; }
-    .hero-meta-item .label {
-      font-size: .72rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--cyan-dim);
-      font-weight: 600;
-    }
-    .hero-meta-item .value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-    .hero-divider {
-      width: 1px;
-      height: 40px;
-      background: rgba(0,198,215,.25);
-      align-self: center;
-    }
-    .btn-primary {
-      display: inline-block;
-      margin-top: 2.8rem;
-      padding: .8rem 2.2rem;
-      background: var(--cyan);
-      color: var(--navy);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: .95rem;
-      border-radius: 4px;
-      text-decoration: none;
-      letter-spacing: .02em;
-      transition: background .2s, transform .15s;
-      position: relative;
-    }
-    .btn-primary:hover { background: #00aebf; transform: translateY(-1px); }
+    .hero-meta-item .label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; }
+    .hero-meta-item .value { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); }
+    .hero-divider { width: 1px; height: 40px; background: rgba(0,198,215,.25); align-self: center; }
 
-    /* ── SECTIONS ── */
-    section { padding: 6rem 2rem; max-width: 1080px; margin: 0 auto; }
-    .section-label {
-      font-size: .72rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      font-weight: 600;
-      margin-bottom: .6rem;
-    }
-    h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700;
-      letter-spacing: -.02em;
-      line-height: 1.15;
-      margin-bottom: 1.6rem;
-    }
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(0,198,215,.15);
-      margin: 0;
-      max-width: 100%;
-    }
+    /* SECTIONS */
+    section { padding: 3.5rem 2rem; max-width: 1080px; margin: 0 auto; }
+    .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1.6rem; }
+    .divider { border: none; border-top: 1px solid rgba(0,198,215,.15); margin: 0; max-width: 100%; }
 
-    /* ── ABOUT ── */
-    #about .about-grid {
-      display: block;
-      max-width: 720px;
-      margin-top: 2rem;
-    }
-    .about-text p { color: #9DBCCC; margin-bottom: 1rem; }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); transition: border-color .2s; }
-    .about-text a:hover { border-color: var(--cyan); }
-    .stat-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .stat-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(0,198,215,.12);
-      border-radius: 8px;
-      padding: 1.2rem 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-    .stat-icon {
-      width: 40px; height: 40px;
-      flex-shrink: 0;
-      background: rgba(0,198,215,.1);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-    .stat-card .stat-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: .95rem;
-    }
-    .stat-card .stat-desc { font-size: .82rem; color: var(--gray); }
-
-    /* ── PROGRAMME ── */
-    #programme { background: none; }
-    .programme-note {
-      color: var(--gray);
-      font-size: .9rem;
-      margin-bottom: 2rem;
-      font-style: italic;
-    }
-    .day-header {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--cyan);
-      margin: 2rem 0 .8rem;
-      padding-bottom: .5rem;
-      border-bottom: 1px solid rgba(0,198,215,.2);
-    }
+    /* PROGRAMME */
+    .programme-note { color: var(--gray); font-size: .9rem; margin-bottom: 2rem; font-style: italic; }
+    .day-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin: 2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(0,198,215,.2); }
     .schedule-row {
       display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 1rem;
-      padding: .7rem 0;
+      grid-template-columns: 110px 1fr 1fr;
+      gap: .5rem 1rem;
+      padding: .65rem 0;
       border-bottom: 1px solid rgba(255,255,255,.05);
       align-items: baseline;
     }
     .schedule-row:last-child { border-bottom: none; }
-    .sched-time {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .8rem;
-      font-weight: 600;
-      color: var(--cyan-dim);
-      letter-spacing: .04em;
-    }
-    .sched-event { font-size: .9rem; color: #9DBCCC; }
-    .sched-event a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); }
-    .sched-event a:hover { border-color: var(--cyan); }
+    .schedule-row.break { background: rgba(0,198,215,.04); border-radius: 4px; padding: .65rem .5rem; }
+    .sched-time { font-family: 'Space Grotesk', sans-serif; font-size: .78rem; font-weight: 600; color: var(--cyan-dim); letter-spacing: .04em; white-space: nowrap; }
+    .sched-talk { font-size: .9rem; color: var(--white); font-weight: 500; }
+    .sched-talk.break-label { color: var(--gray); font-weight: 400; font-style: italic; }
+    .sched-speaker { font-size: .82rem; color: var(--gray); }
+    .sched-speaker strong { color: #9DBCCC; font-weight: 500; }
 
-    /* ── VENUE ── */
-    #venue .venue-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-top: 2rem;
-    }
+    /* VENUE */
+    #venue .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
     .venue-info p { color: #9DBCCC; margin-bottom: .8rem; }
-    .venue-address {
-      margin-top: 1.5rem;
-      background: var(--card-bg);
-      border: 1px solid rgba(0,198,215,.12);
-      border-radius: 8px;
-      padding: 1.2rem 1.4rem;
-    }
-    .venue-address .addr-label {
-      font-size: .7rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--cyan-dim);
-      font-weight: 600;
-      margin-bottom: .4rem;
-    }
-    .venue-address address {
-      font-style: normal;
-      color: var(--white);
-      font-size: .95rem;
-      line-height: 1.9;
-    }
-    .venue-address .hall-badge {
-      display: inline-block;
-      margin-top: .6rem;
-      background: rgba(0,198,215,.12);
-      border: 1px solid rgba(0,198,215,.25);
-      color: var(--cyan);
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      padding: .25rem .7rem;
-      border-radius: 4px;
-    }
-    .map-embed {
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid rgba(0,198,215,.12);
-      height: 100%;
-      min-height: 300px;
-    }
-    .map-embed iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 300px;
-      border: none;
-      filter: invert(90%) hue-rotate(180deg);
-    }
+    .venue-address { margin-top: 1.5rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1.2rem 1.4rem; }
+    .venue-address .addr-label { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; margin-bottom: .4rem; }
+    .venue-address address { font-style: normal; color: var(--white); font-size: .95rem; line-height: 1.9; }
+    .venue-address .hall-badge { display: inline-block; margin-top: .6rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .78rem; font-weight: 600; letter-spacing: .06em; padding: .25rem .7rem; border-radius: 4px; }
+    .map-embed { border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,198,215,.12); height: 100%; min-height: 300px; }
+    .map-embed iframe { width: 100%; height: 100%; min-height: 300px; border: none; filter: invert(90%) hue-rotate(180deg); }
+    .map-link { color: var(--cyan); text-decoration: none; font-size: .85rem; font-weight: 500; display: block; text-align: center; padding: .6rem 0 .3rem; }
+    .map-link:hover { text-decoration: underline; }
 
-    /* ── REGISTRATION ── */
-    #registration .reg-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-top: 2rem;
-    }
-    .reg-info p { color: #9DBCCC; margin-bottom: 1rem; }
-    .deadline-list {
-      list-style: none;
-      margin-top: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-    }
-    .deadline-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: .7rem 1rem;
-      background: var(--card-bg);
-      border-radius: 6px;
-      border-left: 3px solid var(--cyan);
-      font-size: .88rem;
-    }
-    .deadline-list .dl-label { color: var(--gray); }
-    .deadline-list .dl-date { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--white); }
-    .reg-form-box {
-      background: var(--card-bg);
-      border: 1px solid rgba(0,198,215,.15);
-      border-radius: 12px;
-      padding: 2rem;
-    }
-    .reg-form-box h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    .reg-form-box p { color: #9DBCCC; font-size: .9rem; margin-bottom: 1.5rem; }
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .75rem;
-    }
-    .field { margin-bottom: 1rem; }
-    .field label {
-      display: block;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: .35rem;
-    }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(0,198,215,.2);
-      border-radius: 5px;
-      padding: .65rem .85rem;
-      color: var(--white);
-      font-family: 'Inter', sans-serif;
-      font-size: .9rem;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--cyan); }
-    .field textarea { resize: vertical; min-height: 80px; }
-    .field select option { background: var(--navy); }
-    .btn-submit {
-      width: 100%;
-      padding: .8rem;
-      background: var(--cyan);
-      color: var(--navy);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: .95rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: .5rem;
-      transition: background .2s;
-    }
-    .btn-submit:hover { background: #00aebf; }
-
-    /* ── PAST EDITIONS ── */
-    #past { text-align: center; }
-    #past .past-grid {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-top: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .past-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(0,198,215,.15);
-      border-radius: 10px;
-      padding: 1.8rem 2.5rem;
-      text-align: center;
-      text-decoration: none;
-      color: var(--white);
-      transition: border-color .2s, transform .15s;
-      min-width: 180px;
-    }
-    .past-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
-    .past-card .year {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--cyan);
-    }
-    .past-card .past-loc { font-size: .82rem; color: var(--gray); margin-top: .3rem; }
-    .past-card .past-arrow { margin-top: .8rem; font-size: .8rem; color: var(--cyan-dim); }
-
-    /* ── CONTACT ── */
+    /* CONTACT */
     #contact { text-align: center; padding-bottom: 2rem; }
     #contact > p { color: #9DBCCC; max-width: 480px; margin: 0 auto 2rem; }
-    .contact-card {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .5rem;
-      background: var(--card-bg);
-      border: 1px solid rgba(0,198,215,.15);
-      border-radius: 12px;
-      padding: 2.5rem 3rem;
-    }
+    .contact-card { display: inline-flex; flex-direction: column; align-items: center; gap: .5rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 2.5rem 3rem; }
     .contact-icon { font-size: 2rem; }
-    .contact-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      margin-bottom: .2rem;
-    }
-    .contact-card a {
-      color: var(--cyan);
-      text-decoration: none;
-      font-size: .95rem;
-    }
+    .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-bottom: .2rem; }
+    .contact-card a { color: var(--cyan); text-decoration: none; font-size: .95rem; }
     .contact-card a:hover { text-decoration: underline; }
-    .organizers { margin-top: 2.5rem; color: var(--gray); font-size: .85rem; }
 
-    /* ── FOOTER ── */
+    #venue { padding-top: 2rem; padding-bottom: 2rem; }
+    #programme { padding-bottom: 2rem; }
     footer img { filter: none; }
-    footer img.logo-invert { filter: brightness(0) invert(1); }
-    footer {
-      border-top: 1px solid rgba(0,198,215,.1);
-      text-align: center;
-      padding: 2rem;
-      color: var(--gray);
-      font-size: .8rem;
-    }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; }
     footer a { color: var(--cyan-dim); text-decoration: none; }
     footer a:hover { color: var(--cyan); }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 820px) {
       nav { padding: 0 1.4rem; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
-      #about .about-grid,
-      #venue .venue-grid,
-      #registration .reg-grid { grid-template-columns: 1fr; }
+      #venue .venue-grid { grid-template-columns: 1fr; }
       section { padding: 4rem 1.2rem; }
       .hero-divider { display: none; }
+      #hero { padding: 5rem 1.5rem 3rem; }
+      .schedule-row { grid-template-columns: 90px 1fr; }
+      .sched-speaker { grid-column: 2; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
-    }
-    /* ── CEE TOOLTIP ── */
-    .cee-tooltip-wrap {
-      position: relative;
-      display: inline;
-      border-bottom: 1px dashed var(--cyan-dim);
-      cursor: default;
-    }
-    .cee-tooltip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .3rem .8rem;
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0e2033;
-      border: 1px solid rgba(0,198,215,.25);
-      border-radius: 8px;
-      padding: .85rem 1rem;
-      width: 260px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.45);
-      font-size: .78rem;
-      font-family: 'Inter', sans-serif;
-      color: #9DBCCC;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .18s, transform .18s;
-      transform: translateX(-50%) translateY(4px);
-      z-index: 50;
-    }
-    .cee-tooltip-wrap:hover .cee-tooltip {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    .cee-tooltip span {
-      display: block;
-    }
-    .cee-tooltip::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 6px solid transparent;
-      border-top-color: rgba(0,198,215,.25);
-    }
-
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#hero">CECEC<span> 2026</span></a>
+  <a class="nav-logo" href="#hero">CECEC<span> 2025</span></a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
     <li><a href="#programme">Programme</a></li>
     <li><a href="#venue">Venue</a></li>
-    <li><a href="#past">Past Editions</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#registration" class="nav-cta">Register</a></li>
+    <li><a href="../" class="nav-back">← CECEC 2026</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="nav-mobile" id="mobile-menu">
-  <a href="#about"        onclick="closeMenu()">About</a>
-  <a href="#programme"    onclick="closeMenu()">Programme</a>
-  <a href="#venue"        onclick="closeMenu()">Venue</a>
-  <a href="#past"         onclick="closeMenu()">Past Editions</a>
-  <a href="#contact"      onclick="closeMenu()">Contact</a>
-  <a href="#registration" onclick="closeMenu()" style="color:var(--cyan);font-weight:600;">Register →</a>
+  <a href="#programme"  onclick="closeMenu()">Programme</a>
+  <a href="#venue"      onclick="closeMenu()">Venue</a>
+  <a href="../"         onclick="closeMenu()" style="color:var(--cyan);">← CECEC 2026</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
   <canvas id="hex-canvas"></canvas>
-  <p class="hero-eyebrow">2nd Annual Edition · 7 September 2026</p>
+  <p class="hero-eyebrow">1st Annual Edition · 9 September 2025</p>
   <h1 class="hero-title">
     Central &amp; Eastern European<br><span class="accent">Cheminformatics</span> Conference
   </h1>
-  <p class="hero-subtitle">
-    A dedicated forum for cheminformatics researchers, practitioners, and students across the CEE region.
-  </p>
+  <p class="hero-subtitle">Archive of the inaugural CECEC meeting.</p>
   <div class="hero-meta">
     <div class="hero-meta-item">
       <div class="label">Date</div>
-      <div class="value">7 September 2026</div>
+      <div class="value">9 September 2025</div>
     </div>
     <div class="hero-divider"></div>
     <div class="hero-meta-item">
@@ -641,34 +167,8 @@
     <div class="hero-divider"></div>
     <div class="hero-meta-item">
       <div class="label">Edition</div>
-      <div class="value">CECEC 2026</div>
+      <div class="value">CECEC 2025</div>
     </div>
-  </div>
-  <a href="#registration" class="btn-primary">Register Now →</a>
-</section>
-
-<hr class="divider" />
-
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">About the Conference</p>
-  <h2>Where Molecules Meet Algorithms</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        CECEC was founded on a simple idea: researchers in cheminformatics across <span class="cee-tooltip-wrap">Central and Eastern Europe<span class="cee-tooltip"><span>Albania</span><span>Bulgaria</span><span>Croatia</span><span>Czechia</span><span>Estonia</span><span>Hungary</span><span>Latvia</span><span>Lithuania</span><span>Poland</span><span>Romania</span><span>Serbia</span><span>Slovakia</span><span>Slovenia</span><span>Ukraine</span></span></span> deserve a dedicated space to meet, talk, and build lasting connections. The region has no shortage of scientific talent &#8211; but opportunities for informal, low-barrier exchange have been scarce.
-      </p>
-      <p>
-        The format is deliberately lightweight. Each participant gives a short talk (15 minutes + 5 for discussion), covering ongoing work, fresh results, or a problem worth thinking about together. No poster sessions, no keynotes &#8211; just focused conversation among peers. The day closes with a joint dinner, included for all attendees.
-      </p>
-      <p>
-        Attendance is free of charge.
-      </p>
-      <p>
-        Know someone who should be here? Take a look at our <a href="https://docs.google.com/spreadsheets/d/1teeShi8adjKcetY_3hp04CFSkIiLgSsnMq37UWw5DWg/edit?usp=sharing" target="_blank" rel="noopener">invitation list</a> &#8211; if a colleague or research group is missing, <a href="mailto:svozild@vscht.cz?subject=CECEC%20-%20new%20contact">let us know</a> and we'll be happy to reach out.
-      </p>
-    </div>
-
   </div>
 </section>
 
@@ -678,33 +178,134 @@
 <section id="programme">
   <p class="section-label">Programme</p>
   <h2>Conference Schedule</h2>
-  <p class="programme-note">The programme below is preliminary and subject to change. The full schedule will be published closer to the event.</p>
 
-  <div class="day-header">Monday, 7 September 2026</div>
-  <div class="schedule-row"><span class="sched-time">08:00</span><span class="sched-event">Registration</span></div>
-  <div class="schedule-row"><span class="sched-time">08:55</span><span class="sched-event">Opening Remarks</span></div>
-  <div class="schedule-row"><span class="sched-time">09:00</span><span class="sched-event">Talk 1</span></div>
-  <div class="schedule-row"><span class="sched-time">09:20</span><span class="sched-event">Talk 2</span></div>
-  <div class="schedule-row"><span class="sched-time">09:40</span><span class="sched-event">Talk 3</span></div>
-  <div class="schedule-row"><span class="sched-time">10:00</span><span class="sched-event">Talk 4</span></div>
-  <div class="schedule-row"><span class="sched-time">10:20</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row"><span class="sched-time">11:00</span><span class="sched-event">Talk 5</span></div>
-  <div class="schedule-row"><span class="sched-time">11:20</span><span class="sched-event">Talk 6</span></div>
-  <div class="schedule-row"><span class="sched-time">11:40</span><span class="sched-event">Talk 7</span></div>
-  <div class="schedule-row"><span class="sched-time">12:00</span><span class="sched-event">Talk 8</span></div>
-  <div class="schedule-row"><span class="sched-time">12:20</span><span class="sched-event">Lunch</span></div>
-  <div class="schedule-row"><span class="sched-time">14:00</span><span class="sched-event">Talk 9</span></div>
-  <div class="schedule-row"><span class="sched-time">14:20</span><span class="sched-event">Talk 10</span></div>
-  <div class="schedule-row"><span class="sched-time">14:40</span><span class="sched-event">Talk 11</span></div>
-  <div class="schedule-row"><span class="sched-time">15:00</span><span class="sched-event">Talk 12</span></div>
-  <div class="schedule-row"><span class="sched-time">15:20</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row"><span class="sched-time">16:00</span><span class="sched-event">Talk 13</span></div>
-  <div class="schedule-row"><span class="sched-time">16:20</span><span class="sched-event">Talk 14</span></div>
-  <div class="schedule-row"><span class="sched-time">16:40</span><span class="sched-event">Talk 15</span></div>
-  <div class="schedule-row"><span class="sched-time">17:00</span><span class="sched-event">Talk 16</span></div>
-  <div class="schedule-row"><span class="sched-time">17:20</span><span class="sched-event">Talk 17</span></div>
-  <div class="schedule-row"><span class="sched-time">17:40</span><span class="sched-event">Talk 18</span></div>
-  <div class="schedule-row"><span class="sched-time">19:00</span><span class="sched-event">Conference Dinner &#8211; all participants are invited · <a href="https://www.naurale.cz/" target="_blank" rel="noopener">Na Urale</a> (<a href="https://maps.app.goo.gl/z6LscVGdBBpL9GRG6" target="_blank" rel="noopener">map</a>)</span></div>
+  <div class="day-header">Tuesday, 9 September 2025</div>
+
+  <div class="schedule-row">
+    <span class="sched-time">08:55 &#8211; 09:00</span>
+    <span class="sched-talk">Welcome</span>
+    <span class="sched-speaker"><strong>Daniel Svozil</strong> · University of Chemistry and Technology, Department of Informatics and Chemistry, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:00 &#8211; 09:20</span>
+    <span class="sched-talk">Reaction informatics</span>
+    <span class="sched-speaker"><strong>Alexandre Varnek</strong> · University of Strasbourg, France</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:20 &#8211; 09:40</span>
+    <span class="sched-talk">Modeling as a Lens on Quality in Combinatorial Synthesis: Biginelli Reaction Case</span>
+    <span class="sched-speaker"><strong>Iryna Boiko</strong> · Enamine Ltd and Taras Shevchenko University, Kyiv, Ukraine</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:40 &#8211; 10:00</span>
+    <span class="sched-talk">Reaction rate constant estimation with computational nanoreactor</span>
+    <span class="sched-speaker"><strong>Eugen Hruška</strong> · Department of Biophysics and Physical Chemistry, Faculty of Pharmacy in Hradec Králové, Charles University, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">10:00 &#8211; 10:20</span>
+    <span class="sched-talk">Chemography</span>
+    <span class="sched-speaker"><strong>Dragos Horvath</strong> · University of Strasbourg, France</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">10:20 &#8211; 10:40</span>
+    <span class="sched-talk">Enhancing Drug Discovery with NMR and AI</span>
+    <span class="sched-speaker"><strong>Thomas Evangelidis</strong> · AI|ffinity, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">10:40 &#8211; 11:00</span>
+    <span class="sched-talk">Protein-ligand binding sites analysis</span>
+    <span class="sched-speaker"><strong>David Hoksza</strong> · Charles University, Faculty of Mathematics and Physics, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">11:00 &#8211; 11:40</span>
+    <span class="sched-talk break-label">Coffee Break</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">11:40 &#8211; 12:00</span>
+    <span class="sched-talk">ML (and the world) needs trustable big data</span>
+    <span class="sched-speaker"><strong>Ricardo Fusco</strong> · Institute of Molecular and Translational Medicine, Faculty of Medicine and Dentistry, Palacký University, Olomouc, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:00 &#8211; 12:20</span>
+    <span class="sched-talk">Data platforms in chemical biology</span>
+    <span class="sched-speaker"><strong>Ctibor Škuta</strong> · Institute of Molecular Genetics, Czech Academy of Sciences, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:20 &#8211; 12:40</span>
+    <span class="sched-talk">Free cheminformatics web tools for medicinal chemists</span>
+    <span class="sched-speaker"><strong>Peter Ertl</strong> · Ertl Molecular, Basel, Switzerland</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:40 &#8211; 13:00</span>
+    <span class="sched-talk">Molecular and other chemical data &#8211; organometallic compounds in structure databases</span>
+    <span class="sched-speaker"><strong>Stefan Kuhn</strong> · Institute of Computer Science, Chair of Distributed Systems, University of Tartu, Estonia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">13:00 &#8211; 13:20</span>
+    <span class="sched-talk">Challenges and opportunities in computer-aided discovery of NRF2 inhibitors</span>
+    <span class="sched-speaker"><strong>Dragos Paul Mihai</strong> · Carol Davila University of Medicine and Pharmacy, Department of Pharmacology and Clinical Pharmacy, Bucharest, Romania</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">13:20 &#8211; 13:40</span>
+    <span class="sched-talk">Inhibitors of SARS-CoV-2 Main Protease &#8211; Similarity Analysis</span>
+    <span class="sched-speaker"><strong>Magdaléna Májeková</strong> · Institute of Experimental Pharmacology &amp; Toxicology, Slovak Academy of Sciences</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">13:40 &#8211; 15:00</span>
+    <span class="sched-talk break-label">Lunch</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:00 &#8211; 15:20</span>
+    <span class="sched-talk">StreaMD: a tool for high-throughput automated molecular dynamics simulations</span>
+    <span class="sched-speaker"><strong>Aleksandra Ivanova</strong> · Institute of Molecular and Translational Medicine, Palacký University, Olomouc, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:20 &#8211; 15:40</span>
+    <span class="sched-talk">Automated Structural Refinement of Docked Complexes in Cytochrome P450 Using Molecular Dynamics</span>
+    <span class="sched-speaker"><strong>Przemysław Grenda</strong> · Department of Biophysics and Physical Chemistry, Faculty of Pharmacy in Hradec Králové, Charles University, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:40 &#8211; 16:00</span>
+    <span class="sched-talk">De novo design of synthetically reasonable compounds</span>
+    <span class="sched-speaker"><strong>Pavel Polishchuk</strong> · Institute of Molecular and Translational Medicine, Palacký University, Olomouc, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">16:00 &#8211; 16:20</span>
+    <span class="sched-talk">Processing of chemical objects with SYBYL Line Notation. Case study of polymer structure generation.</span>
+    <span class="sched-speaker"><strong>Lyudvika Radeva</strong> · Plovdiv University "Paisii Hilendarski", Department of Analytical Chemistry and Computer Chemistry, Bulgaria</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">16:20 &#8211; 16:40</span>
+    <span class="sched-talk">GFlowNet-based generation of new ligands of mu opioid receptor</span>
+    <span class="sched-speaker"><strong>Sabina Podlewska (Smusz)</strong> · Department of Medicinal Chemistry, Maj Institute of Pharmacology Polish Academy of Sciences, Krakow, Poland</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">16:40 &#8211; 17:20</span>
+    <span class="sched-talk break-label">Coffee Break</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">17:20 &#8211; 17:40</span>
+    <span class="sched-talk">De Novo Design for Novel Intracellular Allosteric Modulators of CCR2</span>
+    <span class="sched-speaker"><strong>Martin Šícho</strong> · University of Chemistry and Technology, Department of Informatics and Chemistry, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">17:40 &#8211; 18:00</span>
+    <span class="sched-talk">Are we explaining the wrong things? Rethinking explainable AI for molecular discovery</span>
+    <span class="sched-speaker"><strong>Tomasz Danel</strong> · Group of Machine Learning Research, Jagiellonian University, Krakow, Poland</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">18:00 &#8211; 18:20</span>
+    <span class="sched-talk">In silico modeling of vapor-liquid equilibria in thermodynamic systems of acid gases in aqueous amine solutions</span>
+    <span class="sched-speaker"><strong>Kyrylo Klimenko</strong> · University of Strasbourg, France</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">18:20 &#8211; 18:40</span>
+    <span class="sched-talk">Global ML initiatives for illuminating understudied proteins</span>
+    <span class="sched-speaker"><strong>Dragos Paul Mihai</strong> · Carol Davila University of Medicine and Pharmacy, Department of Pharmacology and Clinical Pharmacy, Bucharest, Romania</span>
+  </div>
 </section>
 
 <hr class="divider" />
@@ -712,159 +313,13 @@
 <!-- VENUE -->
 <section id="venue">
   <p class="section-label">Venue</p>
-  <h2>Conference Location</h2>
-  <div class="venue-grid">
-    <div class="venue-info">
-      <p>
-        The conference will take place at the <strong>University of Chemistry and Technology Prague (UCT Prague)</strong>. UCT Prague is conveniently located in Prague 6 and is well served by public transport:
-      </p>
-      <ul style="list-style:none; margin: .5rem 0 1rem 0; padding: 0; display:flex; flex-direction:column; gap:.4rem;">
-        <li style="color:#9DBCCC; font-size:.9rem;">🚇 metro stop <em>Dejvická</em>, line A (green line)</li>
-        <li style="color:#9DBCCC; font-size:.9rem;">🚃 tram stop <em>Dejvická</em>, lines 20, 26</li>
-      </ul>
-      <div class="venue-address">
-        <div class="addr-label">Address</div>
-        <address>
-          University of Chemistry and Technology Prague<br />
-          Technická 1903/3<br />
-          166 28 Praha 6 &#8211; Dejvice<br />
-          Czech Republic
-        </address>
-        <span class="hall-badge">Lecture Hall B&nbsp;III</span>
-      </div>
-    </div>
-    <div class="map-embed">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.1!2d14.3894!3d50.1023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b953b10a8e759%3A0xc86ee4cb9ef3105c!2sUniversity%20of%20Chemistry%20and%20Technology%20Prague%2C%20Building%20B!5e0!3m2!1sen!2scz!4v1700000000001"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="UCT Prague Building B map">
-      </iframe>
-      <div style="text-align:center; padding: .6rem 0 .3rem;">
-        <a href="https://www.google.com/maps/search/?api=1&query=Technická+1903/3,+166+28+Praha+6" target="_blank" rel="noopener" class="map-link">Open in Google Maps →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- REGISTRATION -->
-<section id="registration">
-  <p class="section-label">Registration</p>
-  <h2>Join Us at CECEC 2026</h2>
-  <div class="reg-grid">
-    <div class="reg-info">
-      <p>
-        Registration is free of charge but mandatory for all participants. Unfortunately we are unable to cover travel or accommodation costs.
-      </p>
-      <p>
-        The meeting focuses on short oral presentations (15+5 minutes). To present, select <em>Oral Presentation</em> as the participation type &#8211; you will then be asked to provide the title of your talk.
-      </p>
-      <ul class="deadline-list">
-        <li>
-          <span class="dl-label">Registration deadline</span>
-          <span class="dl-date">1 September 2026</span>
-        </li>
-      </ul>
-    </div>
-    <div class="reg-form-box">
-      <h3>Registration Form</h3>
-      <p>Fill in the form below &#8211; we'll see you on September 7th.</p>
-      <div class="field-row">
-        <div class="field">
-          <label>First Name</label>
-          <input type="text" id="reg-firstname" placeholder="Jane" />
-        </div>
-        <div class="field">
-          <label>Last Name</label>
-          <input type="text" id="reg-lastname" placeholder="Doe" />
-        </div>
-      </div>
-      <div class="field">
-        <label>Email Address</label>
-        <input type="email" id="reg-email" placeholder="jane@example.com" />
-      </div>
-      <div class="field">
-        <label>Affiliation</label>
-        <input type="text" id="reg-affiliation" placeholder="University / Institute" />
-      </div>
-      <div class="field">
-        <label>Affiliation Country</label>
-        <select id="reg-country">
-          <option value="">— select —</option>
-          <option>Albania</option>
-          <option>Bulgaria</option>
-          <option>Croatia</option>
-          <option>Czechia</option>
-          <option>Estonia</option>
-          <option>Hungary</option>
-          <option>Latvia</option>
-          <option>Lithuania</option>
-          <option>Poland</option>
-          <option>Romania</option>
-          <option>Serbia</option>
-          <option>Slovakia</option>
-          <option>Slovenia</option>
-          <option>Ukraine</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Position</label>
-        <select id="reg-position">
-          <option value="">— select —</option>
-          <option>Junior researcher (student or postdoc)</option>
-          <option>Senior researcher (group leader, PI, employee)</option>
-          <option>Industry</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Participation Type</label>
-        <select id="reg-participation" onchange="togglePresentationTitle()">
-          <option value="">— select —</option>
-          <option>Oral Presentation (15+5 min)</option>
-          <option>Attendee only</option>
-        </select>
-      </div>
-      <div class="field" id="reg-title-wrap" style="display:none;">
-        <label>Presentation Title</label>
-        <input type="text" id="reg-title" placeholder="Title of your talk" />
-      </div>
-      <button class="btn-submit" id="reg-submit" onclick="submitRegistration()">Submit Registration</button>
-      <p id="reg-msg" style="display:none; margin-top:1rem; font-size:.88rem; text-align:center;"></p>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- PAST EDITIONS -->
-<section id="past">
-  <p class="section-label">History</p>
-  <h2>Past Editions</h2>
-  <div class="past-grid">
-    <a class="past-card" href="./2025/" aria-label="CECEC 2025">
-      <div class="year">2025</div>
-      <div class="past-loc">1st Annual Edition</div>
-      <div class="past-arrow">View archive →</div>
-    </a>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Get in Touch</p>
-  <h2>Contact the Organizers</h2>
-  <p>Have a question about the conference or travel to Prague? We are happy to help.</p>
-  <div class="contact-card">
-    <div class="contact-icon">✉️</div>
-    <h3>Email Us</h3>
-    <a href="mailto:svozild@vscht.cz">svozild@vscht.cz</a>
-  </div>
+  <address style="font-style:normal; color:#9DBCCC; font-size:.95rem; line-height:2;">
+    University of Chemistry and Technology Prague<br />
+    Technická 1903/3<br />
+    166 28 Praha 6 &#8211; Dejvice<br />
+    Czech Republic<br />
+    <span style="display:inline-block; margin-top:.4rem; background:rgba(0,198,215,.12); border:1px solid rgba(0,198,215,.25); color:var(--cyan); font-size:.78rem; font-weight:600; letter-spacing:.06em; padding:.25rem .7rem; border-radius:4px;">Lecture Hall B&nbsp;I</span>
+  </address>
 </section>
 
 <!-- FOOTER -->
@@ -873,169 +328,61 @@
     <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
     <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
       <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
-        <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+        <img src="../czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
       </a>
       <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
-        <img src="logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+        <img src="../logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
       </a>
     </div>
   </div>
-  <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
-  <p style="margin-top:.4rem;">Past editions: <a href="./2025/">CECEC 2025</a></p>
+  <p>© 2025 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#programme">Programme</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
+  <p style="margin-top:.4rem;"><a href="../">← Back to CECEC 2026</a></p>
 </footer>
 
 <script>
-/* ── hamburger menu ── */
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
-hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-});
-function closeMenu() {
-  mobileMenu.classList.remove('open');
-}
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
 
-/* ── active nav link on scroll ── */
-const sections = document.querySelectorAll('section[id], #hero');
-const navLinks  = document.querySelectorAll('.nav-links a');
-const observer  = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
-      });
-    }
-  });
-}, { rootMargin: '-40% 0px -55% 0px' });
-sections.forEach(s => observer.observe(s));
-
-/* ── presentation title toggle ── */
-function togglePresentationTitle() {
-  const participation = document.getElementById('reg-participation').value;
-  const wrap = document.getElementById('reg-title-wrap');
-  wrap.style.display = participation === 'Oral Presentation (15+5 min)' ? 'block' : 'none';
-  if (participation !== 'Oral Presentation (15+5 min)') {
-    document.getElementById('reg-title').value = '';
-  }
-}
-
-/* ── registration form ── */
-async function submitRegistration() {
-  const firstname     = document.getElementById('reg-firstname').value.trim();
-  const lastname      = document.getElementById('reg-lastname').value.trim();
-  const email         = document.getElementById('reg-email').value.trim();
-  const affiliation   = document.getElementById('reg-affiliation').value.trim();
-  const country       = document.getElementById('reg-country').value;
-  const position      = document.getElementById('reg-position').value;
-  const participation = document.getElementById('reg-participation').value;
-  const title         = document.getElementById('reg-title').value.trim();
-  const btn = document.getElementById('reg-submit');
-  const msg = document.getElementById('reg-msg');
-
-  const needsTitle = participation === 'Oral Presentation (15+5 min)';
-  if (!firstname || !lastname || !email || !affiliation || !country || !position || !participation || (needsTitle && !title)) {
-    msg.style.display = 'block';
-    msg.style.color = '#e07070';
-    msg.textContent = 'Please fill in all fields.';
-    return;
-  }
-
-  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!emailValid) {
-    msg.style.display = 'block';
-    msg.style.color = '#e07070';
-    msg.textContent = 'Please enter a valid email address.';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
-  msg.style.display = 'none';
-
-  try {
-    const params = new URLSearchParams();
-    params.append('firstname',     firstname);
-    params.append('lastname',      lastname);
-    params.append('email',         email);
-    params.append('affiliation',   affiliation);
-    params.append('country',       country);
-    params.append('position',      position);
-    params.append('participation', participation);
-    params.append('title',         participation === 'Oral Presentation (15+5 min)' ? title : '');
-
-    await fetch('https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?' + params.toString(), {
-      method: 'GET',
-      mode: 'no-cors'
-    });
-    btn.style.display = 'none';
-    msg.style.display = 'block';
-    msg.style.color = 'var(--cyan)';
-    msg.textContent = '✓ Registration received &#8211; see you in Prague!';
-    ['reg-firstname','reg-lastname','reg-email','reg-affiliation','reg-country','reg-position','reg-participation','reg-title']
-      .forEach(id => { document.getElementById(id).value = ''; });
-    document.getElementById('reg-title-wrap').style.display = 'none';
-  } catch (err) {
-    btn.disabled = false;
-    btn.textContent = 'Submit Registration';
-    msg.style.display = 'block';
-    msg.style.color = '#e07070';
-    msg.textContent = 'Something went wrong. Please try again or email us directly.';
-  }
-}
-
-
+/* hex canvas */
 (function () {
   const canvas = document.getElementById('hex-canvas');
   const ctx = canvas.getContext('2d');
   let W, H, hexes = [];
-  const HEX_R = 34;
-  const SPEED = 0.0008;
-
+  const HEX_R = 34, SPEED = 0.0008;
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
-    W = canvas.width  = rect.width;
-    H = canvas.height = rect.height;
+    W = canvas.width = rect.width; H = canvas.height = rect.height;
     buildGrid();
   }
   function hexCorner(cx, cy, r, i) {
-    const angle = Math.PI / 180 * (60 * i - 30);
-    return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+    const a = Math.PI / 180 * (60 * i - 30);
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
   }
   function buildGrid() {
     hexes = [];
-    const w = HEX_R * Math.sqrt(3);
-    const h = HEX_R * 2;
-    const cols = Math.ceil(W / w) + 2;
-    const rows = Math.ceil(H / (h * 0.75)) + 2;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const cx = c * w + (r % 2 === 0 ? 0 : w / 2) - w * 0.5;
-        const cy = r * h * 0.75 - h * 0.5;
-        hexes.push({ cx, cy, phase: Math.random() * Math.PI * 2 });
-      }
-    }
+    const w = HEX_R * Math.sqrt(3), h = HEX_R * 2;
+    const cols = Math.ceil(W / w) + 2, rows = Math.ceil(H / (h * 0.75)) + 2;
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        hexes.push({ cx: c * w + (r % 2 === 0 ? 0 : w / 2) - w * 0.5, cy: r * h * 0.75 - h * 0.5, phase: Math.random() * Math.PI * 2 });
   }
   function draw(t) {
     ctx.clearRect(0, 0, W, H);
     hexes.forEach(h => {
       const pulse = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * SPEED + h.phase));
       ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const [x, y] = hexCorner(h.cx, h.cy, HEX_R - 2, i);
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      }
+      for (let i = 0; i < 6; i++) { const [x, y] = hexCorner(h.cx, h.cy, HEX_R - 2, i); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
       ctx.closePath();
       ctx.strokeStyle = `rgba(0,198,215,${pulse})`;
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
+      ctx.lineWidth = 1.2; ctx.stroke();
     });
     requestAnimationFrame(draw);
   }
   window.addEventListener('resize', resize);
-  // wait for layout to settle
   setTimeout(() => { resize(); requestAnimationFrame(draw); }, 100);
 })();
 </script>
-
 </body>
 </html>
