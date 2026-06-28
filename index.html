@@ -310,6 +310,8 @@
       letter-spacing: .04em;
     }
     .sched-event { font-size: .9rem; color: #9DBCCC; }
+    .sched-event a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); }
+    .sched-event a:hover { border-color: var(--cyan); }
 
     /* ── VENUE ── */
     #venue .venue-grid {
@@ -677,17 +679,30 @@
   <p class="programme-note">The programme below is preliminary and subject to change. The full schedule will be published closer to the event.</p>
 
   <div class="day-header">Monday, 7 September 2026</div>
-  <div class="schedule-row"><span class="sched-time">09:00</span><span class="sched-event">Registration &amp; Welcome Coffee</span></div>
-  <div class="schedule-row"><span class="sched-time">09:30</span><span class="sched-event">Opening Remarks</span></div>
-  <div class="schedule-row"><span class="sched-time">10:00</span><span class="sched-event">Oral Presentations — Session A</span></div>
-  <div class="schedule-row"><span class="sched-time">11:30</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row"><span class="sched-time">11:50</span><span class="sched-event">Oral Presentations — Session B</span></div>
-  <div class="schedule-row"><span class="sched-time">13:00</span><span class="sched-event">Lunch</span></div>
-  <div class="schedule-row"><span class="sched-time">14:00</span><span class="sched-event">Oral Presentations — Session C</span></div>
-  <div class="schedule-row"><span class="sched-time">15:30</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row"><span class="sched-time">16:00</span><span class="sched-event">Oral Presentations — Session D</span></div>
-  <div class="schedule-row"><span class="sched-time">17:30</span><span class="sched-event">Closing Remarks</span></div>
-  <div class="schedule-row"><span class="sched-time">19:00</span><span class="sched-event">Joint Dinner</span></div>
+  <div class="schedule-row"><span class="sched-time">08:00</span><span class="sched-event">Registration</span></div>
+  <div class="schedule-row"><span class="sched-time">08:55</span><span class="sched-event">Opening Remarks</span></div>
+  <div class="schedule-row"><span class="sched-time">09:00</span><span class="sched-event">Talk 1</span></div>
+  <div class="schedule-row"><span class="sched-time">09:20</span><span class="sched-event">Talk 2</span></div>
+  <div class="schedule-row"><span class="sched-time">09:40</span><span class="sched-event">Talk 3</span></div>
+  <div class="schedule-row"><span class="sched-time">10:00</span><span class="sched-event">Talk 4</span></div>
+  <div class="schedule-row"><span class="sched-time">10:20</span><span class="sched-event">Coffee Break</span></div>
+  <div class="schedule-row"><span class="sched-time">11:00</span><span class="sched-event">Talk 5</span></div>
+  <div class="schedule-row"><span class="sched-time">11:20</span><span class="sched-event">Talk 6</span></div>
+  <div class="schedule-row"><span class="sched-time">11:40</span><span class="sched-event">Talk 7</span></div>
+  <div class="schedule-row"><span class="sched-time">12:00</span><span class="sched-event">Talk 8</span></div>
+  <div class="schedule-row"><span class="sched-time">12:20</span><span class="sched-event">Lunch</span></div>
+  <div class="schedule-row"><span class="sched-time">14:00</span><span class="sched-event">Talk 9</span></div>
+  <div class="schedule-row"><span class="sched-time">14:20</span><span class="sched-event">Talk 10</span></div>
+  <div class="schedule-row"><span class="sched-time">14:40</span><span class="sched-event">Talk 11</span></div>
+  <div class="schedule-row"><span class="sched-time">15:00</span><span class="sched-event">Talk 12</span></div>
+  <div class="schedule-row"><span class="sched-time">15:20</span><span class="sched-event">Coffee Break</span></div>
+  <div class="schedule-row"><span class="sched-time">16:00</span><span class="sched-event">Talk 13</span></div>
+  <div class="schedule-row"><span class="sched-time">16:20</span><span class="sched-event">Talk 14</span></div>
+  <div class="schedule-row"><span class="sched-time">16:40</span><span class="sched-event">Talk 15</span></div>
+  <div class="schedule-row"><span class="sched-time">17:00</span><span class="sched-event">Talk 16</span></div>
+  <div class="schedule-row"><span class="sched-time">17:20</span><span class="sched-event">Talk 17</span></div>
+  <div class="schedule-row"><span class="sched-time">17:40</span><span class="sched-event">Talk 18</span></div>
+  <div class="schedule-row"><span class="sched-time">19:00</span><span class="sched-event">Conference Dinner — all participants are invited · <a href="https://www.naurale.cz/" target="_blank" rel="noopener">Na Urale</a> (<a href="https://maps.app.goo.gl/z6LscVGdBBpL9GRG6" target="_blank" rel="noopener">map</a>)</span></div>
 </section>
 
 <hr class="divider" />
@@ -912,16 +927,32 @@ async function submitRegistration() {
     return;
   }
 
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!emailValid) {
+    msg.style.display = 'block';
+    msg.style.color = '#e07070';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = 'Sending…';
   msg.style.display = 'none';
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstname, lastname, email, affiliation, country, position, participation, title })
+    const params = new URLSearchParams();
+    params.append('firstname',     firstname);
+    params.append('lastname',      lastname);
+    params.append('email',         email);
+    params.append('affiliation',   affiliation);
+    params.append('country',       country);
+    params.append('position',      position);
+    params.append('participation', participation);
+    params.append('title',         participation === 'Oral Presentation (15+5 min)' ? title : '');
+
+    await fetch('https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
     });
     btn.style.display = 'none';
     msg.style.display = 'block';
