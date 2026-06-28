@@ -513,6 +513,7 @@
     .organizers { margin-top: 2.5rem; color: var(--gray); font-size: .85rem; }
 
     /* ── FOOTER ── */
+    footer img { filter: brightness(0) invert(1); }
     footer {
       border-top: 1px solid rgba(0,198,215,.1);
       text-align: center;
@@ -733,14 +734,14 @@
     </div>
     <div class="map-embed">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2559.3!2d14.3878!3d50.1042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b953f85c91f07%3A0x6d6b3a9f23a35b0a!2sUniversity%20of%20Chemistry%20and%20Technology%2C%20Prague!5e0!3m2!1sen!2scz!4v1700000000000"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.1!2d14.3894!3d50.1023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b953b10a8e759%3A0xc86ee4cb9ef3105c!2sUniversity%20of%20Chemistry%20and%20Technology%20Prague%2C%20Building%20B!5e0!3m2!1sen!2scz!4v1700000000001"
         allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="UCT Prague map">
+        title="UCT Prague Building B map">
       </iframe>
       <div style="text-align:center; padding: .6rem 0 .3rem;">
-        <a href="https://maps.app.goo.gl/jQKTScgZK4MBqBRh8" target="_blank" rel="noopener" class="map-link">Open in Google Maps →</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Technická+1903/3,+166+28+Praha+6" target="_blank" rel="noopener" class="map-link">Open in Google Maps →</a>
       </div>
     </div>
   </div>
@@ -758,7 +759,7 @@
         Registration is free of charge but mandatory for all participants. Unfortunately we are unable to cover travel or accommodation costs.
       </p>
       <p>
-        The meeting focuses on short oral presentations (15+5 minutes). If you'd like to present, briefly describe your topic in the registration form.
+        The meeting focuses on short oral presentations (15+5 minutes). To present, select <em>Oral Presentation</em> as the participation type &#8211; you will then be asked to provide the title of your talk.
       </p>
       <ul class="deadline-list">
         <li>
@@ -857,19 +858,30 @@
 <section id="contact">
   <p class="section-label">Get in Touch</p>
   <h2>Contact the Organizers</h2>
-  <p>Have a question about the conference, your abstract, or travel to Prague? We are happy to help.</p>
+  <p>Have a question about the conference or travel to Prague? We are happy to help.</p>
   <div class="contact-card">
     <div class="contact-icon">✉️</div>
     <h3>Email Us</h3>
     <a href="mailto:svozild@vscht.cz">svozild@vscht.cz</a>
   </div>
-  <p class="organizers">Organized by the CECEC Organizing Committee · University of Chemistry and Technology Prague · 2026</p>
+  <p class="organizers">Organized by <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;">CZ-OPENSCREEN</a> and <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;">University of Chemistry and Technology Prague</a> · 2026</p>
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer style="text-align:center;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="logoUCT.png" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:200px; filter:brightness(0) invert(1);" />
+      </a>
+    </div>
+  </div>
   <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
-  <p style="margin-top:.4rem;">Past editions: <a href="#">CECEC 2025</a></p>
+  <p style="margin-top:.4rem;">Organized by <a href="https://www.openscreen.cz/" target="_blank" rel="noopener">CZ-OPENSCREEN</a> and <a href="https://www.vscht.cz/" target="_blank" rel="noopener">UCT Prague</a> &nbsp;·&nbsp; Past editions: <a href="#">CECEC 2025</a></p>
 </footer>
 
 <script>
