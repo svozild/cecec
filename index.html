@@ -486,7 +486,7 @@
     .past-card .past-arrow { margin-top: .8rem; font-size: .8rem; color: var(--cyan-dim); }
 
     /* ── CONTACT ── */
-    #contact { text-align: center; }
+    #contact { text-align: center; padding-bottom: 2rem; }
     #contact > p { color: #9DBCCC; max-width: 480px; margin: 0 auto 2rem; }
     .contact-card {
       display: inline-flex;
@@ -513,7 +513,8 @@
     .organizers { margin-top: 2.5rem; color: var(--gray); font-size: .85rem; }
 
     /* ── FOOTER ── */
-    footer img { filter: brightness(0) invert(1); }
+    footer img { filter: none; }
+    footer img.logo-invert { filter: brightness(0) invert(1); }
     footer {
       border-top: 1px solid rgba(0,198,215,.1);
       text-align: center;
@@ -864,24 +865,23 @@
     <h3>Email Us</h3>
     <a href="mailto:svozild@vscht.cz">svozild@vscht.cz</a>
   </div>
-  <p class="organizers">Organized by <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;">CZ-OPENSCREEN</a> and <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none;">University of Chemistry and Technology Prague</a> · 2026</p>
 </section>
 
 <!-- FOOTER -->
-<footer style="text-align:center;">
+<footer style="text-align:center; padding-top:1rem;">
   <div style="margin-bottom:1.5rem;">
-    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Supported by</p>
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
     <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
       <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
         <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
       </a>
-      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
-        <img src="logoUCT.png" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:200px; filter:brightness(0) invert(1);" />
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
       </a>
     </div>
   </div>
   <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
-  <p style="margin-top:.4rem;">Organized by <a href="https://www.openscreen.cz/" target="_blank" rel="noopener">CZ-OPENSCREEN</a> and <a href="https://www.vscht.cz/" target="_blank" rel="noopener">UCT Prague</a> &nbsp;·&nbsp; Past editions: <a href="#">CECEC 2025</a></p>
+  <p style="margin-top:.4rem;">Past editions: <a href="#">CECEC 2025</a></p>
 </footer>
 
 <script>
