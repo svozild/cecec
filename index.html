@@ -213,7 +213,7 @@
     .btn-primary:hover { background: #00aebf; transform: translateY(-1px); }
 
     /* ── SECTIONS ── */
-    section { padding: 6rem 2rem; max-width: 1080px; margin: 0 auto; }
+    section { padding: 1.5rem 2rem !important; max-width: 1080px; margin: 0 auto; }
     .section-label {
       font-size: .72rem;
       letter-spacing: .18em;
@@ -486,8 +486,8 @@
     .past-card .past-arrow { margin-top: .8rem; font-size: .8rem; color: var(--cyan-dim); }
 
     /* ── CONTACT ── */
-    #contact { text-align: center; padding-bottom: 2rem; }
-    #contact > p { color: #9DBCCC; max-width: 480px; margin: 0 auto 2rem; }
+    #contact { text-align: center; }
+    #contact > p { color: #9DBCCC; max-width: 480px; margin: 0 auto 1rem; }
     .contact-card {
       display: inline-flex;
       flex-direction: column;
@@ -533,7 +533,7 @@
       #about .about-grid,
       #venue .venue-grid,
       #registration .reg-grid { grid-template-columns: 1fr; }
-      section { padding: 4rem 1.2rem; }
+      section { padding: 0.3rem 1.2rem; }
       .hero-divider { display: none; }
     }
 
@@ -716,7 +716,7 @@
   <div class="venue-grid">
     <div class="venue-info">
       <p>
-        The conference will take place at the <strong>University of Chemistry and Technology Prague (UCT Prague)</strong>. UCT Prague is conveniently located in Prague 6 and is well served by public transport:
+        The conference will take place at the <strong><a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a> (UCT Prague)</strong>. UCT Prague is conveniently located in Prague 6 and is well served by public transport:
       </p>
       <ul style="list-style:none; margin: .5rem 0 1rem 0; padding: 0; display:flex; flex-direction:column; gap:.4rem;">
         <li style="color:#9DBCCC; font-size:.9rem;">🚇 metro stop <em>Dejvická</em>, line A (green line)</li>
@@ -725,7 +725,7 @@
       <div class="venue-address">
         <div class="addr-label">Address</div>
         <address>
-          University of Chemistry and Technology Prague<br />
+          <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a><br />
           Technická 1903/3<br />
           166 28 Praha 6 &#8211; Dejvice<br />
           Czech Republic
@@ -761,6 +761,9 @@
       </p>
       <p>
         The meeting focuses on short oral presentations (15+5 minutes). To present, select <em>Oral Presentation</em> as the participation type &#8211; you will then be asked to provide the title of your talk.
+      </p>
+      <p>
+        Need to update your registration details after submitting? Please email <a href="mailto:svozild@vscht.cz" style="color:var(--cyan);">svozild@vscht.cz</a> and we will make the change for you.
       </p>
       <ul class="deadline-list">
         <li>
@@ -876,7 +879,7 @@
         <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
       </a>
       <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
-        <img src="logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+        <img src="logoUCT.svg" alt="<a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a>" style="height:40px; max-width:220px; display:block;" />
       </a>
     </div>
   </div>
