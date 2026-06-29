@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CECEC 2025 &#8211; Participants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#0D1B2A; --cyan:#00C6D7; --cyan-dim:#007F8B; --white:#F4F8FB; --gray:#8FA3B1; --card-bg:#132233; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(13,27,42,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,198,215,0.12); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-hamburger:hover span { background: var(--cyan); }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
+
+    main { max-width: 900px; margin: 0 auto; padding: 6rem 2rem 4rem; }
+    .page-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .subtitle { color: var(--gray); font-size: .9rem; margin-bottom: 2.5rem; }
+    #count { color: var(--cyan); font-weight: 600; }
+
+    .chart-section { margin-bottom: 2.5rem; }
+    .chart-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 1.2rem; }
+    .chart-wrap { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .chart-canvas-wrap { width: 220px; height: 220px; flex-shrink: 0; }
+    .chart-legend { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: .45rem; }
+    .legend-item { display: flex; align-items: center; gap: .6rem; font-size: .82rem; color: #9DBCCC; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-count { margin-left: auto; font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--white); font-size: .8rem; }
+
+    .participant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .participant-card { background: var(--card-bg); border: 1px solid rgba(0,198,215,.1); border-radius: 8px; padding: 1rem 1.2rem; transition: border-color .2s; }
+    .participant-card:hover { border-color: rgba(0,198,215,.3); }
+    .participant-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: .95rem; color: var(--white); margin-bottom: .25rem; }
+    .participant-affiliation { font-size: .8rem; color: var(--gray); line-height: 1.4; }
+    .participant-country { font-size: .75rem; color: var(--cyan-dim); margin-top: .3rem; font-weight: 500; }
+
+    footer img { filter: none; }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; margin-top: 3rem; }
+    footer a { color: var(--cyan-dim); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      main { padding: 5rem 1.2rem 3rem; }
+      .participant-grid { grid-template-columns: 1fr; }
+      .chart-canvas-wrap { width: 180px; height: 180px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../">CECEC<span> 2025</span></a>
+  <ul class="nav-links">
+    <li><a href="./">Programme</a></li>
+    <li><a href="./participants.html">Participants</a></li>
+    <li><a href="../" class="nav-back">← CECEC 2026</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobile-menu">
+  <a href="./"                onclick="closeMenu()">Programme</a>
+  <a href="./participants.html" onclick="closeMenu()">Participants</a>
+  <a href="../"               onclick="closeMenu()" style="color:var(--cyan);">← CECEC 2026</a>
+</div>
+
+<main>
+  <p class="page-label">CECEC 2025</p>
+  <h1>Registered Participants</h1>
+  <p class="subtitle"><span id="count">36</span> participants from 9 countries.</p>
+
+  <div class="chart-section">
+    <h2>Geographic Distribution</h2>
+    <div class="chart-wrap">
+      <div class="chart-canvas-wrap">
+        <canvas id="geoChart"></canvas>
+      </div>
+      <div class="chart-legend" id="chart-legend"></div>
+    </div>
+  </div>
+
+  <div class="participant-grid" id="grid"></div>
+</main>
+
+<footer style="text-align:center; padding-top:1rem;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="../czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="../logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+      </a>
+    </div>
+  </div>
+  <p>© 2025 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="../">Back to CECEC 2026</a></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const FLAGS = {
+  'Bulgaria': '🇧🇬', 'Czechia': '🇨🇿', 'Estonia': '🇪🇪',
+  'Poland': '🇵🇱', 'Romania': '🇷🇴', 'Slovakia': '🇸🇰',
+  'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
+};
+
+const COLORS = [
+  '#00C6D7','#00E5B0','#4A9EFF','#84c225','#F0A500',
+  '#E05C8A','#A78BFA','#F97316','#34D399'
+];
+
+const PARTICIPANTS = [
+  { country: 'Bulgaria', name: 'Radeva Lyudvika',              affiliation: 'Plovdiv University "Paisii Hilendarski", Department of Analytical Chemistry and Computer Chemistry' },
+  { country: 'Czechia',  name: 'Agea Isabel',                  affiliation: 'MSD, company, Prague' },
+  { country: 'Czechia',  name: 'Ceklarz Joanna',               affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Čmelo Ivan',                   affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Dehaen Wim',                   affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Domling Alexander',            affiliation: 'Institute of Molecular and Translational Medicine, Palacký University, Olomouc' },
+  { country: 'Czechia',  name: 'Evangelidis Thomas',           affiliation: 'AI|ffinity, company, Prague' },
+  { country: 'Czechia',  name: 'Fil Valeriia',                 affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Fusco Ricardo',                affiliation: 'Palacký University Olomouc' },
+  { country: 'Czechia',  name: 'Fülöp Jozef',                  affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Grenda Przemysław',            affiliation: 'Department of Biophysics and Physical Chemistry, Faculty of Pharmacy in Hradec Králové, Charles University' },
+  { country: 'Czechia',  name: 'Hanžl Václav',                 affiliation: 'University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Hoksza David',                 affiliation: 'Charles University, Faculty of Mathematics and Physics, Prague' },
+  { country: 'Czechia',  name: 'Hruška Eugen',                 affiliation: 'Department of Biophysics and Physical Chemistry, Faculty of Pharmacy in Hradec Králové, Charles University' },
+  { country: 'Czechia',  name: 'Ivanova Aleksandra',           affiliation: 'Institute of Molecular and Translational Medicine, Palacký University, Olomouc' },
+  { country: 'Czechia',  name: 'Miniabeva Guzel',              affiliation: 'Institute of Molecular and Translational Medicine, Palacký University, Olomouc' },
+  { country: 'Czechia',  name: 'Polishchuk Pavel',             affiliation: 'Institute of Molecular and Translational Medicine, Palacký University, Olomouc' },
+  { country: 'Czechia',  name: 'Sriramulu Dinesh Kumar',       affiliation: 'Palacký University, Olomouc' },
+  { country: 'Czechia',  name: 'Šícho Martin',                 affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+  { country: 'Czechia',  name: 'Škuta Ctibor',                 affiliation: 'Institute of Molecular Genetics, Czech Academy of Sciences, Prague' },
+  { country: 'Czechia',  name: 'Voršilák Milan',               affiliation: 'Institute of Molecular Genetics, Czech Academy of Sciences, Prague' },
+  { country: 'Estonia',  name: 'Kuhn Stefan',                  affiliation: 'University of Tartu, Institute of Computer Science, Chair of Distributed Systems' },
+  { country: 'Poland',   name: 'Danel Tomasz',                 affiliation: 'Group of Machine Learning Research, Jagiellonian University, Krakow' },
+  { country: 'Poland',   name: 'Podlewska (Smusz) Sabina',     affiliation: 'Department of Medicinal Chemistry, Institute of Pharmacology Polish Academy of Sciences, Krakow' },
+  { country: 'Poland',   name: 'Wojtuch Agnieszka',            affiliation: 'Jagiellonian University, Krakow' },
+  { country: 'Romania',  name: 'Paul Mihai Dragos',            affiliation: 'Carol Davila University of Medicine and Pharmacy, Department of Pharmacology and Clinical Pharmacy, Bucharest' },
+  { country: 'Romania',  name: 'Horvath Dragos',               affiliation: 'University of Strasbourg, France' },
+  { country: 'Slovakia', name: 'Frecer Vladimír',              affiliation: 'ICARST, Comenius University in Bratislava, Faculty of Pharmacy' },
+  { country: 'Slovakia', name: 'Májeková Magdaléna',           affiliation: 'Institute of Experimental Pharmacology & Toxicology, Slovak Academy of Sciences' },
+  { country: 'Slovakia', name: 'Ertl Peter',                   affiliation: 'Ertl Molecular' },
+  { country: 'Slovenia', name: 'Podlipnik Črtomir',            affiliation: 'University of Ljubljana, Faculty of Chemistry and Chemical Technology' },
+  { country: 'Ukraine',  name: 'Boiko Iryna',                  affiliation: 'Enamine Ltd and Taras Shevchenko University, Kyiv' },
+  { country: 'Ukraine',  name: 'Kryshchyshyn-Dylevych Anna',   affiliation: 'Danylo Halytsky Lviv National Medical University, Department of Pharmaceutical, Organic and Bioorganic Chemistry' },
+  { country: 'Ukraine',  name: 'Klimenko Kyrylo',              affiliation: 'University of Strasbourg, France' },
+  { country: 'Ukraine',  name: 'Varnek Alexandre',             affiliation: 'University of Strasbourg, France' },
+  { country: 'Czechia',  name: 'Svozil Daniel',                affiliation: 'Department of Informatics and Chemistry, University of Chemistry and Technology, Prague' },
+];
+
+// Sort by country, Other last, then by name
+PARTICIPANTS.sort((a, b) => {
+  if (a.country === 'Other') return 1;
+  if (b.country === 'Other') return -1;
+  const c = a.country.localeCompare(b.country);
+  if (c !== 0) return c;
+  return a.name.localeCompare(b.name);
+});
+
+// Count by country
+const countryCounts = {};
+PARTICIPANTS.forEach(p => { countryCounts[p.country] = (countryCounts[p.country] || 0) + 1; });
+const sorted = Object.entries(countryCounts).sort((a, b) => {
+  if (a[0] === 'Other') return 1;
+  if (b[0] === 'Other') return -1;
+  return b[1] - a[1];
+});
+const labels = sorted.map(e => e[0]);
+const counts = sorted.map(e => e[1]);
+const colors = labels.map((_, i) => COLORS[i % COLORS.length]);
+const total = counts.reduce((a, b) => a + b, 0);
+
+document.getElementById('count').textContent = PARTICIPANTS.length;
+
+new Chart(document.getElementById('geoChart'), {
+  type: 'doughnut',
+  data: { labels, datasets: [{ data: counts, backgroundColor: colors, borderColor: '#0D1B2A', borderWidth: 2 }] },
+  options: {
+    plugins: { legend: { display: false }, tooltip: {
+      callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed / total * 100)}%)` }
+    }},
+    cutout: '55%'
+  }
+});
+
+const legend = document.getElementById('chart-legend');
+sorted.forEach(([country, count], i) => {
+  const pct = Math.round(count / total * 100);
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="legend-dot" style="background:${colors[i]}"></span><span>${country}</span><span class="legend-count">${count} <span style="color:var(--gray);font-weight:400;">(${pct}%)</span></span>`;
+  legend.appendChild(item);
+});
+
+const grid = document.getElementById('grid');
+PARTICIPANTS.forEach(p => {
+  const flag = FLAGS[p.country] || '🌍';
+  const card = document.createElement('div');
+  card.className = 'participant-card';
+  card.innerHTML = `
+    <div class="participant-name">${p.name}</div>
+    <div class="participant-affiliation">${p.affiliation}</div>
+    <div class="participant-country">${flag} ${p.country}</div>
+  `;
+  grid.appendChild(card);
+});
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
