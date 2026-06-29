@@ -336,7 +336,6 @@ function handleData(participants) {
       <div class="participant-name">${p.firstname} ${p.lastname}</div>
       <div class="participant-affiliation">${p.affiliation || ''}</div>
       <div class="participant-country">${flag} ${p.country || ''}</div>
-      <span class="participant-type ${isOral ? '' : 'attendee'}">${isOral ? 'Oral Presentation' : 'Attendee'}</span>
     `;
     grid.appendChild(card);
   });
