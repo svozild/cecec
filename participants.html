@@ -44,7 +44,34 @@
     .subtitle { color: var(--gray); font-size: .9rem; margin-bottom: 2.5rem; }
     #count { color: var(--cyan); font-weight: 600; }
 
-    #loading { color: var(--gray); font-style: italic; padding: 2rem 0; }
+    #loading { padding: 1rem 0; }
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .skeleton-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,198,215,.08);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+    }
+    .skeleton-line {
+      height: 12px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, rgba(255,255,255,.05) 25%, rgba(0,198,215,.08) 50%, rgba(255,255,255,.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: .6rem;
+    }
+    .skeleton-line.name { width: 65%; height: 14px; }
+    .skeleton-line.aff  { width: 90%; }
+    .skeleton-line.aff2 { width: 75%; }
+    .skeleton-line.tag  { width: 40%; height: 10px; margin-top: .4rem; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
 
     .participant-grid {
       display: grid;
@@ -177,7 +204,16 @@
     </div>
   </div>
 
-  <div id="loading">Loading participants…</div>
+  <div id="loading">
+    <div class="skeleton-grid">
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line name"></div><div class="skeleton-line aff"></div><div class="skeleton-line aff2"></div><div class="skeleton-line tag"></div></div>
+    </div>
+  </div>
   <div class="participant-grid" id="grid"></div>
 </main>
 
@@ -280,7 +316,7 @@ function handleData(participants) {
 // Load via JSONP to bypass CORS
 const script = document.createElement('script');
 script.onerror = () => {
-  document.getElementById('loading').textContent = 'Could not load participants. Please try again later.';
+  document.getElementById('loading').innerHTML = '<p style="color:var(--gray);font-style:italic;">Could not load participants. Please try again later.</p>';
 };
 script.src = API_BASE + '?action=list&callback=handleData';
 document.head.appendChild(script);
