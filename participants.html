@@ -189,7 +189,23 @@
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?action=list';
 
-const COLORS = [
+const FLAGS = {
+  'Albania': '🇦🇱',
+  'Bulgaria': '🇧🇬',
+  'Croatia': '🇭🇷',
+  'Czechia': '🇨🇿',
+  'Estonia': '🇪🇪',
+  'Hungary': '🇭🇺',
+  'Latvia': '🇱🇻',
+  'Lithuania': '🇱🇹',
+  'Poland': '🇵🇱',
+  'Romania': '🇷🇴',
+  'Serbia': '🇷🇸',
+  'Slovakia': '🇸🇰',
+  'Slovenia': '🇸🇮',
+  'Ukraine': '🇺🇦',
+  'Other': '🌍'
+};
   '#00C6D7','#00E5B0','#4A9EFF','#84c225','#F0A500',
   '#E05C8A','#A78BFA','#F97316','#34D399','#60A5FA',
   '#FBBF24','#F472B6','#A3E635','#2DD4BF','#818CF8'
@@ -265,12 +281,13 @@ async function loadParticipants() {
 
     participants.forEach(p => {
       const isOral = p.participation === 'Oral Presentation (15+5 min)';
+      const flag = FLAGS[p.country] || '🌍';
       const card = document.createElement('div');
       card.className = 'participant-card';
       card.innerHTML = `
         <div class="participant-name">${p.firstname} ${p.lastname}</div>
         <div class="participant-affiliation">${p.affiliation || ''}</div>
-        <div class="participant-country">${p.country || ''}</div>
+        <div class="participant-country">${flag} ${p.country || ''}</div>
         <span class="participant-type ${isOral ? '' : 'attendee'}">${isOral ? 'Oral Presentation' : 'Attendee'}</span>
       `;
       grid.appendChild(card);
