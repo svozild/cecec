@@ -219,7 +219,7 @@
 <main>
   <p class="page-label">CECEC 2026</p>
   <h1>Registered Participants</h1>
-  <p class="subtitle">This list updates automatically as new registrations arrive. Currently <span id="count">—</span> registered.</p>
+  <p class="subtitle">This list updates automatically as new registrations arrive. Currently <span id="count">—</span> registered from <span id="country-count">—</span> countries.</p>
 
   <div class="chart-section" id="chart-section" style="display:none;">
     <h2>Geographic Distribution</h2>
@@ -271,6 +271,7 @@ const COLORS = [
 function handleData(participants) {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('count').textContent = participants.length;
+  document.getElementById('country-count').textContent = Object.keys(countryCounts).length;
 
   // Count by country
   const countryCounts = {};
