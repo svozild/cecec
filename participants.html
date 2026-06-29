@@ -187,118 +187,103 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?action=list';
+const API_BASE = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec';
 
 const FLAGS = {
-  'Albania': '🇦🇱',
-  'Bulgaria': '🇧🇬',
-  'Croatia': '🇭🇷',
-  'Czechia': '🇨🇿',
-  'Estonia': '🇪🇪',
-  'Hungary': '🇭🇺',
-  'Latvia': '🇱🇻',
-  'Lithuania': '🇱🇹',
-  'Poland': '🇵🇱',
-  'Romania': '🇷🇴',
-  'Serbia': '🇷🇸',
-  'Slovakia': '🇸🇰',
-  'Slovenia': '🇸🇮',
-  'Ukraine': '🇺🇦',
-  'Other': '🌍'
+  'Albania': '🇦🇱', 'Bulgaria': '🇧🇬', 'Croatia': '🇭🇷',
+  'Czechia': '🇨🇿', 'Estonia': '🇪🇪', 'Hungary': '🇭🇺',
+  'Latvia': '🇱🇻', 'Lithuania': '🇱🇹', 'Poland': '🇵🇱',
+  'Romania': '🇷🇴', 'Serbia': '🇷🇸', 'Slovakia': '🇸🇰',
+  'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
 };
+
+const COLORS = [
   '#00C6D7','#00E5B0','#4A9EFF','#84c225','#F0A500',
   '#E05C8A','#A78BFA','#F97316','#34D399','#60A5FA',
   '#FBBF24','#F472B6','#A3E635','#2DD4BF','#818CF8'
 ];
 
-async function loadParticipants() {
-  try {
-    const res = await fetch(API_URL);
-    const participants = await res.json();
+function handleData(participants) {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('count').textContent = participants.length;
 
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('count').textContent = participants.length;
+  // Count by country
+  const countryCounts = {};
+  participants.forEach(p => {
+    const c = p.country || 'Unknown';
+    countryCounts[c] = (countryCounts[c] || 0) + 1;
+  });
 
-    // Count by country
-    const countryCounts = {};
-    participants.forEach(p => {
-      const c = p.country || 'Unknown';
-      countryCounts[c] = (countryCounts[c] || 0) + 1;
-    });
+  // Sort countries by count descending, Other last
+  const sorted = Object.entries(countryCounts).sort((a, b) => {
+    if (a[0] === 'Other') return 1;
+    if (b[0] === 'Other') return -1;
+    return b[1] - a[1];
+  });
+  const labels = sorted.map(e => e[0]);
+  const counts = sorted.map(e => e[1]);
+  const colors = labels.map((_, i) => COLORS[i % COLORS.length]);
+  const total = counts.reduce((a, b) => a + b, 0);
 
-    // Sort countries by count descending, Other last
-    const sorted = Object.entries(countryCounts).sort((a, b) => {
-      if (a[0] === 'Other') return 1;
-      if (b[0] === 'Other') return -1;
-      return b[1] - a[1];
-    });
-    const labels = sorted.map(e => e[0]);
-    const counts = sorted.map(e => e[1]);
-    const colors = labels.map((_, i) => COLORS[i % COLORS.length]);
+  // Show chart
+  document.getElementById('chart-section').style.display = 'block';
+  new Chart(document.getElementById('geoChart'), {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data: counts, backgroundColor: colors, borderColor: '#0D1B2A', borderWidth: 2 }] },
+    options: {
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed / total * 100)}%)` }
+      }},
+      cutout: '55%'
+    }
+  });
 
-    const total = counts.reduce((a, b) => a + b, 0);
+  // Custom legend
+  const legend = document.getElementById('chart-legend');
+  sorted.forEach(([country, count], i) => {
+    const pct = Math.round(count / total * 100);
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `
+      <span class="legend-dot" style="background:${colors[i]}"></span>
+      <span>${country}</span>
+      <span class="legend-count">${count} <span style="color:var(--gray);font-weight:400;">(${pct}%)</span></span>
+    `;
+    legend.appendChild(item);
+  });
 
-    // Show chart
-    document.getElementById('chart-section').style.display = 'block';
+  // Render participant cards
+  const grid = document.getElementById('grid');
+  participants.sort((a, b) => {
+    if ((a.country || '') === 'Other') return 1;
+    if ((b.country || '') === 'Other') return -1;
+    const cmp = (a.country || '').localeCompare(b.country || '');
+    if (cmp !== 0) return cmp;
+    return a.lastname.localeCompare(b.lastname);
+  });
 
-    new Chart(document.getElementById('geoChart'), {
-      type: 'doughnut',
-      data: {
-        labels,
-        datasets: [{ data: counts, backgroundColor: colors, borderColor: '#0D1B2A', borderWidth: 2 }]
-      },
-      options: {
-        plugins: { legend: { display: false }, tooltip: {
-          callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed / total * 100)}%)` }
-        }},
-        cutout: '55%'
-      }
-    });
-
-    // Custom legend
-    const legend = document.getElementById('chart-legend');
-    sorted.forEach(([country, count], i) => {
-      const pct = Math.round(count / total * 100);
-      const item = document.createElement('div');
-      item.className = 'legend-item';
-      item.innerHTML = `
-        <span class="legend-dot" style="background:${colors[i]}"></span>
-        <span>${country}</span>
-        <span class="legend-count">${count} <span style="color:var(--gray);font-weight:400;">(${pct}%)</span></span>
-      `;
-      legend.appendChild(item);
-    });
-
-    // Render participant cards
-    const grid = document.getElementById('grid');
-    participants.sort((a, b) => {
-      if ((a.country || '') === 'Other') return 1;
-      if ((b.country || '') === 'Other') return -1;
-      const countryA = (a.country || '').localeCompare(b.country || '');
-      if (countryA !== 0) return countryA;
-      return a.lastname.localeCompare(b.lastname);
-    });
-
-    participants.forEach(p => {
-      const isOral = p.participation === 'Oral Presentation (15+5 min)';
-      const flag = FLAGS[p.country] || '🌍';
-      const card = document.createElement('div');
-      card.className = 'participant-card';
-      card.innerHTML = `
-        <div class="participant-name">${p.firstname} ${p.lastname}</div>
-        <div class="participant-affiliation">${p.affiliation || ''}</div>
-        <div class="participant-country">${flag} ${p.country || ''}</div>
-        <span class="participant-type ${isOral ? '' : 'attendee'}">${isOral ? 'Oral Presentation' : 'Attendee'}</span>
-      `;
-      grid.appendChild(card);
-    });
-
-  } catch(err) {
-    document.getElementById('loading').textContent = 'Could not load participants. Please try again later.';
-  }
+  participants.forEach(p => {
+    const isOral = p.participation === 'Oral Presentation (15+5 min)';
+    const flag = FLAGS[p.country] || '🌍';
+    const card = document.createElement('div');
+    card.className = 'participant-card';
+    card.innerHTML = `
+      <div class="participant-name">${p.firstname} ${p.lastname}</div>
+      <div class="participant-affiliation">${p.affiliation || ''}</div>
+      <div class="participant-country">${flag} ${p.country || ''}</div>
+      <span class="participant-type ${isOral ? '' : 'attendee'}">${isOral ? 'Oral Presentation' : 'Attendee'}</span>
+    `;
+    grid.appendChild(card);
+  });
 }
 
-loadParticipants();
+// Load via JSONP to bypass CORS
+const script = document.createElement('script');
+script.onerror = () => {
+  document.getElementById('loading').textContent = 'Could not load participants. Please try again later.';
+};
+script.src = API_BASE + '?action=list&callback=handleData';
+document.head.appendChild(script);
 </script>
 </body>
 </html>
