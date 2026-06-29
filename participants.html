@@ -139,8 +139,12 @@ async function loadParticipants() {
 
     const grid = document.getElementById('grid');
 
-    // Sort alphabetically by last name
-    participants.sort((a, b) => a.lastname.localeCompare(b.lastname));
+    // Sort by country first, then by last name
+    participants.sort((a, b) => {
+      const countryA = (a.country || '').localeCompare(b.country || '');
+      if (countryA !== 0) return countryA;
+      return a.lastname.localeCompare(b.lastname);
+    });
 
     participants.forEach(p => {
       const isOral = p.participation === 'Oral Presentation (15+5 min)';
