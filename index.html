@@ -60,7 +60,7 @@
     .divider { border: none; border-top: 1px solid rgba(0,198,215,.15); margin: 0; max-width: 100%; }
 
     /* ABOUT */
-    #about .about-grid { display: block; max-width: 720px; margin-top: 2rem; }
+    #about { max-width: 1080px; margin: 0 auto; padding: 1.5rem 2rem !important; }
     .about-text p { color: #9DBCCC; margin-bottom: 1rem; }
     .about-text p:last-child { margin-bottom: 0; }
     .about-text a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); transition: border-color .2s; }
@@ -81,13 +81,32 @@
     .quick-link .ql-label { color: var(--gray); font-size: .75rem; display: block; }
     .quick-link .ql-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
 
-    /* CONTACT */
-    #contact { text-align: center; }
-    #contact > p { color: #9DBCCC; max-width: 480px; margin: 0 auto 1rem; }
-    .contact-card { display: inline-flex; flex-direction: column; align-items: center; gap: .5rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 2.5rem 3rem; }
-    .contact-icon { font-size: 2rem; }
-    .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-bottom: .2rem; }
-    .contact-card a { color: var(--cyan); text-decoration: none; font-size: .95rem; }
+    /* VENUE + CONTACT side by side */
+    .venue-contact-grid {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem !important;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .venue-box .section-label,
+    .contact-box .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    .venue-box h2, .contact-box h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 1rem; }
+    .venue-box p { color: #9DBCCC; font-size: .9rem; margin-bottom: .6rem; }
+    .venue-address { margin-top: 1rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1rem 1.2rem; }
+    .venue-address address { font-style: normal; color: var(--white); font-size: .9rem; line-height: 1.8; }
+    .venue-address .hall-badge { display: inline-block; margin-top: .5rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .75rem; font-weight: 600; letter-spacing: .06em; padding: .2rem .6rem; border-radius: 4px; }
+    .map-link-small { display: inline-block; margin-top: .7rem; color: var(--cyan); text-decoration: none; font-size: .82rem; font-weight: 500; }
+    .map-link-small:hover { text-decoration: underline; }
+
+    .contact-box { text-align: left; }
+    .contact-box > p { color: #9DBCCC; font-size: .9rem; margin-bottom: 1.2rem; }
+    .contact-card { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 1.5rem 1.8rem; }
+    .contact-icon { font-size: 1.6rem; }
+    .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: .1rem; }
+    .contact-card a { color: var(--cyan); text-decoration: none; font-size: .9rem; }
     .contact-card a:hover { text-decoration: underline; }
 
     /* FOOTER */
@@ -103,6 +122,7 @@
       .nav-hamburger { display: flex; }
       section { padding: 1.5rem 1.2rem !important; }
       .hero-divider { display: none; }
+      .venue-contact-grid { grid-template-columns: 1fr; padding: 1.5rem 1.2rem !important; }
     }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
@@ -170,32 +190,24 @@
 <section id="about">
   <p class="section-label">About the Conference</p>
   <h2>Where Molecules Meet Algorithms</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        CECEC was founded on a simple idea: researchers in cheminformatics across <span class="cee-tooltip-wrap">Central and Eastern Europe<span class="cee-tooltip"><span>Albania</span><span>Bulgaria</span><span>Croatia</span><span>Czechia</span><span>Estonia</span><span>Hungary</span><span>Latvia</span><span>Lithuania</span><span>Poland</span><span>Romania</span><span>Serbia</span><span>Slovakia</span><span>Slovenia</span><span>Ukraine</span></span></span> deserve a dedicated space to meet, talk, and build lasting connections. The region has no shortage of scientific talent &#8211; but opportunities for informal, low-barrier exchange have been scarce.
-      </p>
-      <p>
-        The format is deliberately lightweight. Each participant gives a short talk (15 minutes + 5 for discussion), covering ongoing work, fresh results, or a problem worth thinking about together. No poster sessions, no keynotes &#8211; just focused conversation among peers. The day closes with a joint dinner, included for all attendees.
-      </p>
-      <p>
-        Attendance is free of charge.
-      </p>
-      <p>
-        Know someone who should be here? Take a look at our <a href="https://docs.google.com/spreadsheets/d/1teeShi8adjKcetY_3hp04CFSkIiLgSsnMq37UWw5DWg/edit?usp=sharing" target="_blank" rel="noopener">invitation list</a> &#8211; if a colleague or research group is missing, <a href="mailto:svozild@vscht.cz?subject=CECEC%20-%20new%20contact">let us know</a> and we'll be happy to reach out.
-      </p>
-    </div>
+  <div class="about-text">
+    <p>
+      CECEC was founded on a simple idea: researchers in cheminformatics across <span class="cee-tooltip-wrap">Central and Eastern Europe<span class="cee-tooltip"><span>Albania</span><span>Bulgaria</span><span>Croatia</span><span>Czechia</span><span>Estonia</span><span>Hungary</span><span>Latvia</span><span>Lithuania</span><span>Poland</span><span>Romania</span><span>Serbia</span><span>Slovakia</span><span>Slovenia</span><span>Ukraine</span></span></span> deserve a dedicated space to meet, talk, and build lasting connections. The region has no shortage of scientific talent &#8211; but opportunities for informal, low-barrier exchange have been scarce.
+    </p>
+    <p>
+      The format is deliberately lightweight. Each participant gives a short talk (15 minutes + 5 for discussion), covering ongoing work, fresh results, or a problem worth thinking about together. No poster sessions, no keynotes &#8211; just focused conversation among peers. The day closes with a joint dinner, included for all attendees.
+    </p>
+    <p>
+      Attendance is free of charge.
+    </p>
+    <p>
+      Know someone who should be here? Take a look at our <a href="https://docs.google.com/spreadsheets/d/1teeShi8adjKcetY_3hp04CFSkIiLgSsnMq37UWw5DWg/edit?usp=sharing" target="_blank" rel="noopener">invitation list</a> &#8211; if a colleague or research group is missing, <a href="mailto:svozild@vscht.cz?subject=CECEC%20-%20new%20contact">let us know</a> and we'll be happy to reach out.
+    </p>
   </div>
-
-  <!-- Quick navigation links -->
   <div class="quick-links">
     <a href="./programme.html" class="quick-link">
       <span class="ql-icon">📅</span>
       <span><span class="ql-label">View</span><span class="ql-title">Programme</span></span>
-    </a>
-    <a href="./programme.html#venue" class="quick-link">
-      <span class="ql-icon">📍</span>
-      <span><span class="ql-label">Find us</span><span class="ql-title">Venue</span></span>
     </a>
     <a href="./participants.html" class="quick-link">
       <span class="ql-icon">👥</span>
@@ -210,17 +222,40 @@
 
 <hr class="divider" />
 
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Get in Touch</p>
-  <h2>Contact the Organizers</h2>
-  <p>Have a question about the conference or travel to Prague? We are happy to help.</p>
-  <div class="contact-card">
-    <div class="contact-icon">✉️</div>
-    <h3>Email Us</h3>
-    <a href="mailto:svozild@vscht.cz">svozild@vscht.cz</a>
+<!-- VENUE + CONTACT -->
+<div class="venue-contact-grid">
+  <div class="venue-box">
+    <p class="section-label">Venue</p>
+    <h2>Conference Location</h2>
+    <p>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a> (UCT Prague), conveniently located in Prague 6:
+    </p>
+    <p>🚇 metro <em>Dejvická</em>, line A &nbsp;·&nbsp; 🚃 tram <em>Dejvická</em>, lines 20, 26</p>
+    <div class="venue-address">
+      <address>
+        <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a><br />
+        Technická 1903/3<br />
+        166 28 Praha 6 &#8211; Dejvice<br />
+        Czech Republic
+      </address>
+      <span class="hall-badge">Lecture Hall B&nbsp;III</span><br />
+      <a href="https://www.google.com/maps/search/?api=1&query=Technická+1903/3,+166+28+Praha+6" target="_blank" rel="noopener" class="map-link-small">Open in Google Maps →</a>
+    </div>
   </div>
-</section>
+
+  <div class="contact-box" id="contact">
+    <p class="section-label">Get in Touch</p>
+    <h2>Contact the Organizers</h2>
+    <p>Have a question about the conference or travel to Prague? We are happy to help.</p>
+    <div class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <h3>Email Us</h3>
+      <a href="mailto:svozild@vscht.cz">svozild@vscht.cz</a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
 
 <!-- FOOTER -->
 <footer style="text-align:center; padding-top:1rem;">
