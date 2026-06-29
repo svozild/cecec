@@ -271,7 +271,6 @@ const COLORS = [
 function handleData(participants) {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('count').textContent = participants.length;
-  document.getElementById('country-count').textContent = Object.keys(countryCounts).length;
 
   // Count by country
   const countryCounts = {};
@@ -279,6 +278,8 @@ function handleData(participants) {
     const c = p.country || 'Unknown';
     countryCounts[c] = (countryCounts[c] || 0) + 1;
   });
+
+  document.getElementById('country-count').textContent = Object.keys(countryCounts).length;
 
   // Sort countries by count descending, Other last
   const sorted = Object.entries(countryCounts).sort((a, b) => {
