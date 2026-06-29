@@ -29,13 +29,19 @@
     }
     .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; }
     .nav-logo span { color: var(--white); }
-    .nav-back {
-      background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3);
-      color: var(--cyan); padding: .4rem 1.1rem; border-radius: 4px;
-      font-weight: 600; text-decoration: none; font-size: .875rem;
-      transition: background .2s;
-    }
-    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta { background: var(--cyan); color: var(--navy) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-cta:hover { background: #00aebf; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-hamburger:hover span { background: var(--cyan); }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
 
     main { max-width: 900px; margin: 0 auto; padding: 6rem 2rem 4rem; }
 
@@ -176,6 +182,8 @@
 
     @media (max-width: 600px) {
       nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       main { padding: 5rem 1.2rem 3rem; }
       .participant-grid { grid-template-columns: 1fr; }
       .chart-canvas-wrap { width: 180px; height: 180px; }
@@ -208,6 +216,17 @@
   <a href="./register.html"     onclick="closeMenu()" style="color:var(--cyan);font-weight:600;">Register →</a>
 </div>
 
+<main>
+  <p class="page-label">CECEC 2026</p>
+  <h1>Registered Participants</h1>
+  <p class="subtitle">This list updates automatically as new registrations arrive. Currently <span id="count">—</span> registered.</p>
+
+  <div class="chart-section" id="chart-section" style="display:none;">
+    <h2>Geographic Distribution</h2>
+    <div class="chart-wrap">
+      <div class="chart-canvas-wrap">
+        <canvas id="geoChart"></canvas>
+      </div>
       <div class="chart-legend" id="chart-legend"></div>
     </div>
   </div>
