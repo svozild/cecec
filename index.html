@@ -89,21 +89,22 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: start;
+      align-items: stretch;
     }
     .venue-box .section-label,
     .contact-box .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
     .venue-box h2, .contact-box h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 1rem; }
+    .venue-box { display: flex; flex-direction: column; }
     .venue-box p { color: #9DBCCC; font-size: .9rem; margin-bottom: .6rem; }
-    .venue-address { margin-top: 1rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1rem 1.2rem; }
+    .venue-address { flex: 1; margin-top: 0; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1rem 1.2rem; }
     .venue-address address { font-style: normal; color: var(--white); font-size: .9rem; line-height: 1.8; }
     .venue-address .hall-badge { display: inline-block; margin-top: .5rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .75rem; font-weight: 600; letter-spacing: .06em; padding: .2rem .6rem; border-radius: 4px; }
     .map-link-small { display: inline-block; margin-top: .7rem; color: var(--cyan); text-decoration: none; font-size: .82rem; font-weight: 500; }
     .map-link-small:hover { text-decoration: underline; }
 
-    .contact-box { text-align: left; }
+    .contact-box { text-align: left; display: flex; flex-direction: column; }
     .contact-box > p { color: #9DBCCC; font-size: .9rem; margin-bottom: 1.2rem; }
-    .contact-card { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 1.5rem 1.8rem; }
+    .contact-card { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 1.5rem 1.8rem; }
     .contact-icon { font-size: 1.6rem; }
     .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: .1rem; }
     .contact-card a { color: var(--cyan); text-decoration: none; font-size: .9rem; }
@@ -213,15 +214,16 @@
   <div class="venue-box">
     <p class="section-label">Venue</p>
     <h2>Conference Location</h2>
-    <div class="venue-address">
+    <div class="venue-address" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
       <address>
         <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a><br />
-        Technická 1903/3<br />
-        166 28 Praha 6 &#8211; Dejvice<br />
+        Technická 1903/3, Prague 6, CZ-166 28<br />
         Czech Republic
       </address>
-      <span class="hall-badge">Lecture Hall B&nbsp;III</span><br />
-      <a href="https://maps.app.goo.gl/31jBhXADqirpStWz7" target="_blank" rel="noopener" class="map-link-small">Open in Google Maps →</a>
+      <div>
+        <span class="hall-badge">Lecture Hall B&nbsp;III</span><br />
+        <a href="https://maps.app.goo.gl/31jBhXADqirpStWz7" target="_blank" rel="noopener" class="map-link-small">Open in Google Maps →</a>
+      </div>
     </div>
   </div>
 
