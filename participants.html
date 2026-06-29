@@ -224,6 +224,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const API_BASE = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec';
+const CACHE_KEY = 'cecec_participants';
+const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
 const FLAGS = {
   'Albania': '🇦🇱', 'Bulgaria': '🇧🇬', 'Croatia': '🇭🇷',
@@ -313,13 +315,45 @@ function handleData(participants) {
   });
 }
 
-// Load via JSONP to bypass CORS
-const script = document.createElement('script');
-script.onerror = () => {
-  document.getElementById('loading').innerHTML = '<p style="color:var(--gray);font-style:italic;">Could not load participants. Please try again later.</p>';
-};
-script.src = API_BASE + '?action=list&callback=handleData';
-document.head.appendChild(script);
+// Try cache first for instant display
+try {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp < CACHE_TTL) {
+      handleData(data);
+    } else {
+      // Cache expired — show stale data instantly, refresh in background
+      handleData(data);
+      loadFresh();
+    }
+  } else {
+    loadFresh();
+  }
+} catch(e) {
+  loadFresh();
+}
+
+function loadFresh() {
+  const script = document.createElement('script');
+  script.onerror = () => {
+    if (!document.getElementById('grid').children.length) {
+      document.getElementById('loading').innerHTML = '<p style="color:var(--gray);font-style:italic;">Could not load participants. Please try again later.</p>';
+    }
+  };
+  script.src = API_BASE + '?action=list&callback=handleDataAndCache';
+  document.head.appendChild(script);
+}
+
+function handleDataAndCache(participants) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ data: participants, timestamp: Date.now() }));
+  } catch(e) {}
+  // Only re-render if we didn't already show cached data
+  if (!document.getElementById('grid').children.length) {
+    handleData(participants);
+  }
+}
 </script>
 </body>
 </html>
