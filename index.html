@@ -98,7 +98,8 @@
     .venue-box p { color: #9DBCCC; font-size: .9rem; margin-bottom: .6rem; }
     .venue-address { flex: 1; margin-top: 0; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1rem 1.2rem; }
     .venue-address address { font-style: normal; color: var(--white); font-size: .9rem; line-height: 1.8; }
-    .venue-address .hall-badge { display: inline-block; margin-top: .5rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .75rem; font-weight: 600; letter-spacing: .06em; padding: .2rem .6rem; border-radius: 4px; }
+    .venue-address .hall-badge { display: inline-block; margin-top: .5rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .75rem; font-weight: 600; letter-spacing: .06em; padding: .2rem .6rem; border-radius: 4px; text-decoration: none; transition: background .2s; }
+    .venue-address .hall-badge:hover { background: rgba(0,198,215,.25); }
     .map-link-small { display: inline-block; margin-top: .7rem; color: var(--cyan); text-decoration: none; font-size: .82rem; font-weight: 500; }
     .map-link-small:hover { text-decoration: underline; }
 
@@ -221,7 +222,7 @@
         Czech Republic
       </address>
       <div>
-        <span class="hall-badge">Lecture Hall B&nbsp;III</span><br />
+        <a href="./BIII.png" target="_blank" rel="noopener" class="hall-badge">Lecture Hall B&nbsp;III</a><br />
         <a href="https://maps.app.goo.gl/31jBhXADqirpStWz7" target="_blank" rel="noopener" class="map-link-small">Open in Google Maps →</a>
       </div>
     </div>
