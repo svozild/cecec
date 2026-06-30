@@ -221,7 +221,7 @@
 <main>
   <p class="page-label">CECEC 2026</p>
   <h1>Registered Participants</h1>
-  <p class="subtitle">This list updates automatically as new registrations arrive. Currently <span id="count">—</span> registered from <span id="country-count">—</span> countries.</p>
+  <p class="subtitle">This list refreshes every few minutes as new registrations arrive. Currently <span id="count">—</span> registered from <span id="country-count">—</span> countries.</p>
 
   <div class="chart-section" id="chart-section" style="display:none;">
     <h2>Geographic Distribution</h2>
@@ -254,7 +254,7 @@
 <script>
 const API_BASE = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec';
 const CACHE_KEY = 'cecec_participants';
-const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
+const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
 const FLAGS = {
   'Albania': '🇦🇱', 'Bulgaria': '🇧🇬', 'Croatia': '🇭🇷',
