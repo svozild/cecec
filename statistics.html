@@ -49,6 +49,7 @@
 
     .new-countries { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
     .new-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(132,194,37,.12); border: 1px solid rgba(132,194,37,.3); color: #84c225; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
+    .missing-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(143,163,177,.1); border: 1px solid rgba(143,163,177,.25); color: var(--gray); font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
 
     footer img { filter: none; }
     footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; margin-top: 2rem; }
@@ -109,6 +110,10 @@
       <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">New countries represented in 2026:</p>
       <div class="new-countries" id="new-countries"></div>
     </div>
+    <div id="missing-countries-wrap" style="display:none;">
+      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">Countries present in 2025 but not yet in 2026:</p>
+      <div class="new-countries" id="missing-countries"></div>
+    </div>
   </div>
 </main>
 
@@ -140,6 +145,14 @@ function closeMenu() { mobileMenu.classList.remove('open'); }
 const DATA_2025 = {
   'Bulgaria': 1, 'Czechia': 20, 'Estonia': 1, 'Poland': 3,
   'Romania': 2, 'Slovakia': 3, 'Slovenia': 1, 'Ukraine': 4
+};
+
+const FLAGS = {
+  'Albania': '🇦🇱', 'Bulgaria': '🇧🇬', 'Croatia': '🇭🇷',
+  'Czechia': '🇨🇿', 'Estonia': '🇪🇪', 'Hungary': '🇭🇺',
+  'Latvia': '🇱🇻', 'Lithuania': '🇱🇹', 'Poland': '🇵🇱',
+  'Romania': '🇷🇴', 'Serbia': '🇷🇸', 'Slovakia': '🇸🇰',
+  'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
 };
 
 const API_BASE = 'https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec';
@@ -235,7 +248,20 @@ function buildChart(data2026) {
     newCountries.forEach(c => {
       const badge = document.createElement('span');
       badge.className = 'new-country-badge';
-      badge.textContent = '✨ ' + c;
+      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
+      wrap.appendChild(badge);
+    });
+  }
+
+  // Missing countries badges (present in 2025, absent in 2026)
+  const missingCountries = Object.keys(DATA_2025).filter(c => !counts2026[c] && c !== 'Other');
+  if (missingCountries.length > 0) {
+    document.getElementById('missing-countries-wrap').style.display = 'block';
+    const wrap = document.getElementById('missing-countries');
+    missingCountries.forEach(c => {
+      const badge = document.createElement('span');
+      badge.className = 'missing-country-badge';
+      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
       wrap.appendChild(badge);
     });
   }
