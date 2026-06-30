@@ -176,6 +176,11 @@
       <label>Presentation Title</label>
       <input type="text" id="reg-title" placeholder="Title of your talk" />
     </div>
+    <!-- Honeypot field — hidden from real users, bots tend to fill it in -->
+    <div style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true">
+      <label for="reg-website">Website</label>
+      <input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
     <button class="btn-submit" id="reg-submit" onclick="submitRegistration()">Submit Registration</button>
     <p id="reg-msg" style="display:none; margin-top:1rem; font-size:.88rem; text-align:center;"></p>
   </div>
@@ -220,8 +225,18 @@ async function submitRegistration() {
   const position      = document.getElementById('reg-position').value;
   const participation = document.getElementById('reg-participation').value;
   const title         = document.getElementById('reg-title').value.trim();
+  const website       = document.getElementById('reg-website').value.trim(); // honeypot
   const btn = document.getElementById('reg-submit');
   const msg = document.getElementById('reg-msg');
+
+  // Honeypot: real users never fill this hidden field. If it has a value, it's a bot.
+  // Silently pretend success so the bot doesn't learn anything from the response.
+  if (website) {
+    btn.style.display = 'none';
+    msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
+    msg.textContent = '✓ Registration received — see you in Prague!';
+    return;
+  }
 
   const needsTitle = participation === 'Oral Presentation (15+5 min)';
   if (!firstname || !lastname || !email || !affiliation || !country || !position || !participation || (needsTitle && !title)) {
