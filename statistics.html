@@ -50,6 +50,7 @@
     .new-countries { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
     .new-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(132,194,37,.12); border: 1px solid rgba(132,194,37,.3); color: #84c225; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
     .missing-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(143,163,177,.1); border: 1px solid rgba(143,163,177,.25); color: var(--gray); font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
+    .never-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(224,92,138,.08); border: 1px solid rgba(224,92,138,.2); color: #E05C8A; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
 
     footer img { filter: none; }
     footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; margin-top: 2rem; }
@@ -113,6 +114,10 @@
     <div id="missing-countries-wrap" style="display:none;">
       <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">Countries present in 2025 but not yet in 2026:</p>
       <div class="new-countries" id="missing-countries"></div>
+    </div>
+    <div id="never-countries-wrap" style="display:none;">
+      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">CEE countries not yet represented at any CECEC:</p>
+      <div class="new-countries" id="never-countries"></div>
     </div>
   </div>
 </main>
@@ -261,6 +266,21 @@ function buildChart(data2026) {
     missingCountries.forEach(c => {
       const badge = document.createElement('span');
       badge.className = 'missing-country-badge';
+      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
+      wrap.appendChild(badge);
+    });
+  }
+
+  // CEE countries never represented at any CECEC
+  const CEE_COUNTRIES = ['Albania','Bulgaria','Croatia','Czechia','Estonia','Hungary','Latvia','Lithuania','Poland','Romania','Serbia','Slovakia','Slovenia','Ukraine'];
+  const everRepresented = new Set([...Object.keys(DATA_2025), ...Object.keys(counts2026)]);
+  const neverCountries = CEE_COUNTRIES.filter(c => !everRepresented.has(c));
+  if (neverCountries.length > 0) {
+    document.getElementById('never-countries-wrap').style.display = 'block';
+    const wrap = document.getElementById('never-countries');
+    neverCountries.forEach(c => {
+      const badge = document.createElement('span');
+      badge.className = 'never-country-badge';
       badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
       wrap.appendChild(badge);
     });
