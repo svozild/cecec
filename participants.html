@@ -166,6 +166,16 @@
       border: 5px solid transparent;
       border-top-color: rgba(0,198,215,.25);
     }
+    .oral-icon.tooltip-below .oral-tooltip {
+      bottom: auto;
+      top: calc(100% + 6px);
+    }
+    .oral-icon.tooltip-below .oral-tooltip::after {
+      top: auto;
+      bottom: 100%;
+      border-top-color: transparent;
+      border-bottom-color: rgba(0,198,215,.25);
+    }
     .oral-icon:hover .oral-tooltip { display: block; }
 
     .chart-section {
@@ -386,6 +396,18 @@ function handleData(participants) {
       <div class="participant-country">${flag} ${p.country || ''}</div>
     `;
     grid.appendChild(card);
+  });
+
+  // Flip tooltip below icon if it would overflow above the viewport
+  document.querySelectorAll('.oral-icon').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      const rect = icon.getBoundingClientRect();
+      if (rect.top < 140) {
+        icon.classList.add('tooltip-below');
+      } else {
+        icon.classList.remove('tooltip-below');
+      }
+    });
   });
 }
 
