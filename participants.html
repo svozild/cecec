@@ -127,6 +127,44 @@
       color: var(--gray);
       border-color: rgba(255,255,255,.1);
     }
+    .oral-icon {
+      display: inline-block;
+      margin-left: .4rem;
+      cursor: default;
+      position: relative;
+      font-size: .9rem;
+      vertical-align: middle;
+    }
+    .oral-icon .oral-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0e2033;
+      border: 1px solid rgba(0,198,215,.25);
+      border-radius: 6px;
+      padding: .5rem .8rem;
+      font-size: .78rem;
+      color: var(--white);
+      white-space: nowrap;
+      max-width: 260px;
+      white-space: normal;
+      text-align: center;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,.4);
+      pointer-events: none;
+    }
+    .oral-icon .oral-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0,198,215,.25);
+    }
+    .oral-icon:hover .oral-tooltip { display: block; }
 
     .chart-section {
       margin-bottom: 2.5rem;
@@ -337,8 +375,11 @@ function handleData(participants) {
     const flag = FLAGS[p.country] || '🌍';
     const card = document.createElement('div');
     card.className = 'participant-card';
+    const oralIcon = isOral
+      ? `<span class="oral-icon">🎤<span class="oral-tooltip">${p.title || 'Oral Presentation'}</span></span>`
+      : '';
     card.innerHTML = `
-      <div class="participant-name">${p.firstname} ${p.lastname}</div>
+      <div class="participant-name">${p.firstname} ${p.lastname}${oralIcon}</div>
       <div class="participant-affiliation">${p.affiliation || ''}</div>
       <div class="participant-country">${flag} ${p.country || ''}</div>
     `;
