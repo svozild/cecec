@@ -212,6 +212,20 @@
       gap: .6rem;
       font-size: .82rem;
       color: #9DBCCC;
+      transition: color .15s;
+    }
+    a.legend-item:hover {
+      color: var(--cyan);
+    }
+    a.legend-item:hover .legend-count {
+      color: var(--cyan);
+    }
+    .highlight-flash {
+      animation: flashHighlight 1.5s ease-out;
+    }
+    @keyframes flashHighlight {
+      0% { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,198,215,.3); }
+      100% { border-color: rgba(0,198,215,.1); box-shadow: none; }
     }
     .legend-dot {
       width: 10px; height: 10px;
@@ -358,20 +372,6 @@ function handleData(participants) {
     }
   });
 
-  // Custom legend
-  const legend = document.getElementById('chart-legend');
-  sorted.forEach(([country, count], i) => {
-    const pct = Math.round(count / total * 100);
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    item.innerHTML = `
-      <span class="legend-dot" style="background:${colors[i]}"></span>
-      <span>${country}</span>
-      <span class="legend-count">${count} <span style="color:var(--gray);font-weight:400;">(${pct}%)</span></span>
-    `;
-    legend.appendChild(item);
-  });
-
   // Render participant cards
   const grid = document.getElementById('grid');
   participants.sort((a, b) => {
@@ -382,11 +382,18 @@ function handleData(participants) {
     return a.lastname.localeCompare(b.lastname);
   });
 
+  const firstCardByCountry = {};
   participants.forEach(p => {
     const isOral = p.participation === 'Oral Presentation (15+5 min)';
     const flag = FLAGS[p.country] || '🌍';
     const card = document.createElement('div');
     card.className = 'participant-card';
+    const countryKey = p.country || 'Unknown';
+    if (!firstCardByCountry[countryKey]) {
+      const anchorId = 'country-' + countryKey.replace(/[^a-zA-Z0-9]/g, '');
+      card.id = anchorId;
+      firstCardByCountry[countryKey] = anchorId;
+    }
     const oralIcon = isOral
       ? `<span class="oral-icon">🎤<span class="oral-tooltip">${p.title || 'Oral Presentation'}</span></span>`
       : '';
@@ -396,6 +403,35 @@ function handleData(participants) {
       <div class="participant-country">${flag} ${p.country || ''}</div>
     `;
     grid.appendChild(card);
+  });
+
+  // Custom legend (clickable — jumps to first participant from that country)
+  const legend = document.getElementById('chart-legend');
+  sorted.forEach(([country, count], i) => {
+    const pct = Math.round(count / total * 100);
+    const anchorId = firstCardByCountry[country];
+    const item = document.createElement(anchorId ? 'a' : 'div');
+    item.className = 'legend-item';
+    if (anchorId) {
+      item.href = '#' + anchorId;
+      item.style.cursor = 'pointer';
+      item.style.textDecoration = 'none';
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById(anchorId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.classList.add('highlight-flash');
+          setTimeout(() => target.classList.remove('highlight-flash'), 1500);
+        }
+      });
+    }
+    item.innerHTML = `
+      <span class="legend-dot" style="background:${colors[i]}"></span>
+      <span>${country}</span>
+      <span class="legend-count">${count} <span style="color:var(--gray);font-weight:400;">(${pct}%)</span></span>
+    `;
+    legend.appendChild(item);
   });
 
   // Flip tooltip below icon if it would overflow above the viewport
