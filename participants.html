@@ -221,11 +221,14 @@
       color: var(--cyan);
     }
     .highlight-flash {
-      animation: flashHighlight 1.5s ease-out;
+      animation: flashHighlight 2.2s ease-out;
+      position: relative;
+      z-index: 5;
     }
     @keyframes flashHighlight {
-      0% { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,198,215,.3); }
-      100% { border-color: rgba(0,198,215,.1); box-shadow: none; }
+      0% { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(0,198,215,.45); background: rgba(0,198,215,.08); }
+      60% { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(0,198,215,.25); background: rgba(0,198,215,.05); }
+      100% { border-color: rgba(0,198,215,.1); box-shadow: none; background: transparent; }
     }
     .legend-dot {
       width: 10px; height: 10px;
@@ -420,9 +423,11 @@ function handleData(participants) {
         e.preventDefault();
         const target = document.getElementById(anchorId);
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const navOffset = 80;
+          const targetY = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
           target.classList.add('highlight-flash');
-          setTimeout(() => target.classList.remove('highlight-flash'), 1500);
+          setTimeout(() => target.classList.remove('highlight-flash'), 2200);
         }
       });
     }
