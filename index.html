@@ -106,6 +106,9 @@
     .contact-box { text-align: left; display: flex; flex-direction: column; }
     .contact-box > p { color: #9DBCCC; font-size: .9rem; margin-bottom: 1.2rem; }
     .contact-card { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 1.5rem 1.8rem; }
+    .contact-link:hover h3 { color: #00aebf; }
+    .contact-link:hover .contact-icon { transform: scale(1.1); }
+    .contact-icon { transition: transform .15s; }
     .contact-icon { font-size: 1.6rem; }
     .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: .1rem; }
     .contact-card a { color: var(--cyan); text-decoration: none; font-size: .9rem; }
@@ -232,8 +235,10 @@
     <p class="section-label">Get in Touch</p>
     <h2>Contact the Organizers</h2>
     <div class="contact-card">
-      <a href="mailto:svozild@vscht.cz" style="text-decoration:none;"><div class="contact-icon">✉️</div></a>
-      <a href="mailto:svozild@vscht.cz" style="text-decoration:none;"><h3 style="color:var(--white);">Email Us</h3></a>
+      <a href="mailto:svozild@vscht.cz" class="contact-link" style="text-decoration:none; display:flex; flex-direction:column; align-items:flex-start; gap:.4rem;">
+        <div class="contact-icon">✉️</div>
+        <h3 style="color:var(--cyan); text-decoration:underline; text-underline-offset:3px;">Email Us</h3>
+      </a>
       <span style="color:var(--white); font-size:.9rem; font-weight:500;">Daniel Svozil</span>
       <span style="color:var(--gray); font-size:.82rem; line-height:1.5;">Department of Informatics and Chemistry<br />University of Chemistry and Technology Prague</span>
     </div>
