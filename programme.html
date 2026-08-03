@@ -240,7 +240,7 @@ function renderSchedule(talks) {
         <span class="talk-time">${fmtTime(t)}&nbsp;&#8211;&nbsp;${fmtTime(talkEnd)}</span>
         <span>
           <div class="talk-title">${talk.title || 'Title to be announced'}</div>
-          <div class="talk-speaker"><strong>${talk.firstname} ${talk.lastname}</strong> &middot; ${talk.affiliation || ''}${talk.country ? ', ' + talk.country : ''}</div>
+          <div class="talk-speaker"><strong>${talk.firstname} ${talk.lastname}</strong> &middot; ${talk.affiliation || ''}</div>
         </span>
       `;
       frag.appendChild(row);
