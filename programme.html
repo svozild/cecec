@@ -273,6 +273,19 @@ function renderSchedule(talks) {
 
 function handleData(participants) {
   const talks = participants.filter(p => p.participation === 'Oral Presentation (15+5 min)');
+
+  // Preferred speaker order (by first name), as curated by the organizer
+  const PREFERRED_ORDER = [
+    'Branislav', 'Stefan', 'Dragos', 'Amaan', 'David', 'Riccardo', 'Vaclav',
+    'Igor', 'Marko', 'Karel', 'Dušan', 'Martin', 'Črtomir', 'Kyrylo',
+    'Dalibor', 'Wim', 'Jan', 'Vladimír', 'Peron', 'Magdaléna'
+  ];
+  const orderIndex = name => {
+    const idx = PREFERRED_ORDER.findIndex(n => n.toLowerCase() === (name || '').toLowerCase());
+    return idx === -1 ? PREFERRED_ORDER.length + 1 : idx;
+  };
+  talks.sort((a, b) => orderIndex(a.firstname) - orderIndex(b.firstname));
+
   renderSchedule(talks);
 }
 
