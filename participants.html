@@ -289,7 +289,7 @@
   <p class="page-label">CECEC 2026</p>
   <h1>Registered Participants</h1>
   <p style="color:var(--gray); font-size:.78rem; margin-bottom:.5rem;">This list refreshes every few minutes as new registrations arrive.</p>
-  <p class="subtitle" style="font-size:1.05rem; color:var(--white);">Currently <span id="count" style="color:var(--cyan); font-weight:600;">—</span> registered participants from <span id="country-count" style="color:var(--cyan); font-weight:600;">—</span> countries.</p>
+  <p class="subtitle" style="font-size:1.05rem; color:var(--white);">Currently <span id="count" style="color:var(--cyan); font-weight:600;">–</span> registered participants from <span id="country-count" style="color:var(--cyan); font-weight:600;">–</span> countries.</p>
 
   <div class="chart-section" id="chart-section" style="display:none;">
     <h2>Geographic Distribution</h2>
@@ -408,7 +408,7 @@ function handleData(participants) {
     grid.appendChild(card);
   });
 
-  // Custom legend (clickable — jumps to first participant from that country)
+  // Custom legend (clickable – jumps to first participant from that country)
   const legend = document.getElementById('chart-legend');
   sorted.forEach(([country, count], i) => {
     const pct = Math.round(count / total * 100);
@@ -460,7 +460,7 @@ try {
     if (Date.now() - timestamp < CACHE_TTL) {
       handleData(data);
     } else {
-      // Cache expired — show stale data instantly, refresh in background
+      // Cache expired – show stale data instantly, refresh in background
       handleData(data);
       loadFresh();
     }

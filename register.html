@@ -139,7 +139,7 @@
     <div class="field">
       <label>Affiliation Country</label>
       <select id="reg-country">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Albania</option>
         <option>Bulgaria</option>
         <option>Croatia</option>
@@ -160,7 +160,7 @@
     <div class="field">
       <label>Position</label>
       <select id="reg-position">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Junior researcher (student or postdoc)</option>
         <option>Senior researcher (group leader, PI, employee)</option>
         <option>Industry</option>
@@ -169,7 +169,7 @@
     <div class="field">
       <label>Participation Type</label>
       <select id="reg-participation" onchange="togglePresentationTitle()">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Attendee only</option>
         <option>Oral Presentation (15+5 min)</option>
       </select>
@@ -179,7 +179,7 @@
       <input type="text" id="reg-title" placeholder="Title of your talk" />
       <p style="font-size:.78rem; color:var(--gray); margin-top:.4rem;">This title will be publicly visible as a tooltip next to your name on the <a href="./participants.html" style="color:var(--cyan);">participants page</a>. You can update it anytime by <a href="mailto:svozild@vscht.cz" style="color:var(--cyan);">emailing us</a>.</p>
     </div>
-    <!-- Honeypot field — hidden from real users, bots tend to fill it in -->
+    <!-- Honeypot field – hidden from real users, bots tend to fill it in -->
     <div style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true">
       <label for="reg-website">Website</label>
       <input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off" />
@@ -237,7 +237,7 @@ async function submitRegistration() {
   if (website) {
     btn.style.display = 'none';
     msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
-    msg.textContent = '✓ Registration received — see you in Prague!';
+    msg.textContent = '✓ Registration received – see you in Prague!';
     return;
   }
 
@@ -265,7 +265,7 @@ async function submitRegistration() {
 
     btn.style.display = 'none';
     msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
-    msg.textContent = '✓ Registration received — see you in Prague!';
+    msg.textContent = '✓ Registration received – see you in Prague!';
     ['reg-firstname','reg-lastname','reg-email','reg-affiliation','reg-country','reg-position','reg-participation','reg-title']
       .forEach(id => { document.getElementById(id).value = ''; });
     document.getElementById('reg-title-wrap').style.display = 'none';
