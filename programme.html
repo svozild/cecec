@@ -151,11 +151,7 @@
     <div class="skeleton-row"><div class="skeleton-line" style="width:55%;"></div></div>
   </div>
 
-<<<<<<< HEAD
   <div class="schedule-row"><span class="sched-time">20:00</span><span class="sched-event">Conference Dinner &#8211; all participants are invited · Venue to be announced</span></div>
-=======
-  <div class="schedule-row"><span class="sched-time">19:30</span><span class="sched-event">Conference Dinner &#8211; all participants are invited · Venue to be announced</span></div>
->>>>>>> bfbc205e2120cd2121e91a31f8725bc0fc385769
 </section>
 
 <!-- FOOTER -->
@@ -198,19 +194,11 @@ function fmtTime(mins) {
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
 
-<<<<<<< HEAD
 // Target block sizes as requested by the organizer: 5, 5, 6, 6
 // If the actual number of talks differs, extra talks are appended to the
 // last block, or removed from the end of the last non-empty block.
 function distribute(n) {
   const target = [5, 5, 6, 6];
-=======
-// Target block sizes as requested by the organizer: 5, 5, 5, 6
-// If the actual number of talks differs, extra talks are appended to the
-// last block, or removed from the end of the last non-empty block.
-function distribute(n) {
-  const target = [5, 5, 5, 6];
->>>>>>> bfbc205e2120cd2121e91a31f8725bc0fc385769
   const targetSum = target.reduce((a, b) => a + b, 0);
 
   if (n === targetSum) return target.slice();
