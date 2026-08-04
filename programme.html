@@ -274,35 +274,16 @@ function renderSchedule(talks) {
 function handleData(participants) {
   const talks = participants.filter(p => p.participation === 'Oral Presentation (15+5 min)');
 
-  // Preferred speaker order (firstname + lastname pairs), as curated by the organizer
-  const PREFERRED_ORDER = [
-    ['Branislav', 'Stanković'],
-    ['Stefan', 'Ivanov'],
-    ['Dragos', 'Horvath'],
-    ['Amaan', 'Arif'],
-    ['David', 'Hoksza'],
-    ['Riccardo', 'Fusco'],
-    ['Vaclav', 'Hanzl'],
-    ['Igor', 'Tetko'],
-    ['Marko', 'Jukic'],
-    ['Karel', 'Berka'],
-    ['Dušan', 'Malenov'],
-    ['Martin', 'Sicho'],
-    ['Črtomir', 'Podlipnik'],
-    ['Kyrylo', 'Klimenko'],
-    ['Dalibor', 'Hršak'],
-    ['Wim', 'Dehaen'],
-    ['Jan', 'Řezáč'],
-    ['Vladimír', 'Garaj'],
-    ['Peron Bosco', 'Leutcha'],
-    ['Magdaléna', 'Májeková'],
-  ];
-  const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  const orderIndex = (first, last) => {
-    const idx = PREFERRED_ORDER.findIndex(([f, l]) => norm(f) === norm(first) && norm(l) === norm(last));
-    return idx === -1 ? PREFERRED_ORDER.length + 1 : idx;
-  };
-  talks.sort((a, b) => orderIndex(a.firstname, a.lastname) - orderIndex(b.firstname, b.lastname));
+  // Sort by the "Lecture #" column from the registration sheet.
+  // Talks without a number (not yet assigned) are placed at the end, in registration order.
+  talks.sort((a, b) => {
+    const aHas = a.lectureOrder !== null && a.lectureOrder !== undefined && !isNaN(a.lectureOrder);
+    const bHas = b.lectureOrder !== null && b.lectureOrder !== undefined && !isNaN(b.lectureOrder);
+    if (aHas && bHas) return a.lectureOrder - b.lectureOrder;
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    return 0; // keep original relative order for talks with no number yet
+  });
 
   renderSchedule(talks);
 }
