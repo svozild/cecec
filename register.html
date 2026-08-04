@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="cecec_logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CECEC 2026 &#8211; Registration</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,7 +74,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="./">CECEC<span> 2026</span></a>
+  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2026</span></a>
   <ul class="nav-links">
     <li><a href="./#about">About</a></li>
     <li><a href="./programme.html">Programme</a></li>
@@ -134,12 +135,13 @@
     </div>
     <div class="field">
       <label>Affiliation</label>
-      <input type="text" id="reg-affiliation" placeholder="University / Institute" />
+      <input type="text" id="reg-affiliation" placeholder="Institute / company, Department, City, Country" />
+      <p style="font-size:.78rem; color:#e0a750; margin-top:.4rem; font-weight:500;">⚠️ This field will be displayed in the list of participants and in the programme. Your country will be taken from this field.</p>
     </div>
     <div class="field">
-      <label>Affiliation Country</label>
+      <label>Country</label>
       <select id="reg-country">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Albania</option>
         <option>Bulgaria</option>
         <option>Croatia</option>
@@ -156,11 +158,12 @@
         <option>Ukraine</option>
         <option>Other</option>
       </select>
+      <p style="font-size:.78rem; color:var(--gray); margin-top:.4rem;">This field is for statistics purposes and is not shown as the part of your affiliation.</p>
     </div>
     <div class="field">
       <label>Position</label>
       <select id="reg-position">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Junior researcher (student or postdoc)</option>
         <option>Senior researcher (group leader, PI, employee)</option>
         <option>Industry</option>
@@ -169,17 +172,18 @@
     <div class="field">
       <label>Participation Type</label>
       <select id="reg-participation" onchange="togglePresentationTitle()">
-        <option value="">— select —</option>
+        <option value="">– select –</option>
         <option>Attendee only</option>
         <option>Oral Presentation (15+5 min)</option>
       </select>
+      <p style="font-size:.78rem; color:#e0a750; margin-top:.4rem; font-weight:500;">⚠️ If you plan to present but don't have a title yet, please select <em>Oral Presentation</em> and enter "TBA" as the title &#8211; we'll follow up by email to confirm it later.</p>
     </div>
     <div class="field" id="reg-title-wrap" style="display:none;">
       <label>Presentation Title</label>
       <input type="text" id="reg-title" placeholder="Title of your talk" />
       <p style="font-size:.78rem; color:var(--gray); margin-top:.4rem;">This title will be publicly visible as a tooltip next to your name on the <a href="./participants.html" style="color:var(--cyan);">participants page</a>. You can update it anytime by <a href="mailto:svozild@vscht.cz" style="color:var(--cyan);">emailing us</a>.</p>
     </div>
-    <!-- Honeypot field — hidden from real users, bots tend to fill it in -->
+    <!-- Honeypot field – hidden from real users, bots tend to fill it in -->
     <div style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true">
       <label for="reg-website">Website</label>
       <input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off" />
@@ -237,7 +241,7 @@ async function submitRegistration() {
   if (website) {
     btn.style.display = 'none';
     msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
-    msg.textContent = '✓ Registration received — see you in Prague!';
+    msg.textContent = '✓ Registration received – see you in Prague!';
     return;
   }
 
@@ -261,11 +265,11 @@ async function submitRegistration() {
     params.append('participation', participation);
     params.append('title', needsTitle ? title : '');
 
-    await fetch('https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+    await fetch('https://script.google.com/macros/s/AKfycbyO88vbRzk8TuY2RNBkmAK8bDzoNjlmDMWwsPhsnX8Xzn5_S25fOOoEiMVUnRqIm-9abA/exec?' + params.toString(), { method: 'GET', mode: 'no-cors' });
 
     btn.style.display = 'none';
     msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
-    msg.textContent = '✓ Registration received — see you in Prague!';
+    msg.textContent = '✓ Registration received – see you in Prague!';
     ['reg-firstname','reg-lastname','reg-email','reg-affiliation','reg-country','reg-position','reg-participation','reg-title']
       .forEach(id => { document.getElementById(id).value = ''; });
     document.getElementById('reg-title-wrap').style.display = 'none';
