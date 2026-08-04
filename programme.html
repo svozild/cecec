@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="cecec_logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CECEC 2026 &#8211; Programme</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,13 +41,38 @@
 
     .programme-note { color: var(--gray); font-size: .9rem; margin-bottom: 2rem; font-style: italic; }
     .day-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin: 2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(0,198,215,.2); }
-    .schedule-row { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.05); align-items: baseline; }
-    .schedule-row.talks-block { padding-left: 1.5rem; }
+
+    .schedule-row { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.05); align-items: baseline; }
     .schedule-row:last-child { border-bottom: none; }
     .sched-time { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; color: var(--cyan-dim); letter-spacing: .04em; }
     .sched-event { font-size: .9rem; color: #9DBCCC; }
+    .lunch-tips { margin-top: .6rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: .8rem 1rem; }
+    .lunch-tips-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; margin-bottom: .5rem; }
+    .lunch-tips ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .8rem; }
+    .lunch-tips li { font-size: .84rem; color: #9DBCCC; }
+    .lunch-tips a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+    .lunch-tips a:hover { text-decoration: underline; }
     .sched-event a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); }
     .sched-event a:hover { border-bottom-color: var(--cyan); }
+
+    /* TALK ROWS */
+    .talk-row { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid rgba(255,255,255,.05); align-items: baseline; }
+    .talk-row:last-child { border-bottom: none; }
+    .talk-time { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; color: var(--cyan-dim); letter-spacing: .04em; }
+    .talk-title { font-size: .9rem; color: var(--white); margin-bottom: .2rem; }
+    .talk-speaker { font-size: .84rem; color: #9DBCCC; }
+    .talk-speaker strong { color: var(--white); font-weight: 600; }
+
+    .skeleton-line {
+      height: 12px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(0,198,215,.25) 50%, rgba(255,255,255,.06) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      margin-bottom: .6rem;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-row { padding: .85rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
 
     /* VENUE */
     #venue .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
@@ -71,6 +97,8 @@
       .nav-hamburger { display: flex; }
       section { padding: 1.5rem 1.2rem !important; }
       #venue .venue-grid { grid-template-columns: 1fr; }
+      .talk-row, .schedule-row { grid-template-columns: 80px 1fr; }
+      .lunch-tips ul { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
@@ -78,10 +106,10 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="./">CECEC<span> 2026</span></a>
+  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2026</span></a>
   <ul class="nav-links">
     <li><a href="./#about">About</a></li>
-    <li><a href="./programme.html">Programme</a></li>
+    <li><a href="./programme.html" class="active">Programme</a></li>
     <li><a href="./participants.html">Participants</a></li>
     <li><a href="./statistics.html">Stats</a></li>
     <li><a href="./past.html">Past Editions</a></li>
@@ -110,19 +138,20 @@
 
 <!-- PROGRAMME -->
 <section id="programme">
-  <p class="programme-note">The programme below is preliminary and subject to change. The full schedule will be published closer to the event.</p>
 
   <div class="day-header">Monday, 7 September 2026</div>
+
   <div class="schedule-row"><span class="sched-time">08:00</span><span class="sched-event">Registration</span></div>
-  <div class="schedule-row"><span class="sched-time">08:55</span><span class="sched-event">Opening Remarks</span></div>
-  <div class="schedule-row talks-block"><span class="sched-time">09:00 &#8211; 10:20</span><span class="sched-event">Talks</span></div>
-  <div class="schedule-row"><span class="sched-time">10:20</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row talks-block"><span class="sched-time">11:00 &#8211; 12:20</span><span class="sched-event">Talks</span></div>
-  <div class="schedule-row"><span class="sched-time">12:20</span><span class="sched-event">Lunch</span></div>
-  <div class="schedule-row talks-block"><span class="sched-time">14:00 &#8211; 15:20</span><span class="sched-event">Talks</span></div>
-  <div class="schedule-row"><span class="sched-time">15:20</span><span class="sched-event">Coffee Break</span></div>
-  <div class="schedule-row talks-block"><span class="sched-time">16:00</span><span class="sched-event">Talks</span></div>
-  <div class="schedule-row"><span class="sched-time">Evening</span><span class="sched-event">Conference Dinner &#8211; all participants are invited · <a href="https://www.naurale.cz/" target="_blank" rel="noopener">Na Urale</a> (<a href="https://maps.app.goo.gl/z6LscVGdBBpL9GRG6" target="_blank" rel="noopener">map</a>)</span></div>
+  <div class="schedule-row"><span class="sched-time">08:55</span><span class="sched-event"><span style="color:var(--white);">Opening Remarks</span><br /><span style="font-size:.84rem; color:#9DBCCC;"><strong style="color:var(--white); font-weight:600;">Daniel Svozil</strong> &middot; Department of Informatics and Chemistry &amp; CZ-OPENSCREEN, University of Chemistry and Technology Prague, Czech Republic</span></span></div>
+
+  <div id="schedule-dynamic">
+    <div class="skeleton-row"><div class="skeleton-line" style="width:40%;"></div></div>
+    <div class="skeleton-row"><div class="skeleton-line" style="width:60%;"></div></div>
+    <div class="skeleton-row"><div class="skeleton-line" style="width:50%;"></div></div>
+    <div class="skeleton-row"><div class="skeleton-line" style="width:55%;"></div></div>
+  </div>
+
+  <div class="schedule-row"><span class="sched-time">20:00</span><span class="sched-event">Conference Dinner &#8211; all participants are invited · Venue to be announced</span></div>
 </section>
 
 <!-- FOOTER -->
@@ -147,6 +176,190 @@ const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
 function closeMenu() { mobileMenu.classList.remove('open'); }
+
+const API_BASE = 'https://script.google.com/macros/s/AKfycbyO88vbRzk8TuY2RNBkmAK8bDzoNjlmDMWwsPhsnX8Xzn5_S25fOOoEiMVUnRqIm-9abA/exec';
+const CACHE_KEY = 'cecec_participants';
+const CACHE_TTL = 3 * 60 * 1000; // 3 minutes – shared cache with participants.html
+
+// ---- Schedule timing constants (minutes since 00:00) ----
+const TALK_LENGTH = 20;
+const BLOCK1_START = 9 * 60;      // 09:00
+const COFFEE1_DURATION = 40;
+const LUNCH_DURATION = 100;
+const COFFEE2_DURATION = 40;
+
+function fmtTime(mins) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+
+// Target block sizes as requested by the organizer: 5, 5, 6, 6
+// If the actual number of talks differs, extra talks are appended to the
+// last block, or removed from the end of the last non-empty block.
+function distribute(n) {
+  const target = [5, 5, 6, 6];
+  const targetSum = target.reduce((a, b) => a + b, 0);
+
+  if (n === targetSum) return target.slice();
+
+  const counts = target.slice();
+
+  if (n > targetSum) {
+    counts[3] += (n - targetSum);
+    return counts;
+  }
+
+  // n < targetSum: trim from the end, block by block
+  let deficit = targetSum - n;
+  for (let i = counts.length - 1; i >= 0 && deficit > 0; i--) {
+    const cut = Math.min(counts[i], deficit);
+    counts[i] -= cut;
+    deficit -= cut;
+  }
+  return counts;
+}
+
+function renderSchedule(talks) {
+  const container = document.getElementById('schedule-dynamic');
+  container.innerHTML = '';
+
+  if (talks.length === 0) {
+    container.innerHTML = '<div class="schedule-row"><span class="sched-time"></span><span class="sched-event" style="font-style:italic; color:var(--gray);">Talks will be listed here as speakers register.</span></div>';
+    return;
+  }
+
+  const counts = distribute(talks.length);
+  let idx = 0;
+  let cursor = BLOCK1_START;
+  const blockRanges = [];
+
+  for (let b = 0; b < 4; b++) {
+    const count = counts[b];
+    if (count === 0) { blockRanges.push(null); continue; }
+    const start = cursor;
+    const end = start + count * TALK_LENGTH;
+    blockRanges.push({ start, end, talks: talks.slice(idx, idx + count) });
+    idx += count;
+    cursor = end;
+    if (b === 0) cursor += COFFEE1_DURATION;
+    if (b === 1) cursor += LUNCH_DURATION;
+    if (b === 2) cursor += COFFEE2_DURATION;
+  }
+
+  const frag = document.createDocumentFragment();
+
+  blockRanges.forEach((block, b) => {
+    if (!block) return;
+
+    // individual talk rows
+    let t = block.start;
+    block.talks.forEach(talk => {
+      const row = document.createElement('div');
+      row.className = 'talk-row';
+      const talkEnd = t + TALK_LENGTH;
+      row.innerHTML = `
+        <span class="talk-time">${fmtTime(t)}&nbsp;&#8211;&nbsp;${fmtTime(talkEnd)}</span>
+        <span>
+          <div class="talk-title">${talk.title || 'Title to be announced'}</div>
+          <div class="talk-speaker"><strong>${talk.firstname} ${talk.lastname}</strong> &middot; ${talk.affiliation || ''}</div>
+        </span>
+      `;
+      frag.appendChild(row);
+      t = talkEnd;
+    });
+
+    // break after block
+    if (b === 0) {
+      const row = document.createElement('div');
+      row.className = 'schedule-row';
+      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + COFFEE1_DURATION)}</span><span class="sched-event">Coffee Break</span>`;
+      frag.appendChild(row);
+    }
+    if (b === 1) {
+      const row = document.createElement('div');
+      row.className = 'schedule-row';
+      row.innerHTML = `
+        <span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + LUNCH_DURATION)}</span>
+        <span class="sched-event">
+          Lunch
+          <div class="lunch-tips">
+            <div class="lunch-tips-label">Lunch tips nearby</div>
+            <ul>
+              <li><a href="https://mapy.com/s/resevujobe" target="_blank" rel="noopener">Dua</a> &#8211; Vietnamese cuisine</li>
+              <li><a href="https://mapy.com/s/jaferofafa" target="_blank" rel="noopener">DTG</a> &#8211; another Vietnamese and Thailand cuisine</li>
+              <li><a href="https://mapy.com/s/novocahohu" target="_blank" rel="noopener">Champa</a> &#8211; Chinese cuisine</li>
+              <li><a href="https://mapy.com/s/hazotenetu" target="_blank" rel="noopener">U P&#283;tn&iacute;ka</a> &#8211; Czech cuisine</li>
+              <li><a href="https://mapy.com/s/capovamuga" target="_blank" rel="noopener">U &#352;vejka</a> &#8211; hardcore vintage Czech cuisine, no cards accepted</li>
+              <li><a href="https://mapy.com/s/dotulalomo" target="_blank" rel="noopener">U Topol&#367;</a> &#8211; Czech cuisine</li>
+              <li><a href="https://mapy.com/s/fegohadagu" target="_blank" rel="noopener">Restaurace Kula&#357;&aacute;k</a> &#8211; Czech cuisine</li>
+              <li><a href="https://mapy.com/s/natudokasa" target="_blank" rel="noopener">U &#356;amana</a> &#8211; Vietnamese b&aacute;nh m&igrave; (fastfood baguettes)</li>
+            </ul>
+          </div>
+        </span>
+      `;
+      frag.appendChild(row);
+    }
+    if (b === 2) {
+      const row = document.createElement('div');
+      row.className = 'schedule-row';
+      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + COFFEE2_DURATION)}</span><span class="sched-event">Coffee Break</span>`;
+      frag.appendChild(row);
+    }
+  });
+
+  container.appendChild(frag);
+}
+
+function handleData(participants) {
+  const talks = participants.filter(p => p.participation === 'Oral Presentation (15+5 min)');
+
+  // Sort by the "Lecture #" column from the registration sheet.
+  // Talks without a number (not yet assigned) are placed at the end, in registration order.
+  talks.sort((a, b) => {
+    const aHas = a.lectureOrder !== null && a.lectureOrder !== undefined && !isNaN(a.lectureOrder);
+    const bHas = b.lectureOrder !== null && b.lectureOrder !== undefined && !isNaN(b.lectureOrder);
+    if (aHas && bHas) return a.lectureOrder - b.lectureOrder;
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    return 0; // keep original relative order for talks with no number yet
+  });
+
+  renderSchedule(talks);
+}
+
+// Try cache first for instant display
+try {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (cached) {
+    const { data, timestamp } = JSON.parse(cached);
+    handleData(data);
+    if (Date.now() - timestamp >= CACHE_TTL) loadFresh();
+  } else {
+    loadFresh();
+  }
+} catch(e) {
+  loadFresh();
+}
+
+function loadFresh() {
+  const script = document.createElement('script');
+  script.onerror = () => {
+    const container = document.getElementById('schedule-dynamic');
+    if (!container.children.length || container.querySelector('.skeleton-row')) {
+      container.innerHTML = '<div class="schedule-row"><span class="sched-time"></span><span class="sched-event" style="font-style:italic; color:var(--gray);">Could not load the programme. Please try again later.</span></div>';
+    }
+  };
+  script.src = API_BASE + '?action=list&callback=handleDataAndCache';
+  document.head.appendChild(script);
+}
+
+function handleDataAndCache(participants) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ data: participants, timestamp: Date.now() }));
+  } catch(e) {}
+  handleData(participants);
+}
 </script>
 </body>
 </html>
