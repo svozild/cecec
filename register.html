@@ -261,7 +261,7 @@ async function submitRegistration() {
     params.append('participation', participation);
     params.append('title', needsTitle ? title : '');
 
-    await fetch('https://script.google.com/macros/s/AKfycbwv6iJxKX_gDJJSmh58I07Z3b3LHLi-8fwNVhPRgVoyEnzflrpfUR6PgCMZxzMcovdS1g/exec?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+    await fetch('https://script.google.com/macros/s/AKfycbyO88vbRzk8TuY2RNBkmAK8bDzoNjlmDMWwsPhsnX8Xzn5_S25fOOoEiMVUnRqIm-9abA/exec?' + params.toString(), { method: 'GET', mode: 'no-cors' });
 
     btn.style.display = 'none';
     msg.style.display = 'block'; msg.style.color = 'var(--cyan)';
