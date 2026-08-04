@@ -46,6 +46,12 @@
     .schedule-row:last-child { border-bottom: none; }
     .sched-time { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; color: var(--cyan-dim); letter-spacing: .04em; }
     .sched-event { font-size: .9rem; color: #9DBCCC; }
+    .lunch-tips { margin-top: .6rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: .8rem 1rem; }
+    .lunch-tips-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; margin-bottom: .5rem; }
+    .lunch-tips ul { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+    .lunch-tips li { font-size: .84rem; color: #9DBCCC; }
+    .lunch-tips a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+    .lunch-tips a:hover { text-decoration: underline; }
     .sched-event a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); }
     .sched-event a:hover { border-bottom-color: var(--cyan); }
 
@@ -187,13 +193,28 @@ function fmtTime(mins) {
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
 
-// Distribute n talks across 4 blocks as evenly as possible, extra talks go to earlier blocks
-function distribute(n, blocks = 4) {
-  const base = Math.floor(n / blocks);
-  const remainder = n % blocks;
-  const counts = [];
-  for (let i = 0; i < blocks; i++) {
-    counts.push(base + (i < remainder ? 1 : 0));
+// Target block sizes as requested by the organizer: 5, 5, 6, 5
+// If the actual number of talks differs, extra talks are appended to the
+// last block, or removed from the end of the last non-empty block.
+function distribute(n) {
+  const target = [5, 5, 6, 5];
+  const targetSum = target.reduce((a, b) => a + b, 0);
+
+  if (n === targetSum) return target.slice();
+
+  const counts = target.slice();
+
+  if (n > targetSum) {
+    counts[3] += (n - targetSum);
+    return counts;
+  }
+
+  // n < targetSum: trim from the end, block by block
+  let deficit = targetSum - n;
+  for (let i = counts.length - 1; i >= 0 && deficit > 0; i--) {
+    const cut = Math.min(counts[i], deficit);
+    counts[i] -= cut;
+    deficit -= cut;
   }
   return counts;
 }
@@ -207,7 +228,7 @@ function renderSchedule(talks) {
     return;
   }
 
-  const counts = distribute(talks.length, 4);
+  const counts = distribute(talks.length);
   let idx = 0;
   let cursor = BLOCK1_START;
   const blockRanges = [];
@@ -251,19 +272,33 @@ function renderSchedule(talks) {
     if (b === 0) {
       const row = document.createElement('div');
       row.className = 'schedule-row';
-      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}</span><span class="sched-event">Coffee Break</span>`;
+      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + COFFEE1_DURATION)}</span><span class="sched-event">Coffee Break</span>`;
       frag.appendChild(row);
     }
     if (b === 1) {
       const row = document.createElement('div');
       row.className = 'schedule-row';
-      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}</span><span class="sched-event">Lunch</span>`;
+      row.innerHTML = `
+        <span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + LUNCH_DURATION)}</span>
+        <span class="sched-event">
+          Lunch
+          <div class="lunch-tips">
+            <div class="lunch-tips-label">Lunch tips nearby</div>
+            <ul>
+              <li><a href="https://mapy.com/s/resevujobe" target="_blank" rel="noopener">Dua</a> &#8211; Vietnamese cuisine</li>
+              <li><a href="https://mapy.com/s/jaferofafa" target="_blank" rel="noopener">DTG</a> &#8211; Vietnamese &amp; Thai cuisine</li>
+              <li><a href="https://mapy.com/s/novocahohu" target="_blank" rel="noopener">Champa</a> &#8211; Chinese cuisine</li>
+              <li><a href="https://mapy.com/s/dotulalomo" target="_blank" rel="noopener">U Topol&#367;</a> &#8211; Czech cuisine</li>
+            </ul>
+          </div>
+        </span>
+      `;
       frag.appendChild(row);
     }
     if (b === 2) {
       const row = document.createElement('div');
       row.className = 'schedule-row';
-      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}</span><span class="sched-event">Coffee Break</span>`;
+      row.innerHTML = `<span class="sched-time">${fmtTime(block.end)}&nbsp;&#8211;&nbsp;${fmtTime(block.end + COFFEE2_DURATION)}</span><span class="sched-event">Coffee Break</span>`;
       frag.appendChild(row);
     }
   });
