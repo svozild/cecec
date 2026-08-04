@@ -194,11 +194,11 @@ function fmtTime(mins) {
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
 
-// Target block sizes as requested by the organizer: 5, 5, 6, 5
+// Target block sizes as requested by the organizer: 5, 5, 5, 6
 // If the actual number of talks differs, extra talks are appended to the
 // last block, or removed from the end of the last non-empty block.
 function distribute(n) {
-  const target = [5, 5, 6, 5];
+  const target = [5, 5, 5, 6];
   const targetSum = target.reduce((a, b) => a + b, 0);
 
   if (n === targetSum) return target.slice();
