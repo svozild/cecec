@@ -134,6 +134,7 @@
 <div class="page-hero">
   <p class="section-label">CECEC 2026 · 7 September 2026</p>
   <h1>Programme</h1>
+  <p id="talk-count" style="color:var(--gray); font-size:.9rem; margin-top:.6rem;"></p>
 </div>
 
 <!-- PROGRAMME -->
@@ -319,6 +320,11 @@ function handleData(participants) {
 
   // Sort by the "Lecture #" column from the registration sheet.
   talks.sort((a, b) => a.lectureOrder - b.lectureOrder);
+
+  const countEl = document.getElementById('talk-count');
+  if (countEl) {
+    countEl.textContent = talks.length + (talks.length === 1 ? ' talk scheduled' : ' talks scheduled');
+  }
 
   renderSchedule(talks);
 }
