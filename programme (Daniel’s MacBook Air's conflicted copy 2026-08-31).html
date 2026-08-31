@@ -36,11 +36,11 @@
     h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1.6rem; }
     .divider { border: none; border-top: 1px solid rgba(0,198,215,.15); margin: 0; }
 
-    .page-hero { padding: 5rem 2rem 0; max-width: 1080px; margin: 0 auto; }
+    .page-hero { padding: 5rem 2rem 1rem; max-width: 1080px; margin: 0 auto; }
     .page-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; }
 
     .programme-note { color: var(--gray); font-size: .9rem; margin-bottom: 2rem; font-style: italic; }
-    .day-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin: .2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(0,198,215,.2); }
+    .day-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin: 2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(0,198,215,.2); }
 
     .schedule-row { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.05); align-items: baseline; }
     .schedule-row:last-child { border-bottom: none; }
@@ -134,7 +134,6 @@
 <div class="page-hero">
   <p class="section-label">CECEC 2026 · 7 September 2026</p>
   <h1>Programme</h1>
-  <p id="talk-count" style="color:var(--gray); font-size:.9rem; margin-top:.6rem; margin-bottom:0;"></p>
 </div>
 
 <!-- PROGRAMME -->
@@ -186,7 +185,7 @@ const CACHE_TTL = 3 * 60 * 1000; // 3 minutes – shared cache with participants
 const TALK_LENGTH = 20;
 const BLOCK1_START = 9 * 60;      // 09:00
 const COFFEE1_DURATION = 40;
-const LUNCH_DURATION = 120;
+const LUNCH_DURATION = 100;
 const COFFEE2_DURATION = 40;
 
 function fmtTime(mins) {
@@ -195,11 +194,11 @@ function fmtTime(mins) {
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
 
-// Target block sizes as requested by the organizer: 5, 5, 5, 5
+// Target block sizes as requested by the organizer: 5, 5, 6, 6
 // If the actual number of talks differs, extra talks are appended to the
 // last block, or removed from the end of the last non-empty block.
 function distribute(n) {
-  const target = [5, 5, 5, 5];
+  const target = [5, 5, 6, 6];
   const targetSum = target.reduce((a, b) => a + b, 0);
 
   if (n === targetSum) return target.slice();
@@ -288,13 +287,13 @@ function renderSchedule(talks) {
             <div class="lunch-tips-label">Lunch tips nearby</div>
             <ul>
               <li><a href="https://mapy.com/s/resevujobe" target="_blank" rel="noopener">Dua</a> &#8211; Vietnamese cuisine</li>
-              <li><a href="https://mapy.com/s/masemocogu" target="_blank" rel="noopener">DTG</a> &#8211; another Vietnamese and Thailand cuisine</li>
+              <li><a href="https://mapy.com/s/jaferofafa" target="_blank" rel="noopener">DTG</a> &#8211; another Vietnamese and Thailand cuisine</li>
               <li><a href="https://mapy.com/s/novocahohu" target="_blank" rel="noopener">Champa</a> &#8211; Chinese cuisine</li>
               <li><a href="https://mapy.com/s/hazotenetu" target="_blank" rel="noopener">U P&#283;tn&iacute;ka</a> &#8211; Czech cuisine</li>
-              <li><a href="https://mapy.com/s/capovamuga" target="_blank" rel="noopener">U &#352;vejka</a> &#8211; hardcore retro socialist Czech cuisine, no cards accepted</li>
-              <li><a href="https://mapy.com/s/pekunugege" target="_blank" rel="noopener">U Topol&#367;</a> &#8211; Czech cuisine</li>
-              <li><a href="https://mapy.com/s/catulecatu" target="_blank" rel="noopener">Restaurace Kula&#357;&aacute;k</a> &#8211; Czech cuisine</li>
-              <li><a href="https://mapy.com/s/lemononobe" target="_blank" rel="noopener">U &#356;amana</a> &#8211; Vietnamese b&aacute;nh m&igrave; (fastfood baguettes)</li>
+              <li><a href="https://mapy.com/s/capovamuga" target="_blank" rel="noopener">U &#352;vejka</a> &#8211; hardcore vintage Czech cuisine, no cards accepted</li>
+              <li><a href="https://mapy.com/s/dotulalomo" target="_blank" rel="noopener">U Topol&#367;</a> &#8211; Czech cuisine</li>
+              <li><a href="https://mapy.com/s/fegohadagu" target="_blank" rel="noopener">Restaurace Kula&#357;&aacute;k</a> &#8211; Czech cuisine</li>
+              <li><a href="https://mapy.com/s/natudokasa" target="_blank" rel="noopener">U &#356;amana</a> &#8211; Vietnamese b&aacute;nh m&igrave; (fastfood baguettes)</li>
             </ul>
           </div>
         </span>
@@ -313,18 +312,18 @@ function renderSchedule(talks) {
 }
 
 function handleData(participants) {
-  const talks = participants.filter(p => {
-    if (p.participation !== 'Oral Presentation (15+5 min)') return false;
-    return p.lectureOrder !== null && p.lectureOrder !== undefined && !isNaN(p.lectureOrder);
-  });
+  const talks = participants.filter(p => p.participation === 'Oral Presentation (15+5 min)');
 
   // Sort by the "Lecture #" column from the registration sheet.
-  talks.sort((a, b) => a.lectureOrder - b.lectureOrder);
-
-  const countEl = document.getElementById('talk-count');
-  if (countEl) {
-    countEl.textContent = talks.length + (talks.length === 1 ? ' talk scheduled' : ' talks scheduled');
-  }
+  // Talks without a number (not yet assigned) are placed at the end, in registration order.
+  talks.sort((a, b) => {
+    const aHas = a.lectureOrder !== null && a.lectureOrder !== undefined && !isNaN(a.lectureOrder);
+    const bHas = b.lectureOrder !== null && b.lectureOrder !== undefined && !isNaN(b.lectureOrder);
+    if (aHas && bHas) return a.lectureOrder - b.lectureOrder;
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    return 0; // keep original relative order for talks with no number yet
+  });
 
   renderSchedule(talks);
 }
