@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="../cecec_logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CECEC 2026 &#8211; Photos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#0D1B2A; --cyan:#00C6D7; --cyan-dim:#007F8B; --white:#F4F8FB; --gray:#8FA3B1; --card-bg:#132233; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(13,27,42,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,198,215,0.12); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-hamburger:hover span { background: var(--cyan); }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
+
+    main { max-width: 1080px; margin: 0 auto; padding: 6rem 2rem 4rem; }
+    .page-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .subtitle { color: var(--gray); font-size: .9rem; margin-bottom: 1.5rem; max-width: 640px; }
+
+    .download-all { display: inline-flex; align-items: center; gap: .5rem; background: var(--cyan); color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .9rem; padding: .7rem 1.4rem; border-radius: 6px; text-decoration: none; margin-bottom: 2.5rem; transition: background .2s; }
+    .download-all:hover { background: #00aebf; }
+
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+    .photo-card { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; overflow: hidden; transition: border-color .2s, transform .15s; }
+    .photo-card:hover { border-color: rgba(0,198,215,.35); transform: translateY(-2px); }
+    .photo-card img { width: 100%; height: 180px; object-fit: cover; display: block; background: rgba(255,255,255,.03); }
+    .photo-card-footer { padding: .7rem .9rem; display: flex; align-items: center; justify-content: space-between; }
+    .photo-card-footer span { font-size: .8rem; color: var(--gray); }
+    .photo-card-footer a { color: var(--cyan); text-decoration: none; font-size: .8rem; font-weight: 600; display: inline-flex; align-items: center; gap: .3rem; }
+    .photo-card-footer a:hover { text-decoration: underline; }
+
+    footer img { filter: none; }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; margin-top: 3rem; }
+    footer a { color: var(--cyan-dim); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      main { padding: 5rem 1.2rem 3rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="./"><img src="../cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2026</span></a>
+  <ul class="nav-links">
+    <li><a href="./">Programme</a></li>
+    <li><a href="./participants.html">Participants</a></li>
+    <li><a href="./photos.html" class="active">Photos</a></li>
+    <li><a href="../" class="nav-back">← Back to main page</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobile-menu">
+  <a href="./"                onclick="closeMenu()">Programme</a>
+  <a href="./participants.html" onclick="closeMenu()">Participants</a>
+  <a href="./photos.html"     onclick="closeMenu()">Photos</a>
+  <a href="../"               onclick="closeMenu()" style="color:var(--cyan);">← Back to main page</a>
+</div>
+
+<main>
+  <p class="page-label">CECEC 2026</p>
+  <h1>Conference Photos</h1>
+  <p class="subtitle">A few moments from the day. Click any photo to download the full-resolution version.</p>
+
+  <a href="photos/CECEC2026_photos.zip" class="download-all" download>⬇ Download all photos (.zip)</a>
+
+  <div class="photo-grid">
+    <div class="photo-card">
+      <a href="photos/1.jpg" target="_blank" rel="noopener"><img src="photos/1.jpg" alt="CECEC 2026 photo 1" loading="lazy" /></a>
+      <div class="photo-card-footer">
+        <span>1.jpg</span>
+        <a href="photos/1.jpg" download>⬇ Download</a>
+      </div>
+    </div>
+    <div class="photo-card">
+      <a href="photos/2.jpg" target="_blank" rel="noopener"><img src="photos/2.jpg" alt="CECEC 2026 photo 2" loading="lazy" /></a>
+      <div class="photo-card-footer">
+        <span>2.jpg</span>
+        <a href="photos/2.jpg" download>⬇ Download</a>
+      </div>
+    </div>
+    <div class="photo-card">
+      <a href="photos/3.jpg" target="_blank" rel="noopener"><img src="photos/3.jpg" alt="CECEC 2026 photo 3" loading="lazy" /></a>
+      <div class="photo-card-footer">
+        <span>3.jpg</span>
+        <a href="photos/3.jpg" download>⬇ Download</a>
+      </div>
+    </div>
+    <div class="photo-card">
+      <a href="photos/4.jpg" target="_blank" rel="noopener"><img src="photos/4.jpg" alt="CECEC 2026 photo 4" loading="lazy" /></a>
+      <div class="photo-card-footer">
+        <span>4.jpg</span>
+        <a href="photos/4.jpg" download>⬇ Download</a>
+      </div>
+    </div>
+    <div class="photo-card">
+      <a href="photos/5.jpg" target="_blank" rel="noopener"><img src="photos/5.jpg" alt="CECEC 2026 photo 5" loading="lazy" /></a>
+      <div class="photo-card-footer">
+        <span>5.jpg</span>
+        <a href="photos/5.jpg" download>⬇ Download</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer style="text-align:center; padding-top:1rem;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="../czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="../logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+      </a>
+    </div>
+  </div>
+  <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="../">Back to main page</a></p>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
+</script>
+</body>
+</html>
