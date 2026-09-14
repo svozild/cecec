@@ -1,1 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="../cecec_logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CECEC 2026 &#8211; Central & Eastern European Cheminformatics Conference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0D1B2A;
+      --steel:   #1B4F72;
+      --cyan:    #00C6D7;
+      --cyan-dim:#007F8B;
+      --white:   #F4F8FB;
+      --gray:    #8FA3B1;
+      --card-bg: #132233;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
 
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 64px;
+      background: rgba(13,27,42,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,198,215,0.12);
+    }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; flex-shrink: 0; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .03em; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
+
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 6rem 2rem 4rem; }
+    #hex-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: .55; display: block; }
+    .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.2rem; margin-top: -2rem; position: relative; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; position: relative; max-width: 900px; }
+    .hero-title .accent { color: var(--cyan); }
+    .hero-subtitle { margin-top: 1.4rem; font-size: 1.1rem; color: var(--gray); max-width: 560px; position: relative; }
+    .hero-meta { margin-top: 2.5rem; display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .hero-meta-item { text-align: center; }
+    .hero-meta-item .label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; }
+    .hero-meta-item .value { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); }
+    .hero-divider { width: 1px; height: 40px; background: rgba(0,198,215,.25); align-self: center; }
+
+    section { padding: 3rem 2rem !important; max-width: 1080px; margin: 0 auto; }
+    .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1.6rem; }
+    .divider { border: none; border-top: 1px solid rgba(0,198,215,.15); margin: 0; max-width: 100%; }
+
+    .programme-note { color: var(--gray); font-size: .9rem; margin-bottom: 2rem; font-style: italic; }
+    .day-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; color: var(--cyan); margin: 2rem 0 .8rem; padding-bottom: .5rem; border-bottom: 1px solid rgba(0,198,215,.2); }
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 1fr;
+      gap: .5rem 1rem;
+      padding: .65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      align-items: baseline;
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-row.break { background: rgba(0,198,215,.04); border-radius: 4px; padding: .65rem .5rem; }
+    .sched-time { font-family: 'Space Grotesk', sans-serif; font-size: .78rem; font-weight: 600; color: var(--cyan-dim); letter-spacing: .04em; white-space: nowrap; }
+    .sched-talk { font-size: .9rem; color: var(--white); font-weight: 500; }
+    .sched-talk.break-label { color: var(--gray); font-weight: 400; font-style: italic; }
+    .sched-speaker { font-size: .82rem; color: var(--gray); }
+    .sched-speaker strong { color: #9DBCCC; font-weight: 500; }
+    .slides-link { display: inline-flex; align-items: center; gap: .3rem; margin-left: .6rem; color: var(--cyan); text-decoration: none; font-size: .78rem; font-weight: 600; white-space: nowrap; }
+    .slides-link:hover { text-decoration: underline; }
+
+    #venue .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+    .venue-info p { color: #9DBCCC; margin-bottom: .8rem; }
+    .venue-address { margin-top: 1.5rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1.2rem 1.4rem; }
+    .venue-address .addr-label { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; margin-bottom: .4rem; }
+    .venue-address address { font-style: normal; color: var(--white); font-size: .95rem; line-height: 1.9; }
+    .venue-address .hall-badge { display: inline-block; margin-top: .6rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .78rem; font-weight: 600; letter-spacing: .06em; padding: .25rem .7rem; border-radius: 4px; }
+    .map-embed { border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,198,215,.12); height: 100%; min-height: 300px; }
+    .map-embed iframe { width: 100%; height: 100%; min-height: 300px; border: none; filter: invert(90%) hue-rotate(180deg); }
+    .map-link { color: var(--cyan); text-decoration: none; font-size: .85rem; font-weight: 500; display: block; text-align: center; padding: .6rem 0 .3rem; }
+    .map-link:hover { text-decoration: underline; }
+
+    #venue { padding-top: 2rem; padding-bottom: 2rem; }
+    #programme { padding-bottom: 2rem; }
+    footer img { filter: none; }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; }
+    footer a { color: var(--cyan-dim); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    @media (max-width: 820px) {
+      nav { padding: 0 1.4rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      #venue .venue-grid { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.2rem; }
+      .hero-divider { display: none; }
+      #hero { padding: 5rem 1.5rem 3rem; }
+      .schedule-row { grid-template-columns: 90px 1fr; }
+      .sched-speaker { grid-column: 2; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#hero"><img src="../cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2026</span></a>
+  <ul class="nav-links">
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="./participants.html">Participants</a></li>
+    <li><a href="./photos.html">Photos</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="../" class="nav-back">← Back to main page</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobile-menu">
+  <a href="#programme"          onclick="closeMenu()">Programme</a>
+  <a href="./participants.html" onclick="closeMenu()">Participants</a>
+  <a href="./photos.html"       onclick="closeMenu()">Photos</a>
+  <a href="#venue"              onclick="closeMenu()">Venue</a>
+  <a href="../"                 onclick="closeMenu()" style="color:var(--cyan);">← Back to main page</a>
+</div>
+
+<section id="hero">
+  <canvas id="hex-canvas"></canvas>
+  <p class="hero-eyebrow">2nd Annual Edition · 7 September 2026</p>
+  <h1 class="hero-title">
+    Central &amp; Eastern European<br><span class="accent">Cheminformatics</span> Conference
+  </h1>
+  <p class="hero-subtitle" style="font-size:.9rem;">Archive of the second CECEC meeting.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="label">Date</div>
+      <div class="value">7 September 2026</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Location</div>
+      <div class="value">Prague, Czech Republic</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Edition</div>
+      <div class="value">CECEC 2026</div>
+    </div>
+  </div>
+</section>
+<section id="programme">
+  <p class="section-label">Programme</p>
+  <h2>Conference Schedule</h2>
+
+  <div class="day-header">Monday, 7 September 2026</div>
+
+  <div class="schedule-row">
+    <span class="sched-time">08:55 &#8211; 09:00</span>
+    <span class="sched-talk">Opening Remarks</span>
+    <span class="sched-speaker"><strong>Daniel Svozil</strong> · Department of Informatics and Chemistry &amp; CZ-OPENSCREEN, University of Chemistry and Technology Prague, Czech Republic</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:00 &#8211; 09:20</span>
+    <span class="sched-talk">In Silico Isomerization Produces Apt Negative Data for VHTS Validation <a href="prezentace/Ivanov.pdf" class="slides-link" download>⬇ Slides</a><br /><a href="https://www.youtube.com/watch?v=sa9gnKuV9qk" class="slides-link" target="_blank" rel="noopener">▶ Video Recording</a></span>
+    <span class="sched-speaker"><strong>Stefan Ivanov</strong> · Faculty of Pharmacy, Medical University of Sofia &amp; Centre of Excellence in Informatics and ICT, Sofia, Bulgaria</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:20 &#8211; 09:40</span>
+    <span class="sched-talk">The Dark Side of Docking Scores <a href="prezentace/Horvath.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Dragos Horvath</strong> · Laboratory of Chemoinformatics UMR7140 UniStra/CNRS, Strasbourg, France</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">09:40 &#8211; 10:00</span>
+    <span class="sched-talk">Spatially-aware detection of binding site with protein language models <a href="prezentace/Hoksza.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>David Hoksza</strong> · Faculty of Mathematics and Physics, Charles University, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">10:00 &#8211; 10:20</span>
+    <span class="sched-talk">Predicting HTS data using modern ML methods: what have we learned from recent EUOS competitions? <a href="prezentace/Tetko.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Igor Tetko</strong> · Helmholtz Munich, Germany</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">10:20 &#8211; 10:40</span>
+    <span class="sched-talk">Beyond Black Boxes: Physics-Informed AI for Enantioselective Catalyst Design <a href="prezentace/Varnek.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Alexandre Varnek</strong> · University of Strasbourg, France &amp; ICReDD, Hokkaido University, Japan</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">10:40 &#8211; 11:20</span>
+    <span class="sched-talk break-label">Coffee Break</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">11:20 &#8211; 11:40</span>
+    <span class="sched-talk">The Elephant in the Room: Cheminformatics in the Era of Agents &#8211; How Should We Deliver Value? <a href="prezentace/Fusco.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Riccardo Fusco</strong> · Palacky University | CATRIN, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">11:40 &#8211; 12:00</span>
+    <span class="sched-talk">Chemical Language Models beyond SMILES and SELFIES <a href="prezentace/Dehaen.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Wim Dehaen</strong> · Department of Informatics and Chemistry &amp; CZ-OPENSCREEN, UCT Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:00 &#8211; 12:20</span>
+    <span class="sched-talk">Combining AI and classical techniques to see proteins in motion <a href="prezentace/Han%C5%BEl.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Václav Hanžl</strong> · University of Chemistry and Technology Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:20 &#8211; 12:40</span>
+    <span class="sched-talk">Nuisance Compounds at CZ-OPENSCREEN <a href="prezentace/Hanzl%C3%ADk.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Adam Hanzlík</strong> · CZ-OPENSCREEN, Institute of Molecular Genetics of the Czech Academy of Sciences, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">12:40 &#8211; 13:00</span>
+    <span class="sched-talk">Drug permeation through the data lenses <a href="prezentace/Berka.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Karel Berka</strong> · Palacky University Olomouc, Czechia</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">13:00 &#8211; 15:00</span>
+    <span class="sched-talk break-label">Lunch</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:00 &#8211; 15:20</span>
+    <span class="sched-talk">Exploring noncovalent interactions via the Cambridge Structural Database <a href="prezentace/Malenov.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Dušan Malenov</strong> · University of Belgrade, Faculty of Chemistry, Serbia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:20 &#8211; 15:40</span>
+    <span class="sched-talk">Development of software tools for the open source cheminformatics ecosystem <a href="prezentace/%C5%A0%C3%ADcho.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Martin Šícho</strong> · Department of Informatics and Chemistry &amp; CZ-OPENSCREEN, UCT Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">15:40 &#8211; 16:00</span>
+    <span class="sched-talk">Design, Dock, Simulate: An Open-Source Stack for Drug Discovery <a href="prezentace/Polishchuk.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Pavel Polishchuk</strong> · Palacky University, Olomouc, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">16:00 &#8211; 16:20</span>
+    <span class="sched-talk">Orange ChemInfWidgets as datamining tool for Chemoinformatics <a href="prezentace/Podlipnik.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Črtomir Podlipnik</strong> · Faculty of Chemistry and Chemical Technology, University of Ljubljana, Slovenia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">16:20 &#8211; 16:40</span>
+    <span class="sched-talk">Quantum chemistry on AI-generated structures of protein-ligand complexes <a href="prezentace/%C5%98ez%C3%A1%C4%8D.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Jan Řezáč</strong> · Institute of Organic Chemistry and Biochemistry AS CR, Prague, Czechia</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">16:40 &#8211; 17:20</span>
+    <span class="sched-talk break-label">Coffee Break</span>
+    <span class="sched-speaker"></span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">17:20 &#8211; 17:40</span>
+    <span class="sched-talk">A Read-Across approach to model vapor-liquid equilibria of alkanethiols absorption in aqueous amine solvents <a href="prezentace/Klimenko.pdf" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Kyrylo Klimenko</strong> · Department of Informatics and Chemistry, UCT Prague, Czechia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">17:40 &#8211; 18:00</span>
+    <span class="sched-talk">Predicting vapour pressures in diverse chemical spaces</span>
+    <span class="sched-speaker"><strong>Dalibor Hršak</strong> · Ruđer Bošković Institute, Zagreb, Croatia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">18:00 &#8211; 18:20</span>
+    <span class="sched-talk">Structural Basis of Amyloid-β Aggregation Inhibition by Novel Tetrahydrofuran Derivatives</span>
+    <span class="sched-speaker"><strong>Vladimír Garaj</strong> · Faculty of Pharmacy, Comenius University in Bratislava, Slovakia</span>
+  </div>
+  <div class="schedule-row">
+    <span class="sched-time">18:20 &#8211; 18:40</span>
+    <span class="sched-talk">Polyphenol fatty acid esters &#8211; structure, activity, and pharmacological potential <a href="prezentace/M%C3%A1jekov%C3%A1.pptx" class="slides-link" download>⬇ Slides</a></span>
+    <span class="sched-speaker"><strong>Magdaléna Májeková</strong> · Centre of Experimental Medicine, Slovak Academy of Sciences, Slovakia</span>
+  </div>
+  <div class="schedule-row break">
+    <span class="sched-time">20:00</span>
+    <span class="sched-talk break-label">Conference Dinner &#8211; Na Urale</span>
+    <span class="sched-speaker"></span>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="venue">
+  <p class="section-label">Venue</p>
+  <address style="font-style:normal; color:#9DBCCC; font-size:.95rem; line-height:2;">
+    <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a><br />
+    Technická 1903/3, Prague 6, CZ-166 28<br />
+    Czech Republic<br />
+    <span style="display:inline-block; margin-top:.4rem; background:rgba(0,198,215,.12); border:1px solid rgba(0,198,215,.25); color:var(--cyan); font-size:.78rem; font-weight:600; letter-spacing:.06em; padding:.25rem .7rem; border-radius:4px;">Lecture Hall B&nbsp;III</span>
+  </address>
+</section>
+
+<footer style="text-align:center; padding-top:1rem;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="../czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="../logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+      </a>
+    </div>
+  </div>
+  <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#programme">Programme</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
+  <p style="margin-top:.4rem;"><a href="../">← Back to main page</a></p>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
+
+(function () {
+  const canvas = document.getElementById('hex-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, hexes = [];
+  const HEX_R = 34, SPEED = 0.0008;
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width = rect.width; H = canvas.height = rect.height;
+    buildGrid();
+  }
+  function hexCorner(cx, cy, r, i) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  }
+  function buildGrid() {
+    hexes = [];
+    const w = HEX_R * Math.sqrt(3), h = HEX_R * 2;
+    const cols = Math.ceil(W / w) + 2, rows = Math.ceil(H / (h * 0.75)) + 2;
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        hexes.push({ cx: c * w + (r % 2 === 0 ? 0 : w / 2) - w * 0.5, cy: r * h * 0.75 - h * 0.5, phase: Math.random() * Math.PI * 2 });
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    hexes.forEach(h => {
+      const pulse = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * SPEED + h.phase));
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) { const [x, y] = hexCorner(h.cx, h.cy, HEX_R - 2, i); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+      ctx.closePath();
+      ctx.strokeStyle = `rgba(0,198,215,${pulse})`;
+      ctx.lineWidth = 1.2; ctx.stroke();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  setTimeout(() => { resize(); requestAnimationFrame(draw); }, 100);
+})();
+</script>
+</body>
+</html>
