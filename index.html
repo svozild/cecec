@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="cecec_logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CECEC 2027 &#8211; Central & Eastern European Cheminformatics Conference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0D1B2A;
+      --cyan:    #00C6D7;
+      --cyan-dim:#007F8B;
+      --white:   #F4F8FB;
+      --gray:    #8FA3B1;
+      --card-bg: #132233;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(13,27,42,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,198,215,0.12); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; flex-shrink: 0; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .03em; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta { background: var(--cyan); color: var(--navy) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-cta:hover { background: #00aebf; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-hamburger:hover span { background: var(--cyan); }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
+
+    /* HERO */
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; padding: 6rem 2rem 4rem; }
+    #hex-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: .55; display: block; }
+    .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.2rem; margin-top: 1.5rem; position: relative; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; position: relative; max-width: 900px; }
+    .hero-title .accent { color: var(--cyan); }
+    .hero-subtitle { margin-top: 1.4rem; font-size: 1.1rem; color: var(--gray); max-width: 560px; position: relative; }
+    .hero-meta { margin-top: 2.5rem; display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .hero-meta-item { text-align: center; }
+    .hero-meta-item .label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-dim); font-weight: 600; }
+    .hero-meta-item .value { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); }
+    .hero-divider { width: 1px; height: 40px; background: rgba(0,198,215,.25); align-self: center; }
+    .btn-primary { display: inline-block; margin-top: 2.8rem; padding: .8rem 2.2rem; background: var(--cyan); color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; border-radius: 4px; text-decoration: none; letter-spacing: .02em; transition: background .2s, transform .15s; position: relative; }
+    .btn-primary:hover { background: #00aebf; transform: translateY(-1px); }
+
+    /* SECTIONS */
+    section { padding: 1.5rem 2rem !important; max-width: 1080px; margin: 0 auto; }
+    .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1.6rem; }
+    .divider { border: none; border-top: 1px solid rgba(0,198,215,.15); margin: 0; max-width: 100%; }
+
+    /* ABOUT */
+    #about { max-width: 1080px; margin: 0 auto; padding: 1.5rem 2rem !important; }
+    .about-text p { color: #9DBCCC; margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,198,215,.35); transition: border-color .2s; }
+    .about-text a:hover { border-color: var(--cyan); }
+
+    /* CEE TOOLTIP */
+    .cee-tooltip-wrap { position: relative; display: inline; border-bottom: 1px dashed var(--cyan-dim); cursor: default; }
+    .cee-tooltip { display: grid; grid-template-columns: repeat(3, 1fr); gap: .3rem .8rem; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #0e2033; border: 1px solid rgba(0,198,215,.25); border-radius: 8px; padding: .85rem 1rem; width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,.45); font-size: .78rem; font-family: 'Inter', sans-serif; color: #9DBCCC; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .18s, transform .18s; transform: translateX(-50%) translateY(4px); z-index: 50; }
+    .cee-tooltip-wrap:hover .cee-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .cee-tooltip span { display: block; }
+    .cee-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: rgba(0,198,215,.25); }
+
+    /* QUICK LINKS */
+    .quick-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .quick-link { display: flex; align-items: center; gap: .6rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 8px; padding: .8rem 1.2rem; text-decoration: none; color: var(--white); font-size: .88rem; font-weight: 500; transition: border-color .2s, transform .15s; }
+    .quick-link:hover { border-color: var(--cyan); transform: translateY(-2px); }
+    .quick-link .ql-icon { font-size: 1.1rem; }
+    .quick-link .ql-label { color: var(--gray); font-size: .75rem; display: block; }
+    .quick-link .ql-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+
+    /* VENUE + CONTACT side by side */
+    .venue-contact-grid {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 3rem 2rem !important;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: stretch;
+    }
+    .venue-box .section-label,
+    .contact-box .section-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    .venue-box h2, .contact-box h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 1rem; }
+    .venue-box { display: flex; flex-direction: column; }
+    .venue-box p { color: #9DBCCC; font-size: .9rem; margin-bottom: .6rem; }
+    .venue-address { flex: 1; margin-top: 0; background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 8px; padding: 1rem 1.2rem; }
+    .venue-address address { font-style: normal; color: var(--white); font-size: .9rem; line-height: 1.8; }
+    .venue-address .hall-badge { display: inline-block; margin-top: .5rem; background: rgba(0,198,215,.12); border: 1px solid rgba(0,198,215,.25); color: var(--cyan); font-size: .75rem; font-weight: 600; letter-spacing: .06em; padding: .2rem .6rem; border-radius: 4px; text-decoration: none; transition: background .2s; }
+    .venue-address .hall-badge:hover { background: rgba(0,198,215,.25); }
+    .map-link-small { display: inline-block; margin-top: .7rem; color: var(--cyan); text-decoration: none; font-size: .82rem; font-weight: 500; }
+    .map-link-small:hover { text-decoration: underline; }
+
+    .contact-box { text-align: left; display: flex; flex-direction: column; }
+    .contact-box > p { color: #9DBCCC; font-size: .9rem; margin-bottom: 1.2rem; }
+    .contact-card { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; background: var(--card-bg); border: 1px solid rgba(0,198,215,.15); border-radius: 12px; padding: 1.5rem 1.8rem; }
+    .contact-link:hover h3 { color: #00aebf; }
+    .contact-link:hover .contact-icon { transform: scale(1.1); }
+    .contact-icon { transition: transform .15s; }
+    .contact-icon { font-size: 1.6rem; }
+    .contact-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: .1rem; }
+    .contact-card a { color: var(--cyan); text-decoration: none; font-size: .9rem; }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer img { filter: none; }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; }
+    footer a { color: var(--cyan-dim); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    /* RESPONSIVE */
+    @media (max-width: 820px) {
+      nav { padding: 0 1.4rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      section { padding: 1.5rem 1.2rem !important; }
+      .hero-divider { display: none; }
+      .venue-contact-grid { grid-template-columns: 1fr; padding: 1.5rem 1.2rem !important; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2027</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="./past.html">Past Editions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobile-menu">
+  <a href="#about"              onclick="closeMenu()">About</a>
+  <a href="./past.html"         onclick="closeMenu()">Past Editions</a>
+  <a href="#contact"            onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hex-canvas"></canvas>
+  <p class="hero-eyebrow">3rd Annual Edition · 2&#8211;3 September 2027</p>
+  <h1 class="hero-title">
+    Central &amp; Eastern European<br><span class="accent">Cheminformatics</span> Conference
+  </h1>
+  <p class="hero-subtitle">
+    A dedicated forum for cheminformatics researchers, practitioners, and students across the CEE region.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="label">Date</div>
+      <div class="value">2&#8211;3 September 2027</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Location</div>
+      <div class="value">Prague, Czech Republic</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="label">Edition</div>
+      <div class="value">CECEC 2027</div>
+    </div>
+  </div>
+  <span class="btn-primary" style="opacity:.6; cursor:default; pointer-events:none;">Registration Opens Soon</span>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About the Conference</p>
+  <h2>Where Chemistry Meets Data</h2>
+  <div class="about-text">
+    <p>
+      CECEC was founded on a simple idea: researchers in cheminformatics across <span class="cee-tooltip-wrap">Central and Eastern Europe<span class="cee-tooltip"><span>Albania</span><span>Bulgaria</span><span>Croatia</span><span>Czechia</span><span>Estonia</span><span>Hungary</span><span>Latvia</span><span>Lithuania</span><span>Poland</span><span>Romania</span><span>Serbia</span><span>Slovakia</span><span>Slovenia</span><span>Ukraine</span></span></span> deserve a dedicated space to meet, talk, and build lasting connections. The region has no shortage of scientific talent &#8211; but opportunities for informal, low-barrier exchange have been scarce.
+    </p>
+    <p>
+      The format is deliberately lightweight. Those who wish to present give a short talk (15 minutes + 5 for discussion), covering ongoing work, fresh results, or a problem worth thinking about together. No poster sessions, no keynotes &#8211; just focused conversation among peers. The day closes with a joint dinner, included for all attendees.
+    </p>
+    <p>
+      Attendance is free of charge.
+    </p>
+    <p>
+      Know someone who should be here? Take a look at our <a href="https://docs.google.com/spreadsheets/d/1ZbJFrXlD-3CgsXBwkFc269ueQC6SOMfuqMGPSSG0_EY/edit?usp=sharing" target="_blank" rel="noopener">invitation list</a> &#8211; if a colleague or research group is missing, <a href="mailto:svozild@vscht.cz?subject=CECEC%20-%20new%20contact">let us know</a> and we'll be happy to reach out.
+    </p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- VENUE + CONTACT -->
+<div class="venue-contact-grid">
+  <div class="venue-box">
+    <p class="section-label">Venue</p>
+    <h2>Conference Location</h2>
+    <div class="venue-address" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+      <address>
+        <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">University of Chemistry and Technology Prague</a><br />
+        Technická 1903/3, Prague 6, CZ-166 28<br />
+        Czech Republic
+      </address>
+      <div>
+        <span style="color:var(--gray); font-size:.82rem;">Exact lecture hall to be announced.</span><br />
+        <a href="https://www.google.com/maps/search/?api=1&query=Technick%C3%A1+1903%2F3%2C+Prague+6" target="_blank" rel="noopener" class="map-link-small">Open in Google Maps →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box" id="contact">
+    <p class="section-label">Get in Touch</p>
+    <h2>Contact the Organizers</h2>
+    <div class="contact-card">
+      <a href="mailto:svozild@vscht.cz" class="contact-link" style="text-decoration:none; display:flex; flex-direction:column; align-items:flex-start; gap:.4rem;">
+        <div class="contact-icon">✉️</div>
+        <h3 style="color:var(--cyan); text-decoration:underline; text-underline-offset:3px;">Email Us</h3>
+      </a>
+      <span style="color:var(--white); font-size:.9rem; font-weight:500;">Daniel Svozil</span>
+      <span style="color:var(--gray); font-size:.82rem; line-height:1.5;">Department of Informatics and Chemistry<br />University of Chemistry and Technology Prague</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding-top:1rem;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+      </a>
+    </div>
+  </div>
+  <p>© 2027 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
+  <p style="margin-top:.4rem;">Past editions: <a href="./2025/">2025</a> &nbsp;·&nbsp; <a href="./2026/">2026</a></p>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
+
+(function () {
+  const canvas = document.getElementById('hex-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, hexes = [];
+  const HEX_R = 34, SPEED = 0.0008;
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width = rect.width; H = canvas.height = rect.height; buildGrid();
+  }
+  function hexCorner(cx, cy, r, i) { const a = Math.PI / 180 * (60 * i - 30); return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+  function buildGrid() {
+    hexes = [];
+    const w = HEX_R * Math.sqrt(3), h = HEX_R * 2;
+    const cols = Math.ceil(W / w) + 2, rows = Math.ceil(H / (h * 0.75)) + 2;
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        hexes.push({ cx: c * w + (r % 2 === 0 ? 0 : w / 2) - w * 0.5, cy: r * h * 0.75 - h * 0.5, phase: Math.random() * Math.PI * 2 });
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    hexes.forEach(h => {
+      const pulse = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * SPEED + h.phase));
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) { const [x, y] = hexCorner(h.cx, h.cy, HEX_R - 2, i); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+      ctx.closePath();
+      ctx.strokeStyle = `rgba(0,198,215,${pulse})`; ctx.lineWidth = 1.2; ctx.stroke();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  setTimeout(() => { resize(); requestAnimationFrame(draw); }, 100);
+})();
+</script>
+</body>
+</html>
