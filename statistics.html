@@ -36,17 +36,16 @@
     h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
     .subtitle { color: var(--gray); font-size: .9rem; margin-bottom: 2.5rem; max-width: 640px; }
 
-    .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
-    .stat-card { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.2rem 1.4rem; }
-    .stat-card .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--cyan); line-height: 1; }
-    .stat-card .stat-label { font-size: .78rem; color: var(--gray); margin-top: .4rem; }
-    .stat-card .stat-delta { font-size: .78rem; margin-top: .3rem; font-weight: 600; }
-    .stat-delta.up { color: #84c225; }
-    .stat-delta.down { color: #E05C8A; }
-
     .chart-section { margin-bottom: 3rem; }
-    .chart-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; }
-    .chart-canvas-wrap { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.5rem; height: 420px; }
+    .chart-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.2rem; }
+    .chart-section .chart-note { font-size: .8rem; color: var(--gray); margin-bottom: 1.2rem; margin-top: -.6rem; }
+    .chart-canvas-wrap { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.5rem; height: 220px; }
+
+    .heatmap-wrap { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.5rem; overflow-x: auto; }
+    .heatmap-grid { display: grid; gap: 3px; font-size: .78rem; min-width: 360px; }
+    .heatmap-country { color: #9DBCCC; padding: .4rem .6rem .4rem 0; white-space: nowrap; display: flex; align-items: center; }
+    .heatmap-yearlabel { text-align: center; color: var(--cyan-dim); font-weight: 600; font-size: .74rem; letter-spacing: .04em; padding-bottom: .3rem; }
+    .heatmap-cell { text-align: center; padding: .55rem 0; border-radius: 4px; font-weight: 600; }
 
     .new-countries { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
     .new-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(132,194,37,.12); border: 1px solid rgba(132,194,37,.3); color: #84c225; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
@@ -62,7 +61,6 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
       main { padding: 5rem 1.2rem 3rem; }
-      .chart-canvas-wrap { height: 320px; padding: 1rem; }
     }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
@@ -92,17 +90,23 @@
 <main>
   <p class="page-label">CECEC Archive</p>
   <h1>Conference Statistics</h1>
-  <p class="subtitle">How the CECEC community grew between its first two editions &#8211; a look at participation and geographic reach.</p>
-
-  <div class="stat-cards" id="stat-cards"></div>
+  <p class="subtitle">How the CECEC community has grown across editions &#8211; participation, geographic reach, and where new countries have joined.</p>
 
   <div class="chart-section">
-    <h2>Participants by Country: 2025 vs 2026</h2>
+    <h2>Participants per edition</h2>
     <div class="chart-canvas-wrap">
-      <canvas id="growthChart"></canvas>
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h2>Participants by country and edition</h2>
+    <p class="chart-note">Darker shading means more participants from that country in that year. Built to scale as more editions are added.</p>
+    <div class="heatmap-wrap">
+      <div class="heatmap-grid" id="heatmap"></div>
     </div>
     <div id="new-countries-wrap" style="display:none;">
-      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">New countries represented in 2026:</p>
+      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">New countries since the previous edition:</p>
       <div class="new-countries" id="new-countries"></div>
     </div>
     <div id="never-countries-wrap" style="display:none;">
@@ -136,15 +140,12 @@ const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
 function closeMenu() { mobileMenu.classList.remove('open'); }
 
-// Static archived data — both editions are now closed
-const DATA_2025 = {
-  'Bulgaria': 1, 'Czechia': 20, 'Estonia': 1, 'Poland': 3,
-  'Romania': 2, 'Slovakia': 3, 'Slovenia': 1, 'Ukraine': 4
-};
+// Archived, closed-edition data
+const EDITIONS = ['2025', '2026'];
 
-const DATA_2026 = {
-  'Bulgaria': 1, 'Croatia': 1, 'Czechia': 39, 'Other': 3,
-  'Poland': 3, 'Serbia': 1, 'Slovakia': 4, 'Slovenia': 1, 'Ukraine': 1
+const DATA = {
+  '2025': { 'Bulgaria': 1, 'Czechia': 20, 'Estonia': 1, 'Poland': 3, 'Romania': 2, 'Slovakia': 3, 'Slovenia': 1, 'Ukraine': 4 },
+  '2026': { 'Bulgaria': 1, 'Croatia': 1, 'Czechia': 39, 'Other': 3, 'Poland': 3, 'Serbia': 1, 'Slovakia': 4, 'Slovenia': 1, 'Ukraine': 1 }
 };
 
 const FLAGS = {
@@ -155,78 +156,72 @@ const FLAGS = {
   'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
 };
 
-function buildChart() {
-  const allCountries = Array.from(new Set([...Object.keys(DATA_2025), ...Object.keys(DATA_2026)]))
-    .filter(c => c !== 'Other')
-    .sort((a, b) => (DATA_2026[b] || 0) - (DATA_2026[a] || 0));
-  if (Object.keys(DATA_2026).includes('Other') || Object.keys(DATA_2025).includes('Other')) {
-    allCountries.push('Other');
-  }
+const totals = EDITIONS.map(y => Object.values(DATA[y]).reduce((a, b) => a + b, 0));
 
-  const total2025 = Object.values(DATA_2025).reduce((a, b) => a + b, 0);
-  const total2026 = Object.values(DATA_2026).reduce((a, b) => a + b, 0);
-  const countries2025 = Object.keys(DATA_2025).length;
-  const countries2026 = Object.keys(DATA_2026).length;
-
-  const statCards = document.getElementById('stat-cards');
-  const participantDelta = total2026 - total2025;
-  const countryDelta = countries2026 - countries2025;
-  statCards.innerHTML = `
-    <div class="stat-card">
-      <div class="stat-value">${total2025}</div>
-      <div class="stat-label">Participants in 2025</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">${total2026}</div>
-      <div class="stat-label">Participants in 2026</div>
-      <div class="stat-delta ${participantDelta >= 0 ? 'up' : 'down'}">${participantDelta >= 0 ? '▲' : '▼'} ${Math.abs(participantDelta)} vs 2025</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">${countries2025}</div>
-      <div class="stat-label">Countries in 2025</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">${countries2026}</div>
-      <div class="stat-label">Countries in 2026</div>
-      <div class="stat-delta ${countryDelta >= 0 ? 'up' : 'down'}">${countryDelta >= 0 ? '▲' : '▼'} ${Math.abs(countryDelta)} vs 2025</div>
-    </div>
-  `;
-
-  new Chart(document.getElementById('growthChart'), {
-    type: 'bar',
-    data: {
-      labels: allCountries,
-      datasets: [
-        {
-          label: '2025',
-          data: allCountries.map(c => DATA_2025[c] || 0),
-          backgroundColor: 'rgba(0,198,215,.35)',
-          borderColor: '#00C6D7',
-          borderWidth: 1,
-          borderRadius: 4
-        },
-        {
-          label: '2026',
-          data: allCountries.map(c => DATA_2026[c] || 0),
-          backgroundColor: '#00C6D7',
-          borderRadius: 4
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: { ticks: { color: '#8FA3B1', font: { size: 11 } }, grid: { display: false } },
-        y: { beginAtZero: true, ticks: { color: '#8FA3B1', stepSize: 5 }, grid: { color: 'rgba(255,255,255,.05)' } }
-      },
-      plugins: {
-        legend: { labels: { color: '#F4F8FB', font: { family: 'Inter' } } }
-      }
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: EDITIONS,
+    datasets: [{
+      data: totals,
+      borderColor: '#00C6D7',
+      backgroundColor: 'rgba(0,198,215,.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#00C6D7',
+      pointBorderColor: '#0D1B2A',
+      pointBorderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: '#8FA3B1', stepSize: 10 }, grid: { color: 'rgba(255,255,255,.05)' } },
+      x: { ticks: { color: '#8FA3B1' }, grid: { display: false } }
     }
-  });
+  }
+});
 
-  const newCountries = Object.keys(DATA_2026).filter(c => !DATA_2025[c] && c !== 'Other');
+const allCountries = Array.from(new Set(EDITIONS.flatMap(y => Object.keys(DATA[y]))))
+  .filter(c => c !== 'Other')
+  .sort((a, b) => (DATA[EDITIONS[EDITIONS.length - 1]][b] || 0) - (DATA[EDITIONS[EDITIONS.length - 1]][a] || 0));
+if (EDITIONS.some(y => DATA[y]['Other'])) allCountries.push('Other');
+
+const maxVal = Math.max(...allCountries.flatMap(c => EDITIONS.map(y => DATA[y][c] || 0)));
+
+function shade(v) {
+  if (v === 0) return 'rgba(255,255,255,.04)';
+  const t = v / maxVal;
+  const stops = [[6,50,66],[0,127,139],[0,198,215],[77,217,232]];
+  const i = Math.min(2, Math.floor(t * 3));
+  const f = t * 3 - i;
+  const c = stops[i].map((c0, k) => Math.round(c0 + (stops[i + 1][k] - c0) * f));
+  return 'rgb(' + c.join(',') + ')';
+}
+function textColor(v) {
+  return v / maxVal > 0.45 ? '#0D1B2A' : '#9DBCCC';
+}
+
+const heatmap = document.getElementById('heatmap');
+heatmap.style.gridTemplateColumns = '110px repeat(' + EDITIONS.length + ', 1fr)';
+let cells = '<div></div>';
+EDITIONS.forEach(y => { cells += `<div class="heatmap-yearlabel">${y}</div>`; });
+allCountries.forEach(c => {
+  cells += `<div class="heatmap-country">${FLAGS[c] || '🌍'}&nbsp;${c}</div>`;
+  EDITIONS.forEach(y => {
+    const v = DATA[y][c] || 0;
+    cells += `<div class="heatmap-cell" style="background:${shade(v)}; color:${textColor(v)};">${v}</div>`;
+  });
+});
+heatmap.innerHTML = cells;
+
+if (EDITIONS.length > 1) {
+  const prevYear = EDITIONS[EDITIONS.length - 2];
+  const lastYear = EDITIONS[EDITIONS.length - 1];
+  const newCountries = Object.keys(DATA[lastYear]).filter(c => !DATA[prevYear][c] && c !== 'Other');
   if (newCountries.length > 0) {
     document.getElementById('new-countries-wrap').style.display = 'block';
     const wrap = document.getElementById('new-countries');
@@ -237,23 +232,21 @@ function buildChart() {
       wrap.appendChild(badge);
     });
   }
-
-  const CEE_COUNTRIES = ['Albania','Bulgaria','Croatia','Czechia','Estonia','Hungary','Latvia','Lithuania','Poland','Romania','Serbia','Slovakia','Slovenia','Ukraine'];
-  const everRepresented = new Set([...Object.keys(DATA_2025), ...Object.keys(DATA_2026)]);
-  const neverCountries = CEE_COUNTRIES.filter(c => !everRepresented.has(c));
-  if (neverCountries.length > 0) {
-    document.getElementById('never-countries-wrap').style.display = 'block';
-    const wrap = document.getElementById('never-countries');
-    neverCountries.forEach(c => {
-      const badge = document.createElement('span');
-      badge.className = 'never-country-badge';
-      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
-      wrap.appendChild(badge);
-    });
-  }
 }
 
-buildChart();
+const CEE_COUNTRIES = ['Albania','Bulgaria','Croatia','Czechia','Estonia','Hungary','Latvia','Lithuania','Poland','Romania','Serbia','Slovakia','Slovenia','Ukraine'];
+const everRepresented = new Set(EDITIONS.flatMap(y => Object.keys(DATA[y])));
+const neverCountries = CEE_COUNTRIES.filter(c => !everRepresented.has(c));
+if (neverCountries.length > 0) {
+  document.getElementById('never-countries-wrap').style.display = 'block';
+  const wrap = document.getElementById('never-countries');
+  neverCountries.forEach(c => {
+    const badge = document.createElement('span');
+    badge.className = 'never-country-badge';
+    badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
+    wrap.appendChild(badge);
+  });
+}
 </script>
 </body>
 </html>
