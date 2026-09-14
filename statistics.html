@@ -20,8 +20,8 @@
     .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
     .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
-    .nav-cta { background: var(--cyan); color: var(--navy) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
-    .nav-cta:hover { background: #00aebf; }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
     .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
     .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
     .nav-hamburger:hover span { background: var(--cyan); }
@@ -50,7 +50,6 @@
 
     .new-countries { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
     .new-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(132,194,37,.12); border: 1px solid rgba(132,194,37,.3); color: #84c225; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
-    .missing-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(143,163,177,.1); border: 1px solid rgba(143,163,177,.25); color: var(--gray); font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
     .never-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(224,92,138,.08); border: 1px solid rgba(224,92,138,.2); color: #E05C8A; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
 
     footer img { filter: none; }
@@ -71,15 +70,12 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC<span> 2026</span></a>
+  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC</a>
   <ul class="nav-links">
     <li><a href="./#about">About</a></li>
-    <li><a href="./programme.html">Programme</a></li>
-    <li><a href="./participants.html">Participants</a></li>
-    <li><a href="./statistics.html" class="active">Stats</a></li>
     <li><a href="./past.html">Past Editions</a></li>
-    <li><a href="./#contact">Contact</a></li>
-    <li><a href="./register.html" class="nav-cta">Register</a></li>
+    <li><a href="./statistics.html" class="active">Statistics</a></li>
+    <li><a href="./" class="nav-back">← Back to main page</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
@@ -87,19 +83,16 @@
 </nav>
 
 <div class="nav-mobile" id="mobile-menu">
-  <a href="./#about"            onclick="closeMenu()">About</a>
-  <a href="./programme.html"    onclick="closeMenu()">Programme</a>
-  <a href="./participants.html" onclick="closeMenu()">Participants</a>
-  <a href="./statistics.html"   onclick="closeMenu()">Stats</a>
-  <a href="./past.html"         onclick="closeMenu()">Past Editions</a>
-  <a href="./#contact"          onclick="closeMenu()">Contact</a>
-  <a href="./register.html"     onclick="closeMenu()" style="color:var(--cyan);font-weight:600;">Register →</a>
+  <a href="./#about"     onclick="closeMenu()">About</a>
+  <a href="./past.html"  onclick="closeMenu()">Past Editions</a>
+  <a href="./statistics.html" onclick="closeMenu()">Statistics</a>
+  <a href="./"           onclick="closeMenu()" style="color:var(--cyan);">← Back to main page</a>
 </div>
 
 <main>
-  <p class="page-label">CECEC</p>
+  <p class="page-label">CECEC Archive</p>
   <h1>Conference Statistics</h1>
-  <p class="subtitle">How the CECEC community has grown across editions &#8211; a look at participation and geographic reach over time.</p>
+  <p class="subtitle">How the CECEC community grew between its first two editions &#8211; a look at participation and geographic reach.</p>
 
   <div class="stat-cards" id="stat-cards"></div>
 
@@ -111,10 +104,6 @@
     <div id="new-countries-wrap" style="display:none;">
       <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">New countries represented in 2026:</p>
       <div class="new-countries" id="new-countries"></div>
-    </div>
-    <div id="missing-countries-wrap" style="display:none;">
-      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">Countries present in 2025 but not yet in 2026:</p>
-      <div class="new-countries" id="missing-countries"></div>
     </div>
     <div id="never-countries-wrap" style="display:none;">
       <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">CEE countries not yet represented at any CECEC:</p>
@@ -136,8 +125,8 @@
       </a>
     </div>
   </div>
-  <p>© 2026 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="./#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
-  <p style="margin-top:.4rem;">Past editions: <a href="./2025/">2025</a></p>
+  <p>© 2027 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="./#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
+  <p style="margin-top:.4rem;">Past editions: <a href="./2025/">2025</a> &nbsp;·&nbsp; <a href="./2026/">2026</a></p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -147,10 +136,15 @@ const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
 function closeMenu() { mobileMenu.classList.remove('open'); }
 
-// 2025 data (static, from past edition archive)
+// Static archived data — both editions are now closed
 const DATA_2025 = {
   'Bulgaria': 1, 'Czechia': 20, 'Estonia': 1, 'Poland': 3,
   'Romania': 2, 'Slovakia': 3, 'Slovenia': 1, 'Ukraine': 4
+};
+
+const DATA_2026 = {
+  'Bulgaria': 1, 'Croatia': 1, 'Czechia': 39, 'Other': 3,
+  'Poland': 3, 'Serbia': 1, 'Slovakia': 4, 'Slovenia': 1, 'Ukraine': 1
 };
 
 const FLAGS = {
@@ -161,32 +155,19 @@ const FLAGS = {
   'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
 };
 
-const API_BASE = 'https://script.google.com/macros/s/AKfycbyO88vbRzk8TuY2RNBkmAK8bDzoNjlmDMWwsPhsnX8Xzn5_S25fOOoEiMVUnRqIm-9abA/exec';
-const CACHE_KEY = 'cecec_participants';
-const CACHE_TTL = 3 * 60 * 1000; // 3 minutes
-
-function buildChart(data2026) {
-  // Count 2026 by country
-  const counts2026 = {};
-  data2026.forEach(p => {
-    const c = p.country || 'Unknown';
-    counts2026[c] = (counts2026[c] || 0) + 1;
-  });
-
-  // Union of all countries from both years
-  const allCountries = Array.from(new Set([...Object.keys(DATA_2025), ...Object.keys(counts2026)]))
+function buildChart() {
+  const allCountries = Array.from(new Set([...Object.keys(DATA_2025), ...Object.keys(DATA_2026)]))
     .filter(c => c !== 'Other')
-    .sort((a, b) => (counts2026[b] || 0) - (counts2026[a] || 0));
-  if (Object.keys(counts2026).includes('Other') || Object.keys(DATA_2025).includes('Other')) {
+    .sort((a, b) => (DATA_2026[b] || 0) - (DATA_2026[a] || 0));
+  if (Object.keys(DATA_2026).includes('Other') || Object.keys(DATA_2025).includes('Other')) {
     allCountries.push('Other');
   }
 
   const total2025 = Object.values(DATA_2025).reduce((a, b) => a + b, 0);
-  const total2026 = data2026.length;
+  const total2026 = Object.values(DATA_2026).reduce((a, b) => a + b, 0);
   const countries2025 = Object.keys(DATA_2025).length;
-  const countries2026 = Object.keys(counts2026).length;
+  const countries2026 = Object.keys(DATA_2026).length;
 
-  // Stat cards
   const statCards = document.getElementById('stat-cards');
   const participantDelta = total2026 - total2025;
   const countryDelta = countries2026 - countries2025;
@@ -211,7 +192,6 @@ function buildChart(data2026) {
     </div>
   `;
 
-  // Grouped bar chart
   new Chart(document.getElementById('growthChart'), {
     type: 'bar',
     data: {
@@ -227,7 +207,7 @@ function buildChart(data2026) {
         },
         {
           label: '2026',
-          data: allCountries.map(c => counts2026[c] || 0),
+          data: allCountries.map(c => DATA_2026[c] || 0),
           backgroundColor: '#00C6D7',
           borderRadius: 4
         }
@@ -238,7 +218,7 @@ function buildChart(data2026) {
       maintainAspectRatio: false,
       scales: {
         x: { ticks: { color: '#8FA3B1', font: { size: 11 } }, grid: { display: false } },
-        y: { beginAtZero: true, ticks: { color: '#8FA3B1', stepSize: 1 }, grid: { color: 'rgba(255,255,255,.05)' } }
+        y: { beginAtZero: true, ticks: { color: '#8FA3B1', stepSize: 5 }, grid: { color: 'rgba(255,255,255,.05)' } }
       },
       plugins: {
         legend: { labels: { color: '#F4F8FB', font: { family: 'Inter' } } }
@@ -246,8 +226,7 @@ function buildChart(data2026) {
     }
   });
 
-  // New countries badges
-  const newCountries = Object.keys(counts2026).filter(c => !DATA_2025[c] && c !== 'Other');
+  const newCountries = Object.keys(DATA_2026).filter(c => !DATA_2025[c] && c !== 'Other');
   if (newCountries.length > 0) {
     document.getElementById('new-countries-wrap').style.display = 'block';
     const wrap = document.getElementById('new-countries');
@@ -259,22 +238,8 @@ function buildChart(data2026) {
     });
   }
 
-  // Missing countries badges (present in 2025, absent in 2026)
-  const missingCountries = Object.keys(DATA_2025).filter(c => !counts2026[c] && c !== 'Other');
-  if (missingCountries.length > 0) {
-    document.getElementById('missing-countries-wrap').style.display = 'block';
-    const wrap = document.getElementById('missing-countries');
-    missingCountries.forEach(c => {
-      const badge = document.createElement('span');
-      badge.className = 'missing-country-badge';
-      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
-      wrap.appendChild(badge);
-    });
-  }
-
-  // CEE countries never represented at any CECEC
   const CEE_COUNTRIES = ['Albania','Bulgaria','Croatia','Czechia','Estonia','Hungary','Latvia','Lithuania','Poland','Romania','Serbia','Slovakia','Slovenia','Ukraine'];
-  const everRepresented = new Set([...Object.keys(DATA_2025), ...Object.keys(counts2026)]);
+  const everRepresented = new Set([...Object.keys(DATA_2025), ...Object.keys(DATA_2026)]);
   const neverCountries = CEE_COUNTRIES.filter(c => !everRepresented.has(c));
   if (neverCountries.length > 0) {
     document.getElementById('never-countries-wrap').style.display = 'block';
@@ -288,38 +253,7 @@ function buildChart(data2026) {
   }
 }
 
-function handleData(participants) {
-  buildChart(participants);
-}
-
-// Try cache first for instant display
-try {
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (cached) {
-    const { data, timestamp } = JSON.parse(cached);
-    handleData(data);
-    if (Date.now() - timestamp >= CACHE_TTL) loadFresh();
-  } else {
-    loadFresh();
-  }
-} catch(e) {
-  loadFresh();
-}
-
-function loadFresh() {
-  const script = document.createElement('script');
-  script.src = API_BASE + '?action=list&callback=handleDataAndCache';
-  document.head.appendChild(script);
-}
-
-function handleDataAndCache(participants) {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ data: participants, timestamp: Date.now() }));
-  } catch(e) {}
-  if (!document.getElementById('stat-cards').children.length) {
-    handleData(participants);
-  }
-}
+buildChart();
 </script>
 </body>
 </html>
