@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="cecec_logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CECEC &#8211; Statistics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#0D1B2A; --cyan:#00C6D7; --cyan-dim:#007F8B; --white:#F4F8FB; --gray:#8FA3B1; --card-bg:#132233; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); font-size: 16px; line-height: 1.65; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(13,27,42,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,198,215,0.12); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: .04em; color: var(--cyan); text-decoration: none; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    .nav-back { background: rgba(0,198,215,.1); border: 1px solid rgba(0,198,215,.3); color: var(--cyan) !important; padding: .4rem 1.1rem; border-radius: 4px; font-weight: 600 !important; }
+    .nav-back:hover { background: rgba(0,198,215,.2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .3rem; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray); border-radius: 2px; }
+    .nav-hamburger:hover span { background: var(--cyan); }
+    .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(13,27,42,0.98); border-bottom: 1px solid rgba(0,198,215,.12); padding: 1.2rem 2rem; z-index: 99; flex-direction: column; gap: .9rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { color: var(--gray); text-decoration: none; font-size: .95rem; font-weight: 500; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.05); transition: color .2s; }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--cyan); }
+
+    main { max-width: 1080px; margin: 0 auto; padding: 6rem 2rem 4rem; }
+    .page-label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 600; margin-bottom: .6rem; }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .subtitle { color: var(--gray); font-size: .9rem; margin-bottom: 2.5rem; max-width: 640px; }
+
+    .chart-section { margin-bottom: 3rem; }
+    .chart-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.2rem; }
+    .chart-section .chart-note { font-size: .8rem; color: var(--gray); margin-bottom: 1.2rem; margin-top: -.6rem; }
+    .chart-canvas-wrap { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.5rem; height: 220px; }
+
+    .heatmap-wrap { background: var(--card-bg); border: 1px solid rgba(0,198,215,.12); border-radius: 10px; padding: 1.5rem; overflow-x: auto; }
+    .heatmap-grid { display: grid; gap: 3px; font-size: .78rem; min-width: 360px; }
+    .heatmap-country { color: #9DBCCC; padding: .4rem .6rem .4rem 0; white-space: nowrap; display: flex; align-items: center; }
+    .heatmap-yearlabel { text-align: center; color: var(--cyan-dim); font-weight: 600; font-size: .74rem; letter-spacing: .04em; padding-bottom: .3rem; }
+    .heatmap-cell { text-align: center; padding: .55rem 0; border-radius: 4px; font-weight: 600; }
+
+    .new-countries { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+    .new-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(132,194,37,.12); border: 1px solid rgba(132,194,37,.3); color: #84c225; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
+    .never-country-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(224,92,138,.08); border: 1px solid rgba(224,92,138,.2); color: #E05C8A; font-size: .82rem; font-weight: 500; padding: .35rem .8rem; border-radius: 20px; }
+
+    footer img { filter: none; }
+    footer { border-top: 1px solid rgba(0,198,215,.1); text-align: center; padding: 2rem; color: var(--gray); font-size: .8rem; margin-top: 2rem; }
+    footer a { color: var(--cyan-dim); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    @media (max-width: 820px) {
+      nav { padding: 0 1.4rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      main { padding: 5rem 1.2rem 3rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="./"><img src="cecec_logo.png" alt="" style="height:24px; width:auto; vertical-align:middle; margin-right:.4rem;" />CECEC</a>
+  <ul class="nav-links">
+    <li><a href="./#about">About</a></li>
+    <li><a href="./past.html">Past Editions</a></li>
+    <li><a href="./statistics.html" class="active">Statistics</a></li>
+    <li><a href="./" class="nav-back">← Back to main page</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobile-menu">
+  <a href="./#about"     onclick="closeMenu()">About</a>
+  <a href="./past.html"  onclick="closeMenu()">Past Editions</a>
+  <a href="./statistics.html" onclick="closeMenu()">Statistics</a>
+  <a href="./"           onclick="closeMenu()" style="color:var(--cyan);">← Back to main page</a>
+</div>
+
+<main>
+  <p class="page-label">CECEC Archive</p>
+  <h1>Conference Statistics</h1>
+  <p class="subtitle">How the CECEC community has grown across editions &#8211; participation, geographic reach, and where new countries have joined.</p>
+
+  <div class="chart-section">
+    <h2>Participants per edition</h2>
+    <div class="chart-canvas-wrap">
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h2>Participants by country and edition</h2>
+    <p class="chart-note">Darker shading means more participants from that country in that year. Built to scale as more editions are added.</p>
+    <div class="heatmap-wrap">
+      <div class="heatmap-grid" id="heatmap"></div>
+    </div>
+    <div id="new-countries-wrap" style="display:none;">
+      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">New countries since the previous edition:</p>
+      <div class="new-countries" id="new-countries"></div>
+    </div>
+    <div id="never-countries-wrap" style="display:none;">
+      <p style="color:var(--gray); font-size:.85rem; margin-top:1.5rem;">CEE countries not yet represented at any CECEC:</p>
+      <div class="new-countries" id="never-countries"></div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding-top:1rem;">
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan-dim); font-weight:600; margin-bottom:1rem;">Organized &amp; supported by</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;">
+      <a href="https://www.openscreen.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.7; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.7">
+        <img src="czopenscreen_logo.svg" alt="CZ-OPENSCREEN" style="height:40px; max-width:200px;" />
+      </a>
+      <a href="https://www.vscht.cz/" target="_blank" rel="noopener" style="display:inline-block; opacity:.85; transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+        <img src="logoUCT.svg" alt="University of Chemistry and Technology Prague" style="height:40px; max-width:220px; display:block;" />
+      </a>
+    </div>
+  </div>
+  <p>© 2027 CECEC &#8211; Central &amp; Eastern European Cheminformatics Conference &nbsp;·&nbsp; <a href="./#about">About</a> &nbsp;·&nbsp; <a href="mailto:svozild@vscht.cz">Contact</a></p>
+  <p style="margin-top:.4rem;">Past editions: <a href="./2025/">2025</a> &nbsp;·&nbsp; <a href="./2026/">2026</a></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+function closeMenu() { mobileMenu.classList.remove('open'); }
+
+// Archived, closed-edition data
+const EDITIONS = ['2025', '2026'];
+
+const DATA = {
+  '2025': { 'Bulgaria': 1, 'Czechia': 20, 'Estonia': 1, 'Poland': 3, 'Romania': 2, 'Slovakia': 3, 'Slovenia': 1, 'Ukraine': 4 },
+  '2026': { 'Bulgaria': 1, 'Croatia': 1, 'Czechia': 39, 'Other': 3, 'Poland': 3, 'Serbia': 1, 'Slovakia': 4, 'Slovenia': 1, 'Ukraine': 1 }
+};
+
+const FLAGS = {
+  'Albania': '🇦🇱', 'Bulgaria': '🇧🇬', 'Croatia': '🇭🇷',
+  'Czechia': '🇨🇿', 'Estonia': '🇪🇪', 'Hungary': '🇭🇺',
+  'Latvia': '🇱🇻', 'Lithuania': '🇱🇹', 'Poland': '🇵🇱',
+  'Romania': '🇷🇴', 'Serbia': '🇷🇸', 'Slovakia': '🇸🇰',
+  'Slovenia': '🇸🇮', 'Ukraine': '🇺🇦', 'Other': '🌍'
+};
+
+const totals = EDITIONS.map(y => Object.values(DATA[y]).reduce((a, b) => a + b, 0));
+
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: EDITIONS,
+    datasets: [{
+      data: totals,
+      borderColor: '#00C6D7',
+      backgroundColor: 'rgba(0,198,215,.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#00C6D7',
+      pointBorderColor: '#0D1B2A',
+      pointBorderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, ticks: { color: '#8FA3B1', stepSize: 10 }, grid: { color: 'rgba(255,255,255,.05)' } },
+      x: { ticks: { color: '#8FA3B1' }, grid: { display: false } }
+    }
+  }
+});
+
+const allCountries = Array.from(new Set(EDITIONS.flatMap(y => Object.keys(DATA[y]))))
+  .filter(c => c !== 'Other')
+  .sort((a, b) => (DATA[EDITIONS[EDITIONS.length - 1]][b] || 0) - (DATA[EDITIONS[EDITIONS.length - 1]][a] || 0));
+if (EDITIONS.some(y => DATA[y]['Other'])) allCountries.push('Other');
+
+const maxVal = Math.max(...allCountries.flatMap(c => EDITIONS.map(y => DATA[y][c] || 0)));
+
+function shade(v) {
+  if (v === 0) return 'rgba(255,255,255,.04)';
+  const t = v / maxVal;
+  const stops = [[6,50,66],[0,127,139],[0,198,215],[77,217,232]];
+  const i = Math.min(2, Math.floor(t * 3));
+  const f = t * 3 - i;
+  const c = stops[i].map((c0, k) => Math.round(c0 + (stops[i + 1][k] - c0) * f));
+  return 'rgb(' + c.join(',') + ')';
+}
+function textColor(v) {
+  return v / maxVal > 0.45 ? '#0D1B2A' : '#9DBCCC';
+}
+
+const heatmap = document.getElementById('heatmap');
+heatmap.style.gridTemplateColumns = '110px repeat(' + EDITIONS.length + ', 1fr)';
+let cells = '<div></div>';
+EDITIONS.forEach(y => { cells += `<div class="heatmap-yearlabel">${y}</div>`; });
+allCountries.forEach(c => {
+  cells += `<div class="heatmap-country">${FLAGS[c] || '🌍'}&nbsp;${c}</div>`;
+  EDITIONS.forEach(y => {
+    const v = DATA[y][c] || 0;
+    cells += `<div class="heatmap-cell" style="background:${shade(v)}; color:${textColor(v)};">${v}</div>`;
+  });
+});
+heatmap.innerHTML = cells;
+
+if (EDITIONS.length > 1) {
+  const prevYear = EDITIONS[EDITIONS.length - 2];
+  const lastYear = EDITIONS[EDITIONS.length - 1];
+  const newCountries = Object.keys(DATA[lastYear]).filter(c => !DATA[prevYear][c] && c !== 'Other');
+  if (newCountries.length > 0) {
+    document.getElementById('new-countries-wrap').style.display = 'block';
+    const wrap = document.getElementById('new-countries');
+    newCountries.forEach(c => {
+      const badge = document.createElement('span');
+      badge.className = 'new-country-badge';
+      badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
+      wrap.appendChild(badge);
+    });
+  }
+}
+
+const CEE_COUNTRIES = ['Albania','Bulgaria','Croatia','Czechia','Estonia','Hungary','Latvia','Lithuania','Poland','Romania','Serbia','Slovakia','Slovenia','Ukraine'];
+const everRepresented = new Set(EDITIONS.flatMap(y => Object.keys(DATA[y])));
+const neverCountries = CEE_COUNTRIES.filter(c => !everRepresented.has(c));
+if (neverCountries.length > 0) {
+  document.getElementById('never-countries-wrap').style.display = 'block';
+  const wrap = document.getElementById('never-countries');
+  neverCountries.forEach(c => {
+    const badge = document.createElement('span');
+    badge.className = 'never-country-badge';
+    badge.textContent = (FLAGS[c] || '🌍') + ' ' + c;
+    wrap.appendChild(badge);
+  });
+}
+</script>
+</body>
+</html>
